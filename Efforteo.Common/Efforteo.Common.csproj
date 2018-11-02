@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RawRabbit" Version="1.10.4" />
+    <PackageReference Include="RawRabbit.vNext" Version="1.10.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Configuration.Json">
+      <HintPath>..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.configuration.json\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+      <HintPath>..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.dependencyinjection.abstractions\2.1.1\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="RawRabbit">
+      <HintPath>..\..\..\Users\ezmadad\.nuget\packages\rawrabbit\1.10.4\lib\netstandard1.5\RawRabbit.dll</HintPath>
+    </Reference>
+    <Reference Include="RawRabbit.vNext">
+      <HintPath>..\..\..\Users\ezmadad\.nuget\packages\rawrabbit.vnext\1.10.4\lib\netstandard2.0\RawRabbit.vNext.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
