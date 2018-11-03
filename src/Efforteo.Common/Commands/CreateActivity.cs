@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Efforteo.Common.Commands
 {
-    public class CreateActivity : IAuthenticatedCommand
+    public class CreateActivity : IAuthenticatedEvent
     {
-        public Guid UserId { get; set; }
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public string Category { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
