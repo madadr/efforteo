@@ -17,6 +17,8 @@ namespace Efforteo.Api
         public static void Main(string[] args)
         {
             ServiceHost.Create<Startup>(args)
+                .UseRabbitMq()
+                .SubscribeToEvent<ActivityCreated>()
                 .Build()
                 .Run();
         }

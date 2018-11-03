@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Efforteo.Common.Events
 {
-    public class ActivityCreated
+    public class ActivityCreated : IEvent
     {
         public Guid UserId { get; }
         public Guid Id { get; }
