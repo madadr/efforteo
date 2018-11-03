@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Efforteo.Common.Commands
 {
-    public interface IAuthenticatedCommand : ICommand
+    public interface IAuthenticatedEvent : ICommand
     {
         Guid UserId { get; set; }
     }
