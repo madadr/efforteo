@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Efforteo.Common.Commands;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RawRabbit;
 
-namespace Efforteo.Api.Controllers
+namespace Efforteo.Services.Activities.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
