@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using RawRabbit;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Efforteo.Common.RabbitMq;
 using Microsoft.Extensions.Logging;
 
@@ -74,7 +72,7 @@ namespace Efforteo.Common.Services
         public class BusBuilder : BuilderBase
         {
             private readonly IWebHost _webHost;
-            private IBusClient _bus;
+            private readonly IBusClient _bus;
 
             public BusBuilder(IWebHost webHost, IBusClient bus)
             {

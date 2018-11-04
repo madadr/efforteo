@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Efforteo.Common;
 using Efforteo.Common.Exceptions;
 using Efforteo.Services.Activities.Domain.Models;
 using Efforteo.Services.Activities.Domain.Repositories;

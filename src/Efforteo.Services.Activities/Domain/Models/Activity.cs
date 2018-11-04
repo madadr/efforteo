@@ -1,6 +1,4 @@
 ﻿using System;
-using Efforteo.Common.Events;
-using IAuthenticatedEvent = Efforteo.Common.Commands.IAuthenticatedEvent;
 
 namespace Efforteo.Services.Activities.Domain.Models
 {

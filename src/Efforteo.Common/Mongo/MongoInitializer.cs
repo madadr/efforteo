@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
-using MongoDB.Driver;
 
 namespace Efforteo.Common.Mongo
 {
@@ -13,12 +10,10 @@ namespace Efforteo.Common.Mongo
     {
         private bool _initialized;
         private readonly bool _seed;
-        private readonly IMongoDatabase _database;
         private readonly IDatabaseSeeder _seeder;
 
-        public MongoInitializer(IMongoDatabase database, IOptions<MongoOptions> options, IDatabaseSeeder seeder, bool initialized = false)
+        public MongoInitializer(IOptions<MongoOptions> options, IDatabaseSeeder seeder, bool initialized = false)
         {
-            _database = database;
             _seed = options.Value.Seed;
             _seeder = seeder;
             _initialized = initialized;

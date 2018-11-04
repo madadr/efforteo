@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Efforteo.Common.Commands
+﻿namespace Efforteo.Common.Commands
 {
     public interface ICommand
     {

@@ -1,10 +1,7 @@
-﻿using Efforteo.Common.RabbitMq;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using RawRabbit;
-using RawRabbit.Instantiation;
 
 namespace Efforteo.Common.Mongo
 {

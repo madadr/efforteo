@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Efforteo.Common.Events
+﻿namespace Efforteo.Common.Events
 {
     public class UserAuthenticated : IEvent
     {

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Efforteo.Common.Commands;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RawRabbit;
 
@@ -23,7 +19,7 @@ namespace Efforteo.Api.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Post(CreateAccount command)
         {
-;            await _busClient.PublishAsync(command);
+            await _busClient.PublishAsync(command);
 
             return Accepted();
         }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Efforteo.Common.Commands;
-using Efforteo.Common.Events;
+﻿using Efforteo.Common.Commands;
 using Efforteo.Common.Mongo;
 using Efforteo.Common.RabbitMq;
 using Efforteo.Services.Activities.Domain.Repositories;
@@ -12,12 +7,9 @@ using Efforteo.Services.Activities.Repositories;
 using Efforteo.Services.Activities.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Efforteo.Services.Activities
 {
