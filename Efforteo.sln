@@ -5,13 +5,13 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8FAD1B61-A0E8-43DC-AAA2-731F09869228}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Efforteo.Api", "src\Efforteo.Api\Efforteo.Api.csproj", "{703A4E50-F5CD-49E1-8359-6F3C3FE0541A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efforteo.Api", "src\Efforteo.Api\Efforteo.Api.csproj", "{703A4E50-F5CD-49E1-8359-6F3C3FE0541A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Efforteo.Common", "src\Efforteo.Common\Efforteo.Common.csproj", "{D4D075D3-190A-4BE8-87D1-CE1DFD94590A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efforteo.Common", "src\Efforteo.Common\Efforteo.Common.csproj", "{D4D075D3-190A-4BE8-87D1-CE1DFD94590A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Efforteo.Services.Activities", "src\Efforteo.Services.Activities\Efforteo.Services.Activities.csproj", "{ACE94A6A-93BF-49FA-80FF-7A40F51DA46A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efforteo.Services.Activities", "src\Efforteo.Services.Activities\Efforteo.Services.Activities.csproj", "{ACE94A6A-93BF-49FA-80FF-7A40F51DA46A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Efforteo.Services.Identity", "src\Efforteo.Services.Identity\Efforteo.Services.Identity.csproj", "{7193A5AC-C642-47C6-8728-D37988960351}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efforteo.Services.Identity", "src\Efforteo.Services.Identity\Efforteo.Services.Identity.csproj", "{7193A5AC-C642-47C6-8728-D37988960351}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{703A4E50-F5CD-49E1-8359-6F3C3FE0541A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -75,10 +72,16 @@ Global
 		{7193A5AC-C642-47C6-8728-D37988960351}.Release|x86.ActiveCfg = Release|Any CPU
 		{7193A5AC-C642-47C6-8728-D37988960351}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{703A4E50-F5CD-49E1-8359-6F3C3FE0541A} = {8FAD1B61-A0E8-43DC-AAA2-731F09869228}
 		{D4D075D3-190A-4BE8-87D1-CE1DFD94590A} = {8FAD1B61-A0E8-43DC-AAA2-731F09869228}
 		{ACE94A6A-93BF-49FA-80FF-7A40F51DA46A} = {8FAD1B61-A0E8-43DC-AAA2-731F09869228}
 		{7193A5AC-C642-47C6-8728-D37988960351} = {8FAD1B61-A0E8-43DC-AAA2-731F09869228}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AE07C3B8-F443-409E-99C7-5FB515F3416B}
 	EndGlobalSection
 EndGlobal
