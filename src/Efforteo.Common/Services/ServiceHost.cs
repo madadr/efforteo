@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Efforteo.Common.RabbitMq;
+using Microsoft.Extensions.Logging;
 
 namespace Efforteo.Common.Services
 {
@@ -32,6 +33,11 @@ namespace Efforteo.Common.Services
             var webHostBuilder = WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(config)
                 .UseDefaultServiceProvider(options => options.ValidateScopes = false)
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                })
                 .UseStartup<TStartup>();
 
             return new HostBuilder(webHostBuilder.Build());
