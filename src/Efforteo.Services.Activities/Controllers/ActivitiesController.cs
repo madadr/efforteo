@@ -25,7 +25,7 @@ namespace Efforteo.Api.Controllers
         {
             command.Id = Guid.NewGuid();
             command.CreatedAt = DateTime.UtcNow;
-;            await _busClient.PublishAsync(command);
+            await _busClient.PublishAsync(command);
 
             return Accepted($"activities/{command.Id}");
         }

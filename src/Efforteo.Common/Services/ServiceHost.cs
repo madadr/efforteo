@@ -31,6 +31,7 @@ namespace Efforteo.Common.Services
                 .Build();
             var webHostBuilder = WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(config)
+                .UseDefaultServiceProvider(options => options.ValidateScopes = false)
                 .UseStartup<TStartup>();
 
             return new HostBuilder(webHostBuilder.Build());

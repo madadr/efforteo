@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Efforteo.Common.Events;
 
 namespace Efforteo.Common.Commands
 {
-    public class CreateActivity : IAuthenticatedEvent
+    public class CreateActivity : IAuthenticatedEvent, IEvent
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
