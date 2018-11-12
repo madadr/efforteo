@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Efforteo.Common\Efforteo.Common.csproj" />
+    <ProjectReference Include="..\Efforteo.Services.Identity\Efforteo.Services.Identity.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,19 +4,19 @@
     {
         public string Email { get; }
         public string Name { get; }
-        public string Reason { get; }
         public string Code { get; }
+        public string Reason { get; }
 
         protected AuthenticateUserRejected()
         {
         }
 
-        public AuthenticateUserRejected(string email, string name, string reason, string code)
+        public AuthenticateUserRejected(string email, string name, string code, string reason)
         {
             Email = email;
             Name = name;
-            Reason = reason;
             Code = code;
+            Reason = reason;
         }
     }
 }

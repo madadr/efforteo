@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Efforteo.Common.Commands;
+using Efforteo.Services.Identity.Services;
 using Microsoft.AspNetCore.Mvc;
 using RawRabbit;
 
@@ -9,19 +10,15 @@ namespace Efforteo.Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IBusClient _busClient;
+        private readonly IUserService _userService;
 
-        public UsersController(IBusClient busClient)
+        public UsersController(IUserService userService)
         {
-            _busClient = busClient;
+            _userService = userService;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Post(CreateAccount command)
-        {
-            await _busClient.PublishAsync(command);
-
-            return Accepted();
-        }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(AuthenticateUser command)
+            => new JsonResult(await _userService.LoginAsync(command.Email, command.Password));
     }
 }

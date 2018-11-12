@@ -1,6 +1,6 @@
 ﻿namespace Efforteo.Common.Commands
 {
-    public class CreateAccount : ICommand
+    public class CreateUser : ICommand
     {
         public string Email { get; set; }
         public string Name { get; set; }

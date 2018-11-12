@@ -1,4 +1,5 @@
 ﻿using Efforteo.Api.Handlers;
+using Efforteo.Common.Auth;
 using Efforteo.Common.Events;
 using Efforteo.Common.RabbitMq;
 using Microsoft.AspNetCore.Builder;
@@ -21,6 +22,7 @@ namespace Efforteo.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddJwt(Configuration);
             services.AddRabbitMq(Configuration);
             services.AddScoped<IEventHandler<ActivityCreated>, ActivityCreatedHandler>();
         }

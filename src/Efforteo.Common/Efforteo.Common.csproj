@@ -9,6 +9,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App">
       <NoWarn>NU1602,NU1604</NoWarn>
     </PackageReference>
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.3.0" />
     <PackageReference Include="MongoDB.Bson" Version="2.7.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
     <PackageReference Include="RawRabbit" Version="2.0.0-rc5" />

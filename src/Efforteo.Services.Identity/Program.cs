@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore;
+﻿using Efforteo.Common.Commands;
+using Efforteo.Common.Services;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Efforteo.Services.Identity
@@ -7,11 +9,11 @@ namespace Efforteo.Services.Identity
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            ServiceHost.Create<Startup>(args)
+                .UseRabbitMq()
+                .SubscribeToCommand<CreateUser>()
+                .Build()
+                .Run();
         }
-
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
     }
 }
