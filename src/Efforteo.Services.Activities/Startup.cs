@@ -12,14 +12,18 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Efforteo.Services.Activities
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger _logger;
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
+            _logger = logger;
         }
 
         public IConfiguration Configuration { get; }
@@ -32,13 +36,14 @@ namespace Efforteo.Services.Activities
 //                .AddJsonFormatters();
             services.AddMongoDb(Configuration);
             services.AddJwt(Configuration);
-            //            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
             services.AddScoped<IDatabaseSeeder, CustomMongoSeeder>();
             services.AddRabbitMq(Configuration);
             services.AddScoped<ICommandHandler<CreateActivity>, CreateActivityHandler>();
             services.AddScoped<IActivityRepository, ActivityRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IActivityService, ActivityService>();
+
+            _logger.LogInformation("Configured services");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +64,8 @@ namespace Efforteo.Services.Activities
             app.ApplicationServices.GetService<IDatabaseSeeder>().SeedAsync();
 
             app.UseMvc();
+
+            _logger.LogInformation("Configured application");
         }
     }
 }

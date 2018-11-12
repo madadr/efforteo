@@ -1,0 +1,62 @@
+version: "3"
+
+services:
+  start-dep:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - mongo
+      - rabbitmq
+    command: rabbitmq:5672
+ 
+  mongo:
+    image: mongo
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - '27017:27017'
+
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+  api:
+    build: ../src/Efforteo.Api
+    restart: on-failure
+    depends_on:
+      - mongo
+      - rabbitmq
+    links:
+      - rabbitmq
+      - mongo
+    ports:
+      - '5000:5000'
+      - '5001:5001'
+  
+  activities-service:
+    build: ../src/Efforteo.Services.Activities
+    restart: on-failure
+    depends_on:
+      - mongo
+      - rabbitmq
+    links:
+      - rabbitmq
+      - mongo
+    ports:
+      - '5010:5000'
+      - '5011:5001'
+
+  identity-service:
+    build: ../src/Efforteo.Services.Identity
+    restart: on-failure
+    depends_on:
+      - mongo
+      - rabbitmq
+    links:
+      - rabbitmq
+      - mongo
+    ports:
+      - '5020:5000'
+      - '5021:5001'
+

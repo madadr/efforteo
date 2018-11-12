@@ -13,14 +13,17 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Efforteo.Services.Identity
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger _logger;
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
+            _logger = logger;
         }
 
         public IConfiguration Configuration { get; }
@@ -39,6 +42,8 @@ namespace Efforteo.Services.Identity
             services.AddScoped<IEncrypter, Encrypter>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+
+            _logger.LogInformation("Configured services");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +65,7 @@ namespace Efforteo.Services.Identity
 //            app.UseAuthentication();
 
             app.UseMvc();
+            _logger.LogInformation("Configured application");
         }
     }
 }

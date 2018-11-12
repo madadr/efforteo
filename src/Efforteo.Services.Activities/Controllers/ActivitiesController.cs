@@ -37,8 +37,9 @@ namespace Efforteo.Services.Activities.Controllers
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
+            await Task.CompletedTask;
             return Content("Authorized access");
         }
     }
