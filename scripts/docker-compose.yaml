@@ -9,11 +9,12 @@ services:
     command: rabbitmq:5672
  
   mongo:
-    image: mongo
-    volumes:
-      - ./data/db:/data/db
+    image: mongo:3.6
+    #volumes:
+    #  - ./data/db:/data/db
     ports:
       - '27017:27017'
+    #command: mongod --bind_ip_all --storageEngine=mmapv1
 
   rabbitmq:
     image: rabbitmq
@@ -59,4 +60,3 @@ services:
     ports:
       - '5020:5000'
       - '5021:5001'
-
