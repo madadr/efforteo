@@ -1,20 +1,6 @@
-﻿FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
-WORKDIR /app
-
-FROM microsoft/dotnet:2.1-sdk AS build
-WORKDIR /src
-COPY . .
-WORKDIR /src/Efforteo.Api
-RUN dotnet restore -nowarn:msb3202,nu1503
-RUN dotnet build --no-restore -c Release -o /app
-
-FROM build AS publish
-RUN dotnet publish --no-restore -c Release -o /app
-
-EXPOSE 5000/tcp
-ENV ASPNETCORE_URLS https://*:5000
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "Efforteo.Api.dll"]
+﻿FROM microsoft/dotnet:2.1-aspnetcore-runtime
+WORKDIR /dotnetapp
+COPY ./bin/Docker .
+ENV ASPNETCORE_URLS http://+:5000
+ENV ASPNETCORE_ENVIRONMENT Release
+ENTRYPOINT dotnet Efforteo.Api.dll
