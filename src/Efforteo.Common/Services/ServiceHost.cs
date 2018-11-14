@@ -28,6 +28,7 @@ namespace Efforteo.Common.Services
                 .AddEnvironmentVariables()
                 .AddCommandLine(args)
                 .Build();
+
             var webHostBuilder = WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(config)
                 .UseDefaultServiceProvider(options => options.ValidateScopes = false)

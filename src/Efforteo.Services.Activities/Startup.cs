@@ -1,5 +1,6 @@
 ﻿using Efforteo.Common.Auth;
 using Efforteo.Common.Commands;
+using Efforteo.Common.Exceptions;
 using Efforteo.Common.Mongo;
 using Efforteo.Common.RabbitMq;
 using Efforteo.Services.Activities.Domain.Repositories;
@@ -63,6 +64,7 @@ namespace Efforteo.Services.Activities
             app.UseAuthentication();
             app.ApplicationServices.GetService<IDatabaseSeeder>().SeedAsync();
 
+            app.UseMiddleware<BasicExceptionHandlingMiddleware>();
             app.UseMvc();
 
             _logger.LogInformation("Configured application");

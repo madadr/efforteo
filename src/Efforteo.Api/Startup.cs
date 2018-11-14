@@ -1,6 +1,7 @@
 ﻿using Efforteo.Api.Handlers;
 using Efforteo.Common.Auth;
 using Efforteo.Common.Events;
+using Efforteo.Common.Exceptions;
 using Efforteo.Common.RabbitMq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,6 +46,7 @@ namespace Efforteo.Api
             }
 
             app.UseHttpsRedirection();
+            app.UseMiddleware<BasicExceptionHandlingMiddleware>();
             app.UseMvc();
 
             _logger.LogInformation("Configured application");

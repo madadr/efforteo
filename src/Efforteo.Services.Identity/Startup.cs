@@ -1,5 +1,6 @@
 ﻿using Efforteo.Common.Auth;
 using Efforteo.Common.Commands;
+using Efforteo.Common.Exceptions;
 using Efforteo.Common.Mongo;
 using Efforteo.Common.RabbitMq;
 using Efforteo.Services.Identity.Domain.Repositories;
@@ -62,9 +63,10 @@ namespace Efforteo.Services.Identity
 
             app.ApplicationServices.GetService<IDatabaseSeeder>().SeedAsync();
             app.ApplicationServices.GetService<IUserService>().RegisterAsync("user2@user.com", "Stronk111", "User");
-//            app.UseAuthentication();
 
+            app.UseMiddleware<BasicExceptionHandlingMiddleware>();
             app.UseMvc();
+
             _logger.LogInformation("Configured application");
         }
     }

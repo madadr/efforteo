@@ -1,4 +1,5 @@
-﻿using Efforteo.Common.Commands;
+﻿using System;
+using Efforteo.Common.Commands;
 using Efforteo.Common.Events;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,6 +7,7 @@ using RawRabbit;
 using RawRabbit.Instantiation;
 using System.Reflection;
 using System.Threading.Tasks;
+using Polly;
 
 namespace Efforteo.Common.RabbitMq
 {
@@ -31,11 +33,17 @@ namespace Efforteo.Common.RabbitMq
             var options = new RabbitMqOptions();
             var section = configuration.GetSection("rabbitmq");
             section.Bind(options);
-            var client = RawRabbitFactory.CreateSingleton(new RawRabbitOptions
-            {
-                ClientConfiguration = options
-            });
-            services.AddSingleton<IBusClient>(_ => client);
+
+            Policy.Handle<Exception>()
+                .WaitAndRetry(5, r => TimeSpan.FromSeconds(5), (ex, ts) => { /*TODO: add some log when failed*/ })
+                .Execute(() =>
+                {
+                    var client = RawRabbitFactory.CreateSingleton(new RawRabbitOptions
+                    {
+                        ClientConfiguration = options
+                    });
+                    services.AddSingleton<IBusClient>(_ => client);
+                });
         }
     }
 }

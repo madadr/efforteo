@@ -5,4 +5,4 @@ ENV ASPNETCORE_URLS http://+:5000
 EXPOSE 5000/tcp
 EXPOSE 5001/tcp
 ENV ASPNETCORE_ENVIRONMENT Release
-ENTRYPOINT dotnet Efforteo.Api.dll
+ENTRYPOINT dotnet Efforteo.Services.Activities.dll

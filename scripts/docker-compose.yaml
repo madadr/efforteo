@@ -23,8 +23,9 @@ services:
       - '15672:15672'
 
   api:
+    image: efforteo.api
     build: ../src/Efforteo.Api
-    restart: on-failure
+    #restart: on-failure
     depends_on:
       - mongo
       - rabbitmq
@@ -36,8 +37,9 @@ services:
       - '5001:5001'
   
   activities-service:
+    image: efforteo.services.activities
     build: ../src/Efforteo.Services.Activities
-    restart: on-failure
+    #restart: on-failure
     depends_on:
       - mongo
       - rabbitmq
@@ -49,8 +51,9 @@ services:
       - '5011:5001'
 
   identity-service:
+    image: efforteo.services.identity
     build: ../src/Efforteo.Services.Identity
-    restart: on-failure
+    #restart: on-failure
     depends_on:
       - mongo
       - rabbitmq
