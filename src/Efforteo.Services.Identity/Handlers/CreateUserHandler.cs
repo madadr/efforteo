@@ -17,9 +17,7 @@ namespace Efforteo.Services.Identity.Handlers
         private readonly IBusClient _busClient;
         private readonly IUserService _userService;
 
-        public CreateUserHandler(IBusClient busClient,
-            IUserService userService,
-            ILogger<CreateUser> logger)
+        public CreateUserHandler(IBusClient busClient, IUserService userService, ILogger<CreateUser> logger)
         {
             _busClient = busClient;
             _userService = userService;
@@ -35,20 +33,16 @@ namespace Efforteo.Services.Identity.Handlers
                 await _userService.RegisterAsync(command.Email, command.Password, command.Name);
                 await _busClient.PublishAsync(new UserCreated(command.Email, command.Name));
                 _logger.LogInformation($"User created. Email='{command.Email}', name='{command.Name}'.");
-
-                return;
             }
             catch (EfforteoException ex)
             {
                 _logger.LogError(ex, ex.Message);
-                await _busClient.PublishAsync(new CreateUserRejected(command.Email,
-                    ex.Code, ex.Message));
+                await _busClient.PublishAsync(new CreateUserRejected(command.Email, ex.Code, ex.Message));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                await _busClient.PublishAsync(new CreateUserRejected(command.Email,
-                    "error", ex.Message));
+                await _busClient.PublishAsync(new CreateUserRejected(command.Email, "error", ex.Message));
             }
         }
     }

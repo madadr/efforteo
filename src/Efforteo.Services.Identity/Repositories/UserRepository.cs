@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using Efforteo.Services.Identity.Domain.Models;
 using Efforteo.Services.Identity.Domain.Repositories;
@@ -16,9 +17,10 @@ namespace Efforteo.Services.Identity.Repositories
             => _database.GetCollection<User>("users");
 
         public UserRepository(IMongoDatabase database)
-        {
-            _database = database;
-        }
+            => _database = database;
+
+        public async Task AddAsync(User user)
+            => await Collection.InsertOneAsync(user);
 
         public async Task<User> GetAsync(Guid id)
             => await Collection
@@ -30,7 +32,10 @@ namespace Efforteo.Services.Identity.Repositories
                 .AsQueryable()
                 .FirstOrDefaultAsync(x => x.Email == email);
 
-        public async Task AddAsync(User user)
-            => await Collection.InsertOneAsync(user);
+        public async Task UpdateAsync(User user)
+            => await Collection.ReplaceOneAsync(x => x.Id == user.Id, user);
+
+        public async Task RemoveAsync(Guid id)
+            => await Collection.FindOneAndDeleteAsync(x => x.Id == id);
     }
 }

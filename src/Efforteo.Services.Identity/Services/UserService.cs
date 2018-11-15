@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using Efforteo.Common.Auth;
 using Efforteo.Common.Exceptions;
+using Efforteo.Services.Identity.Domain.DTO;
 using Efforteo.Services.Identity.Domain.Models;
 using Efforteo.Services.Identity.Domain.Repositories;
 using Efforteo.Services.Identity.Domain.Services;
@@ -13,12 +15,14 @@ namespace Efforteo.Services.Identity.Services
         private readonly IUserRepository _repository;
         private readonly IEncrypter _encrypter;
         private readonly IJwtHandler _jwtHandler;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository repository, IEncrypter encrypter, IJwtHandler jwtHandler)
+        public UserService(IUserRepository repository, IEncrypter encrypter, IJwtHandler jwtHandler, IMapper mapper)
         {
             _repository = repository;
             _encrypter = encrypter;
             _jwtHandler = jwtHandler;
+            _mapper = mapper;
         }
 
         public async Task RegisterAsync(string email, string password, string name)
@@ -46,6 +50,28 @@ namespace Efforteo.Services.Identity.Services
             }
 
             return _jwtHandler.Create(user.Id);
+        }
+
+        public async Task<UserDto> GetAsync(Guid id)
+        {
+            var user = await _repository.GetAsync(id);
+            if (user == null)
+            {
+                throw new EfforteoException("user_not_exists", $"User doesn't exist.");
+            }
+
+            return _mapper.Map<UserDto>(user);
+        }
+
+        public async Task<UserDto> GetAsync(string email)
+        {
+            var user = await _repository.GetAsync(email);
+            if (user == null)
+            {
+                throw new EfforteoException("user_not_exists", $"User doesn't exist.");
+            }
+
+            return _mapper.Map<UserDto>(user);
         }
     }
 }

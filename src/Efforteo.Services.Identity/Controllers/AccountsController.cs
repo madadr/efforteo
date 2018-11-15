@@ -2,9 +2,12 @@
 using System.Net;
 using System.Threading.Tasks;
 using Efforteo.Common.Commands;
+using Efforteo.Services.Identity.Handlers;
 using Efforteo.Services.Identity.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
+using Newtonsoft.Json;
 
 namespace Efforteo.Services.Identity.Controllers
 {
@@ -24,7 +27,8 @@ namespace Efforteo.Services.Identity.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(CreateUser command)
         {
-            _logger.LogError($"email = {command.Email}, password = {command.Password}, name = {command.Name}");
+            // TODO: Implement CommandDispatcher and use it!
+            _logger.LogTrace($"Register command = {JsonConvert.SerializeObject(command)}");
             await _userService.RegisterAsync(command.Email, command.Password, command.Name);
             return Content("Success!");
         }
@@ -32,7 +36,7 @@ namespace Efforteo.Services.Identity.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(AuthenticateUser command)
         {
-            _logger.LogInformation($"email = {command.Email}, password = {command.Password}");
+            _logger.LogTrace($"Login command = {JsonConvert.SerializeObject(command)}");
 
             return Json(await _userService.LoginAsync(command.Email, command.Password));
         }
