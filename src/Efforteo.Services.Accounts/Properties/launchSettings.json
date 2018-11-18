@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Efforteo.Services.Identity": {
+    "Efforteo.Services.Accounts": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",

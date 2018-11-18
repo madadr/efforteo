@@ -38,18 +38,23 @@ namespace Efforteo.Common.Exceptions
             var exceptionType = exception.GetType();
             switch (exception)
             {
+                // TODO: uncomment and test later
+//                case Exception e when exceptionType == typeof(EfforteoException):
+//                    errorCode = ((EfforteoException) e).Code;
+//                    statusCode = HttpStatusCode.Unauthorized;
+//                    break;
                 case Exception e when exceptionType == typeof(UnauthorizedAccessException):
                     statusCode = HttpStatusCode.Unauthorized;
-                break;
+                    break;
                 default:
                     statusCode = HttpStatusCode.InternalServerError;
-                break;
+                    break;
             }
 
-            var response = new { code = errorCode, message = exception.Message };
+            var response = new {code = errorCode, message = exception.Message};
             var payload = JsonConvert.SerializeObject(response);
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)statusCode;
+            context.Response.StatusCode = (int) statusCode;
 
             return context.Response.WriteAsync(payload);
         }

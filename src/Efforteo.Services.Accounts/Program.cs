@@ -3,7 +3,7 @@ using Efforteo.Common.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Efforteo.Services.Identity
+namespace Efforteo.Services.Accounts
 {
     public class Program
     {
@@ -11,7 +11,6 @@ namespace Efforteo.Services.Identity
         {
             ServiceHost.Create<Startup>(args)
                 .UseRabbitMq()
-                .SubscribeToCommand<CreateUser>()
                 .Build()
                 .Run();
         }

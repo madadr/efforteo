@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Efforteo.Common.Auth;
-using Efforteo.Services.Identity.Domain.DTO;
+using Efforteo.Services.Accounts.Domain.DTO;
 
-namespace Efforteo.Services.Identity.Services
+namespace Efforteo.Services.Accounts.Services
 {
     public interface IUserService
     {

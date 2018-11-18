@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efforteo.Common", "src\Effo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efforteo.Services.Activities", "src\Efforteo.Services.Activities\Efforteo.Services.Activities.csproj", "{ACE94A6A-93BF-49FA-80FF-7A40F51DA46A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efforteo.Services.Identity", "src\Efforteo.Services.Identity\Efforteo.Services.Identity.csproj", "{7193A5AC-C642-47C6-8728-D37988960351}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efforteo.Services.Accounts", "src\Efforteo.Services.Accounts\Efforteo.Services.Accounts.csproj", "{7193A5AC-C642-47C6-8728-D37988960351}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

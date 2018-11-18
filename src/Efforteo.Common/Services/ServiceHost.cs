@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using RawRabbit;
 using System;
+using Autofac.Extensions.DependencyInjection;
 using Efforteo.Common.RabbitMq;
 using Microsoft.Extensions.Logging;
 
@@ -31,6 +32,7 @@ namespace Efforteo.Common.Services
 
             var webHostBuilder = WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(config)
+//                .ConfigureServices(services => services.AddAutofac())
                 .UseDefaultServiceProvider(options => options.ValidateScopes = false)
                 .ConfigureLogging(logging =>
                 {
@@ -81,16 +83,7 @@ namespace Efforteo.Common.Services
                 _bus = bus;
             }
 
-            public BusBuilder SubscribeToCommand<TCommand>() where TCommand : ICommand
-            {
-                var handler = (ICommandHandler<TCommand>)_webHost.Services
-                    .GetService(typeof(ICommandHandler<TCommand>));
-                _bus.WithCommandHandlerAsync(handler);
-
-                return this;
-            }
-
-            public BusBuilder SubscribeToEvent<TEvent>() where TEvent : IEvent
+            public BusBuilder Subscribe<TEvent>() where TEvent : IEvent
             {
                 var handler = (IEventHandler<TEvent>)_webHost.Services
                     .GetService(typeof(IEventHandler<TEvent>));

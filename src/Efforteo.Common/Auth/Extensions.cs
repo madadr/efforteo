@@ -17,7 +17,7 @@ namespace Efforteo.Common.Auth
             section.Bind(options);
             services.Configure<JwtOptions>(section);
             services.AddSingleton<IJwtHandler, JwtHandler>();
-            services.AddAuthentication()//JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication()
                 .AddJwtBearer(cfg =>
                 {
                     cfg.RequireHttpsMetadata = false;

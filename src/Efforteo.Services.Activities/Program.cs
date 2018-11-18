@@ -9,7 +9,6 @@ namespace Efforteo.Services.Activities
         {
             ServiceHost.Create<Startup>(args)
                 .UseRabbitMq()
-                .SubscribeToCommand<CreateActivity>()
                 .Build()
                 .Run();
         }

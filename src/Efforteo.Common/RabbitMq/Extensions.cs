@@ -7,6 +7,7 @@ using RawRabbit;
 using RawRabbit.Instantiation;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Polly;
 
 namespace Efforteo.Common.RabbitMq
@@ -28,20 +29,20 @@ namespace Efforteo.Common.RabbitMq
 
         private static string GetQueueName<T>() => $"{Assembly.GetEntryAssembly().GetName()}/{typeof(T).Name}";
 
-        public static void AddRabbitMq(this IServiceCollection services, IConfiguration configuration)
+        public static void AddRabbitMq(this IServiceCollection services, IConfiguration configuration, ILogger logger)
         {
             var options = new RabbitMqOptions();
             var section = configuration.GetSection("rabbitmq");
             section.Bind(options);
-
             Policy.Handle<Exception>()
-                .WaitAndRetry(5, r => TimeSpan.FromSeconds(5), (ex, ts) => { /*TODO: add some log when failed*/ })
+                .WaitAndRetryForever(r => TimeSpan.FromSeconds(5),
+                    (ex, ts) =>
+                    {
+                        logger.LogError($"Failed to configure RabbitMQ. Retrying in {ts}. Reason=[{ex.Message}]");
+                    })
                 .Execute(() =>
                 {
-                    var client = RawRabbitFactory.CreateSingleton(new RawRabbitOptions
-                    {
-                        ClientConfiguration = options
-                    });
+                    var client = RawRabbitFactory.CreateSingleton(new RawRabbitOptions {ClientConfiguration = options});
                     services.AddSingleton<IBusClient>(_ => client);
                 });
         }

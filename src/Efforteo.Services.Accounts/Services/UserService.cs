@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Efforteo.Common.Auth;
 using Efforteo.Common.Exceptions;
-using Efforteo.Services.Identity.Domain.DTO;
-using Efforteo.Services.Identity.Domain.Models;
-using Efforteo.Services.Identity.Domain.Repositories;
-using Efforteo.Services.Identity.Domain.Services;
+using Efforteo.Services.Accounts.Domain.DTO;
+using Efforteo.Services.Accounts.Domain.Models;
+using Efforteo.Services.Accounts.Domain.Repositories;
+using Efforteo.Services.Accounts.Domain.Services;
 
-namespace Efforteo.Services.Identity.Services
+namespace Efforteo.Services.Accounts.Services
 {
     public class UserService : IUserService
     {

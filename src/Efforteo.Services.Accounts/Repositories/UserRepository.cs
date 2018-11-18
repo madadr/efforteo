@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Policy;
 using System.Threading.Tasks;
-using Efforteo.Services.Identity.Domain.Models;
-using Efforteo.Services.Identity.Domain.Repositories;
+using Efforteo.Services.Accounts.Domain.Models;
+using Efforteo.Services.Accounts.Domain.Repositories;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
-namespace Efforteo.Services.Identity.Repositories
+namespace Efforteo.Services.Accounts.Repositories
 {
     public class UserRepository : IUserRepository
     {

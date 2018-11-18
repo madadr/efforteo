@@ -1,4 +1,4 @@
 cd ../src
-docker build -f ./Efforteo.Api/Dockerfile -t efforteo.api ./Efforteo.Api
-docker build -f ./Efforteo.Services.Activities/Dockerfile -t efforteo.services.activities ./Efforteo.Services.Activities
-docker build -f ./Efforteo.Services.Identity/Dockerfile -t efforteo.services.identity ./Efforteo.Services.Identity
+docker build --no-cache -f ./Efforteo.Api/Dockerfile -t efforteo.api ./Efforteo.Api
+docker build --no-cache -f ./Efforteo.Services.Activities/Dockerfile -t efforteo.services.activities ./Efforteo.Services.Activities
+docker build --no-cache -f ./Efforteo.Services.Accoutns/Dockerfile -t efforteo.services.accounts ./Efforteo.Services.Accounts

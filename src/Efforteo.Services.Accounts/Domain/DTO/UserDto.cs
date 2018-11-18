@@ -1,8 +1,8 @@
 ﻿using System;
 using Efforteo.Common.Exceptions;
-using Efforteo.Services.Identity.Domain.Services;
+using Efforteo.Services.Accounts.Domain.Services;
 
-namespace Efforteo.Services.Identity.Domain.DTO
+namespace Efforteo.Services.Accounts.Domain.DTO
 {
     public class UserDto
     {

@@ -1,4 +1,5 @@
-﻿using Efforteo.Common.Auth;
+﻿using System;
+using Efforteo.Common.Auth;
 using Efforteo.Common.Commands;
 using Efforteo.Common.Exceptions;
 using Efforteo.Common.Mongo;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Polly;
 
 namespace Efforteo.Services.Activities
 {
@@ -32,19 +34,27 @@ namespace Efforteo.Services.Activities
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-//                .AddJsonFormatters();
-            services.AddMongoDb(Configuration);
+            _logger.LogInformation("Configuring services");
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            _logger.LogDebug("Configuring MongoDb.");
+            services.AddMongoDb(Configuration, _logger);
+
+            _logger.LogDebug("Configuring RabbitMQ.");
+            services.AddRabbitMq(Configuration, _logger);
+
+
+            _logger.LogDebug("Configuring JWT");
             services.AddJwt(Configuration);
+
+            _logger.LogDebug("Configuring other services");
             services.AddScoped<IDatabaseSeeder, CustomMongoSeeder>();
-            services.AddRabbitMq(Configuration);
             services.AddScoped<ICommandHandler<CreateActivity>, CreateActivityHandler>();
             services.AddScoped<IActivityRepository, ActivityRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IActivityService, ActivityService>();
 
-            _logger.LogInformation("Configured services");
+            _logger.LogInformation("Configured all services");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

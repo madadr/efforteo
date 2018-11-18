@@ -1,4 +1,5 @@
-﻿using Efforteo.Api.Handlers;
+﻿using System;
+using Efforteo.Api.Handlers;
 using Efforteo.Common.Auth;
 using Efforteo.Common.Events;
 using Efforteo.Common.Exceptions;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Polly;
 
 namespace Efforteo.Api
 {
@@ -26,12 +28,19 @@ namespace Efforteo.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            _logger.LogInformation("Configuring services");
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            _logger.LogDebug("Configuring RabbitMQ");
+            services.AddRabbitMq(Configuration, _logger);
+
+            _logger.LogDebug("Configuring JWT");
             services.AddJwt(Configuration);
-            services.AddRabbitMq(Configuration);
+
+            _logger.LogDebug("Configuring other services");
             services.AddScoped<IEventHandler<ActivityCreated>, ActivityCreatedHandler>();
 
-            _logger.LogInformation("Configured services");
+            _logger.LogInformation("Configured all services");
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

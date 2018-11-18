@@ -1,8 +1,8 @@
 ﻿using System;
 using Efforteo.Common.Exceptions;
-using Efforteo.Services.Identity.Domain.Services;
+using Efforteo.Services.Accounts.Domain.Services;
 
-namespace Efforteo.Services.Identity.Domain.Models
+namespace Efforteo.Services.Accounts.Domain.Models
 {
     public class User
     {

@@ -1,4 +1,4 @@
-﻿namespace Efforteo.Services.Identity.Domain.Services
+﻿namespace Efforteo.Services.Accounts.Domain.Services
 {
     public interface IEncrypter
     {
