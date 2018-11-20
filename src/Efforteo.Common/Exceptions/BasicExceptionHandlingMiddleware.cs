@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RabbitMQ.Client.Exceptions;
 
@@ -13,10 +14,12 @@ namespace Efforteo.Common.Exceptions
     public class BasicExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger _logger;
 
-        public BasicExceptionHandlingMiddleware(RequestDelegate next)
+        public BasicExceptionHandlingMiddleware(RequestDelegate next, ILogger<BasicExceptionHandlingMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -31,18 +34,17 @@ namespace Efforteo.Common.Exceptions
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             var errorCode = "error";
             var statusCode = HttpStatusCode.BadRequest;
             var exceptionType = exception.GetType();
             switch (exception)
             {
-                // TODO: uncomment and test later
-//                case Exception e when exceptionType == typeof(EfforteoException):
-//                    errorCode = ((EfforteoException) e).Code;
-//                    statusCode = HttpStatusCode.Unauthorized;
-//                    break;
+                case Exception e when exceptionType == typeof(EfforteoException):
+                    errorCode = ((EfforteoException) e).Code;
+                    statusCode = HttpStatusCode.BadRequest;
+                    break;
                 case Exception e when exceptionType == typeof(UnauthorizedAccessException):
                     statusCode = HttpStatusCode.Unauthorized;
                     break;
