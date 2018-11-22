@@ -41,7 +41,7 @@ namespace Efforteo.Services.Activities.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             _logger.LogError($"USER ID = {UserId.ToString()}");

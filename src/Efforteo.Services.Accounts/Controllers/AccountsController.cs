@@ -40,20 +40,9 @@ namespace Efforteo.Services.Accounts.Controllers
 
         [HttpGet("id")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-//        [JwtAuth]
         public IActionResult GetId()
         {
-            _logger.LogCritical($"GET_ID; isUserNull? {User == null} | claims.size {User.Claims.Count()}");
-            foreach (var c in User.Claims)
-            {
-                _logger.LogCritical($"CLAIM type={c.Type}, value={c.Value}");
-
-            }
-            var uid = User.FindFirst(ClaimTypes.Name).Value;
-            //            _logger.LogCritical($"uid= {uid}");
-            //            _logger.LogCritical($"Name= {User.FindFirst(ClaimTypes.Name).Value}");
-
-            return Content($"UserId: ${uid}");
+            return Content($"UserId: ${UserId}");
         }
 
         [HttpPost("register")]
@@ -93,10 +82,10 @@ namespace Efforteo.Services.Accounts.Controllers
         }
 
         [HttpPost("password")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         public async Task<IActionResult> ChangePassword(ChangePassword command)
         {
-            _logger.LogTrace($"AccountsController::Register: command={JsonConvert.SerializeObject(command)}");
+            _logger.LogTrace($"AccountsController::ChangePassword: command={JsonConvert.SerializeObject(command)}");
 
             // Securing command by swapping request UserId with JWT UserId
             command.UserId = UserId;

@@ -13,12 +13,9 @@ namespace Efforteo.Common.Auth
     {
         public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
         {
-//            var options = new JwtSettings();
-//            var section = configuration.GetSection("jwt");
-//            section.Bind(options);
-            var sets = configuration.GetSettings<JwtSettings>();
-//            services.Configure<JwtSettings>(section);
-//            services.AddSingleton<IJwtHandler, JwtHandler>();
+            var settings = configuration.GetSettings<JwtSettings>();
+            services.AddSingleton(settings);
+            services.AddSingleton<IJwtHandler, JwtHandler>();
             services.AddAuthentication(o =>
                 {
                     o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -31,8 +28,8 @@ namespace Efforteo.Common.Auth
                     cfg.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateAudience = false,
-                        ValidIssuer = sets.Issuer,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sets.SecretKey))
+                        ValidIssuer = settings.Issuer,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecretKey))
                     };
                 });
         }

@@ -18,6 +18,7 @@ using Efforteo.Services.Accounts.Domain.Models;
 using Efforteo.Services.Accounts.Domain.Repositories;
 using Efforteo.Services.Accounts.Domain.Services;
 using Efforteo.Services.Accounts.Handlers;
+using Efforteo.Services.Accounts.IoC.Modules;
 using Efforteo.Services.Accounts.Repositories;
 using Efforteo.Services.Accounts.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -43,44 +44,18 @@ namespace Efforteo.Services.Accounts
             _logger.LogInformation("Configuring services");
 
             services.AddMvcCore()
+                .AddJsonFormatters()
+                .AddDataAnnotations()
                 .AddAuthorization();
-
-            _logger.LogDebug("Configuring JWT");
+    
             services.AddJwt(Configuration);
-
-//                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-//                .AddJsonFormatters();
-
-            _logger.LogDebug("Configuring MongoDb");
             services.AddMongoDb(Configuration, _logger);
-
-            _logger.LogDebug("Configuring RabbitMQ");
             services.AddRabbitMq(Configuration, _logger);
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
-            _logger.LogDebug("Configuring misc services");
-            builder.RegisterInstance(new MapperConfiguration(cfg => { cfg.CreateMap<User, UserDto>(); }).CreateMapper())
-                .SingleInstance();
 
-            var a = Configuration.GetSettings<JwtSettings>();
-            _logger.LogCritical($"iss = {a.Issuer}, exp = {a.ExpiryMinutes}");
-            builder.RegisterInstance(Configuration.GetSettings<JwtSettings>())
-                .SingleInstance();
-
-            builder.RegisterModule<DispatcherModule>();
-
-            builder.RegisterType<UserRepository>()
-                .As<IUserRepository>()
-                .InstancePerLifetimeScope();
-            builder.RegisterType<UserService>()
-                .As<IUserService>()
-                .InstancePerLifetimeScope();
-            builder.RegisterType<Encrypter>()
-                .As<IEncrypter>()
-                .SingleInstance();
-
-            builder.RegisterModule<JwtModule>();
+            builder.RegisterModule<ContainerModule>();
 
             ApplicationContainer = builder.Build();
 

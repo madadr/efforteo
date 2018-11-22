@@ -10,6 +10,7 @@ using Efforteo.Common.RabbitMq;
 using Efforteo.Common.Settings;
 using Efforteo.Services.Activities.Domain.Repositories;
 using Efforteo.Services.Activities.Handlers;
+using Efforteo.Services.Activities.IoC.Modules;
 using Efforteo.Services.Activities.Repositories;
 using Efforteo.Services.Activities.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -41,41 +42,19 @@ namespace Efforteo.Services.Activities
         {
             _logger.LogInformation("Configuring services");
 
-            _logger.LogDebug("Configuring JWT");
-            services.AddJwt(Configuration);
-
             services.AddMvcCore()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonFormatters();
+                .AddJsonFormatters()
+                .AddDataAnnotations()
+                .AddAuthorization();
 
-            _logger.LogDebug("Configuring misc services");
-
-            _logger.LogDebug("Configuring MongoDb.");
+            services.AddJwt(Configuration);
             services.AddMongoDb(Configuration, _logger);
-
-            _logger.LogDebug("Configuring RabbitMQ.");
             services.AddRabbitMq(Configuration, _logger);
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
-            builder.RegisterInstance(Configuration.GetSettings<JwtSettings>())
-                .SingleInstance();
-
-            builder.RegisterType<CustomMongoSeeder>()
-                .As<IDatabaseSeeder>()
-                .InstancePerLifetimeScope();
-            builder.RegisterType<ActivityRepository>()
-                .As<IActivityRepository>()
-                .InstancePerLifetimeScope();
-            builder.RegisterType<CategoryRepository>()
-                .As<ICategoryRepository>()
-                .InstancePerLifetimeScope();
-            builder.RegisterType<ActivityService>()
-                .As<IActivityService>()
-                .InstancePerLifetimeScope();
-
-            builder.RegisterModule<JwtModule>();
+            builder.RegisterModule<ContainerModule>();
 
             ApplicationContainer = builder.Build();
 
