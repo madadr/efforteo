@@ -12,6 +12,7 @@ using Efforteo.Common.Exceptions;
 using Efforteo.Common.IoC.Modules;
 using Efforteo.Common.Mongo;
 using Efforteo.Common.RabbitMq;
+using Efforteo.Common.Settings;
 using Efforteo.Services.Accounts.Domain.DTO;
 using Efforteo.Services.Accounts.Domain.Models;
 using Efforteo.Services.Accounts.Domain.Repositories;
@@ -37,38 +38,18 @@ namespace Efforteo.Services.Accounts
         public IConfiguration Configuration { get; }
         public IContainer ApplicationContainer { get; private set; }
 
-        public Startup(IConfiguration configuration, ILogger<Startup> logger)
-        {
-            Configuration = configuration;
-            _logger = logger;
-        }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             _logger.LogInformation("Configuring services");
+
             services.AddMvcCore()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonFormatters();
-
-            var builder = new ContainerBuilder();
-
-            _logger.LogDebug("Configuring misc services");
-            builder.RegisterInstance(new MapperConfiguration(cfg => { cfg.CreateMap<User, UserDto>(); }).CreateMapper())
-                .SingleInstance();
-
-            builder.RegisterModule<DispatcherModule>();
-
-            builder.RegisterType<UserRepository>()
-                .As<IUserRepository>()
-                .SingleInstance();
-            builder.RegisterType<UserService>()
-                .As<IUserService>()
-                .SingleInstance();
+                .AddAuthorization();
 
             _logger.LogDebug("Configuring JWT");
             services.AddJwt(Configuration);
-            services.AddScoped<IEncrypter, Encrypter>();
+
+//                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+//                .AddJsonFormatters();
 
             _logger.LogDebug("Configuring MongoDb");
             services.AddMongoDb(Configuration, _logger);
@@ -76,12 +57,43 @@ namespace Efforteo.Services.Accounts
             _logger.LogDebug("Configuring RabbitMQ");
             services.AddRabbitMq(Configuration, _logger);
 
+            var builder = new ContainerBuilder();
             builder.Populate(services);
+            _logger.LogDebug("Configuring misc services");
+            builder.RegisterInstance(new MapperConfiguration(cfg => { cfg.CreateMap<User, UserDto>(); }).CreateMapper())
+                .SingleInstance();
+
+            var a = Configuration.GetSettings<JwtSettings>();
+            _logger.LogCritical($"iss = {a.Issuer}, exp = {a.ExpiryMinutes}");
+            builder.RegisterInstance(Configuration.GetSettings<JwtSettings>())
+                .SingleInstance();
+
+            builder.RegisterModule<DispatcherModule>();
+
+            builder.RegisterType<UserRepository>()
+                .As<IUserRepository>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<UserService>()
+                .As<IUserService>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<Encrypter>()
+                .As<IEncrypter>()
+                .SingleInstance();
+
+            builder.RegisterModule<JwtModule>();
 
             ApplicationContainer = builder.Build();
 
             return new AutofacServiceProvider(ApplicationContainer);
         }
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
+        {
+            Configuration = configuration;
+            _logger = logger;
+        }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -40,7 +40,7 @@ namespace Efforteo.Services.Accounts.Controllers
 
         [HttpGet("id")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-//        []
+//        [JwtAuth]
         public IActionResult GetId()
         {
             _logger.LogCritical($"GET_ID; isUserNull? {User == null} | claims.size {User.Claims.Count()}");

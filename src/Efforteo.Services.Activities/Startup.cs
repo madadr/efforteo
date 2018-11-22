@@ -1,9 +1,13 @@
 ﻿using System;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Efforteo.Common.Auth;
 using Efforteo.Common.Commands;
 using Efforteo.Common.Exceptions;
+using Efforteo.Common.IoC.Modules;
 using Efforteo.Common.Mongo;
 using Efforteo.Common.RabbitMq;
+using Efforteo.Common.Settings;
 using Efforteo.Services.Activities.Domain.Repositories;
 using Efforteo.Services.Activities.Handlers;
 using Efforteo.Services.Activities.Repositories;
@@ -22,6 +26,7 @@ namespace Efforteo.Services.Activities
     public class Startup
     {
         private readonly ILogger _logger;
+        public IContainer ApplicationContainer { get; private set; }
 
         public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
@@ -32,10 +37,18 @@ namespace Efforteo.Services.Activities
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             _logger.LogInformation("Configuring services");
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            _logger.LogDebug("Configuring JWT");
+            services.AddJwt(Configuration);
+
+            services.AddMvcCore()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonFormatters();
+
+            _logger.LogDebug("Configuring misc services");
 
             _logger.LogDebug("Configuring MongoDb.");
             services.AddMongoDb(Configuration, _logger);
@@ -43,17 +56,30 @@ namespace Efforteo.Services.Activities
             _logger.LogDebug("Configuring RabbitMQ.");
             services.AddRabbitMq(Configuration, _logger);
 
-            _logger.LogDebug("Configuring JWT");
-            services.AddJwt(Configuration);
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
 
-            _logger.LogDebug("Configuring other services");
-            services.AddScoped<IDatabaseSeeder, CustomMongoSeeder>();
-            services.AddScoped<ICommandHandler<CreateActivity>, CreateActivityHandler>();
-            services.AddScoped<IActivityRepository, ActivityRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<IActivityService, ActivityService>();
+            builder.RegisterInstance(Configuration.GetSettings<JwtSettings>())
+                .SingleInstance();
 
-            _logger.LogInformation("Configured all services");
+            builder.RegisterType<CustomMongoSeeder>()
+                .As<IDatabaseSeeder>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<ActivityRepository>()
+                .As<IActivityRepository>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<CategoryRepository>()
+                .As<ICategoryRepository>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<ActivityService>()
+                .As<IActivityService>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterModule<JwtModule>();
+
+            ApplicationContainer = builder.Build();
+
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

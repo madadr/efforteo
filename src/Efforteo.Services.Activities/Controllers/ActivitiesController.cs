@@ -27,11 +27,13 @@ namespace Efforteo.Services.Activities.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Post(CreateActivity command)
         {
             _logger.LogError($"CreateActivity = {JsonConvert.SerializeObject(command)}");
 
             command.Id = Guid.NewGuid();
+            command.UserId = UserId;
             command.CreatedAt = DateTime.UtcNow;
             await _busClient.PublishAsync(command);
 

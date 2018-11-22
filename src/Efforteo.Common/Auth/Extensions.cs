@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Efforteo.Common.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,12 +13,17 @@ namespace Efforteo.Common.Auth
     {
         public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
         {
-            var options = new JwtOptions();
-            var section = configuration.GetSection("jwt");
-            section.Bind(options);
-            services.Configure<JwtOptions>(section);
-            services.AddSingleton<IJwtHandler, JwtHandler>();
-            services.AddAuthentication()
+//            var options = new JwtSettings();
+//            var section = configuration.GetSection("jwt");
+//            section.Bind(options);
+            var sets = configuration.GetSettings<JwtSettings>();
+//            services.Configure<JwtSettings>(section);
+//            services.AddSingleton<IJwtHandler, JwtHandler>();
+            services.AddAuthentication(o =>
+                {
+                    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(cfg =>
                 {
                     cfg.RequireHttpsMetadata = false;
@@ -25,8 +31,8 @@ namespace Efforteo.Common.Auth
                     cfg.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateAudience = false,
-                        ValidIssuer = options.Issuer,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey))
+                        ValidIssuer = sets.Issuer,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sets.SecretKey))
                     };
                 });
         }

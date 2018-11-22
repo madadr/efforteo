@@ -12,20 +12,20 @@ namespace Efforteo.Common.Auth
     public class JwtHandler : IJwtHandler
     {
         private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
-        private readonly JwtOptions _options;
+        private readonly JwtSettings _settings;
         private readonly JwtHeader _jwtHeader;
         private readonly TokenValidationParameters _tokenValidationParameters;
 
-        public JwtHandler(IOptions<JwtOptions> options)
+        public JwtHandler(JwtSettings settings)
         {
-            _options = options.Value;
-            SecurityKey issuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey));
+            _settings = settings;
+            SecurityKey issuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey));
             var signingCredentials = new SigningCredentials(issuerSigningKey, SecurityAlgorithms.HmacSha256);
             _jwtHeader = new JwtHeader(signingCredentials);
             _tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = false,
-                ValidIssuer = _options.Issuer,
+                ValidIssuer = _settings.Issuer,
                 IssuerSigningKey = issuerSigningKey
             };
         }
@@ -33,14 +33,14 @@ namespace Efforteo.Common.Auth
         public JsonWebToken Create(Guid userId)
         {
             var nowUtc = DateTime.UtcNow;
-            var expires = nowUtc.AddMinutes(_options.ExpiryMinutes);
+            var expires = nowUtc.AddMinutes(_settings.ExpiryMinutes);
             var centuryBegin = new DateTime(1970, 1, 1).ToUniversalTime();
             var now = (long)(new TimeSpan(nowUtc.Ticks - centuryBegin.Ticks).TotalSeconds);
             var exp = (long)(new TimeSpan(expires.Ticks - centuryBegin.Ticks).TotalSeconds);
             var payload = new JwtPayload
             {
                 {"sub", userId},
-                {"iss", _options.Issuer},
+                {"iss", _settings.Issuer},
                 {"iat", now},
                 {"exp", exp},
                 {"unique_name", userId}
