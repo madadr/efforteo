@@ -43,7 +43,6 @@ namespace Efforteo.Services.Activities
             _logger.LogDebug("Configuring RabbitMQ.");
             services.AddRabbitMq(Configuration, _logger);
 
-
             _logger.LogDebug("Configuring JWT");
             services.AddJwt(Configuration);
 

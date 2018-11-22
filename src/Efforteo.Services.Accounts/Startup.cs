@@ -51,6 +51,21 @@ namespace Efforteo.Services.Accounts
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonFormatters();
 
+            var builder = new ContainerBuilder();
+
+            _logger.LogDebug("Configuring misc services");
+            builder.RegisterInstance(new MapperConfiguration(cfg => { cfg.CreateMap<User, UserDto>(); }).CreateMapper())
+                .SingleInstance();
+
+            builder.RegisterModule<DispatcherModule>();
+
+            builder.RegisterType<UserRepository>()
+                .As<IUserRepository>()
+                .SingleInstance();
+            builder.RegisterType<UserService>()
+                .As<IUserService>()
+                .SingleInstance();
+
             _logger.LogDebug("Configuring JWT");
             services.AddJwt(Configuration);
             services.AddScoped<IEncrypter, Encrypter>();
@@ -61,21 +76,7 @@ namespace Efforteo.Services.Accounts
             _logger.LogDebug("Configuring RabbitMQ");
             services.AddRabbitMq(Configuration, _logger);
 
-            var builder = new ContainerBuilder();
             builder.Populate(services);
-
-            builder.RegisterInstance(new MapperConfiguration(cfg => { cfg.CreateMap<User, UserDto>(); }).CreateMapper())
-                .SingleInstance();
-
-            builder.RegisterModule<DispatcherModule>();
-
-            builder.RegisterType<UserRepository>()
-                .As<IUserRepository>()
-                .SingleInstance();
-
-            builder.RegisterType<UserService>()
-                .As<IUserService>()
-                .SingleInstance();
 
             ApplicationContainer = builder.Build();
 

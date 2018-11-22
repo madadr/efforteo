@@ -2,10 +2,10 @@
 
 namespace Efforteo.Common.Events
 {
-    public class ActivityCreated : IEvent
+    public class ActivityCreated : IAuthenticatedEvent
     {
-        public Guid UserId { get; }
         public Guid Id { get; }
+        public Guid UserId { get; }
         public string Category { get; }
         public string Name { get; }
         public string Description { get; }

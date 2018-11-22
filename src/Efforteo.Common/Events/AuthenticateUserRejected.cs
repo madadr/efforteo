@@ -3,7 +3,6 @@
     public class AuthenticateUserRejected : IRejectedEvent
     {
         public string Email { get; }
-        public string Name { get; }
         public string Code { get; }
         public string Reason { get; }
 
@@ -11,10 +10,9 @@
         {
         }
 
-        public AuthenticateUserRejected(string email, string name, string code, string reason)
+        public AuthenticateUserRejected(string email, string code, string reason)
         {
             Email = email;
-            Name = name;
             Code = code;
             Reason = reason;
         }

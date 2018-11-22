@@ -12,10 +12,13 @@ namespace Efforteo.Services.Activities.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ActivitiesController : ControllerBase
+    public class ActivitiesController : Controller
     {
         private readonly IBusClient _busClient;
         private ILogger _logger;
+
+        private Guid UserId =>
+            string.IsNullOrWhiteSpace(User?.Identity?.Name) ? Guid.Empty : Guid.Parse(User.Identity.Name);
 
         public ActivitiesController(IBusClient busClient, ILogger<ActivitiesController> logger)
         {
@@ -39,6 +42,8 @@ namespace Efforteo.Services.Activities.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Get()
         {
+            _logger.LogError($"USER ID = {UserId.ToString()}");
+
             await Task.CompletedTask;
             return Content("Authorized access");
         }

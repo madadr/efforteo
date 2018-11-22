@@ -3,7 +3,7 @@ using Efforteo.Common.Events;
 
 namespace Efforteo.Common.Commands
 {
-    public class CreateActivity : IAuthenticatedEvent, IEvent
+    public class CreateActivity : IAuthenticatedCommand
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }

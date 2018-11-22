@@ -52,6 +52,23 @@ namespace Efforteo.Services.Accounts.Services
             return _jwtHandler.Create(user.Id);
         }
 
+        public async Task ChangePassword(Guid userId, string oldPassword, string newPassword)
+        {
+            var user = await _repository.GetAsync(userId);
+            if (user == null)
+            {
+                throw new EfforteoException("invalid_credentials", $"Invalid credentials.");
+            }
+            if (!user.ValidatePassword(oldPassword, _encrypter))
+            {
+                throw new EfforteoException("invalid_credentials", $"Invalid credentials.");
+            }
+
+            user.SetPassword(newPassword, _encrypter);
+
+            await _repository.UpdateAsync(user);
+        }
+
         public async Task<UserDto> GetAsync(Guid id)
         {
             var user = await _repository.GetAsync(id);

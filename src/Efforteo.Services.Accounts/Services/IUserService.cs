@@ -14,5 +14,6 @@ namespace Efforteo.Services.Accounts.Services
         Task<UserDto> GetAsync(string email);
         Task<UserDto> GetAsync(Guid id);
         Task<JsonWebToken> LoginAsync(string email, string password);
+        Task ChangePassword(Guid commandUserId, string commandOldPassword, string commandNewPassword);
     }
 }

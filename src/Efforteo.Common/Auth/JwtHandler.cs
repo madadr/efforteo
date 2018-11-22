@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -10,22 +13,20 @@ namespace Efforteo.Common.Auth
     {
         private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
         private readonly JwtOptions _options;
-        private readonly SecurityKey _issuerSigningKey;
-        private readonly SigningCredentials _signingCredentials;
         private readonly JwtHeader _jwtHeader;
         private readonly TokenValidationParameters _tokenValidationParameters;
 
         public JwtHandler(IOptions<JwtOptions> options)
         {
             _options = options.Value;
-            _issuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey));
-            _signingCredentials = new SigningCredentials(_issuerSigningKey, SecurityAlgorithms.HmacSha256);
-            _jwtHeader = new JwtHeader(_signingCredentials);
+            SecurityKey issuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey));
+            var signingCredentials = new SigningCredentials(issuerSigningKey, SecurityAlgorithms.HmacSha256);
+            _jwtHeader = new JwtHeader(signingCredentials);
             _tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = false,
                 ValidIssuer = _options.Issuer,
-                IssuerSigningKey = _issuerSigningKey
+                IssuerSigningKey = issuerSigningKey
             };
         }
 
@@ -34,8 +35,8 @@ namespace Efforteo.Common.Auth
             var nowUtc = DateTime.UtcNow;
             var expires = nowUtc.AddMinutes(_options.ExpiryMinutes);
             var centuryBegin = new DateTime(1970, 1, 1).ToUniversalTime();
-            var exp = (long)(new TimeSpan(expires.Ticks - centuryBegin.Ticks).TotalSeconds);
             var now = (long)(new TimeSpan(nowUtc.Ticks - centuryBegin.Ticks).TotalSeconds);
+            var exp = (long)(new TimeSpan(expires.Ticks - centuryBegin.Ticks).TotalSeconds);
             var payload = new JwtPayload
             {
                 {"sub", userId},
@@ -50,8 +51,15 @@ namespace Efforteo.Common.Auth
             return new JsonWebToken
             {
                 Token = token,
-                Expires = exp
-            };
+                Expires = exp//,
+//                Claims = new List<Claim>
+//                {
+//                    new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
+//                    new Claim(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
+//                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+//                    new Claim(JwtRegisteredClaimNames.Iat, now.ToString()),
+//                }.ToDictionary(c => c.Type, c => c.Value)
+        };
         }
     }
 }

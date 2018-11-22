@@ -5,8 +5,8 @@ namespace Efforteo.Common.Events
     public class CreateActivityRejected : IRejectedEvent
     {
         public Guid Id { get; }
-        public string Reason { get; }
         public string Code { get; }
+        public string Reason { get; }
 
         protected CreateActivityRejected()
         {

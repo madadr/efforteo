@@ -2,7 +2,7 @@
 
 namespace Efforteo.Common.Commands
 {
-    public interface IAuthenticatedEvent : ICommand
+    public interface IAuthenticatedCommand : ICommand
     {
         Guid UserId { get; set; }
     }
