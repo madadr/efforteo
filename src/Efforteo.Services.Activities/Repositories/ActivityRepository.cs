@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Efforteo.Services.Activities.Domain.Models;
 using Efforteo.Services.Activities.Domain.Repositories;
@@ -18,18 +19,24 @@ namespace Efforteo.Services.Activities.Repositories
         public ActivityRepository(IMongoDatabase database)
             => _database = database;
 
-        public async Task<IEnumerable<Activity>> BrowseAsync()
+        public async Task AddAsync(Activity activity)
             => await Collection
-                .AsQueryable()
-                .ToListAsync();
+                .InsertOneAsync(activity);
 
         public async Task<Activity> GetAsync(Guid id)
             => await Collection
                 .AsQueryable()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task AddAsync(Activity activity)
+        public async Task<IEnumerable<Activity>> GetUserActivitiesAsync(Guid userId)
             => await Collection
-                .InsertOneAsync(activity);
+                .Find(a => a.UserId == userId)
+                .ToListAsync();
+
+        public async Task UpdateAsync(Activity activity)
+            => await Collection.ReplaceOneAsync(x => x.Id == activity.Id, activity);
+
+        public async Task RemoveAsync(Guid id)
+            => await Collection.FindOneAndDeleteAsync(x => x.Id == id);
     }
 }

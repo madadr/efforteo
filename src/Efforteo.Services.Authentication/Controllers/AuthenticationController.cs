@@ -34,16 +34,17 @@ namespace Efforteo.Services.Authentication.Controllers
         }
 
         [HttpGet("id")]
-        [Authorize/*(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)*/]
+        [Authorize]
         public IActionResult GetId()
         {
+            _logger.LogInformation($"AuthenticationController::GetId");
             return Content($"UserId: {UserId}");
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(CreateUser command)
         {
-            _logger.LogTrace($"AuthenticationController::Register: command={JsonConvert.SerializeObject(command)}");
+            _logger.LogInformation($"AuthenticationController::Register: command={JsonConvert.SerializeObject(command)}");
 
             await _commandDispatcher.DispatchAsync(command);
 
@@ -53,7 +54,7 @@ namespace Efforteo.Services.Authentication.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(AuthenticateUser command)
         {
-            _logger.LogTrace($"AuthenticationController::Login: command={JsonConvert.SerializeObject(command)}");
+            _logger.LogInformation($"AuthenticationController::Login: command={JsonConvert.SerializeObject(command)}");
 
             try
             {
@@ -79,7 +80,7 @@ namespace Efforteo.Services.Authentication.Controllers
         [Authorize]
         public async Task<IActionResult> ChangePassword(ChangePassword command)
         {
-            _logger.LogTrace($"AuthenticationController::ChangePassword: command={JsonConvert.SerializeObject(command)}, UserId={UserId}");
+            _logger.LogInformation($"AuthenticationController::ChangePassword: command={JsonConvert.SerializeObject(command)}, UserId={UserId}");
 
             // Securing command by swapping request UserId with JWT UserId
             command.UserId = UserId;

@@ -1,5 +1,8 @@
 ﻿using Autofac;
+using AutoMapper;
 using Efforteo.Common.Mongo;
+using Efforteo.Services.Activities.Domain.DTO;
+using Efforteo.Services.Activities.Domain.Models;
 using Efforteo.Services.Activities.Domain.Repositories;
 using Efforteo.Services.Activities.Repositories;
 using Efforteo.Services.Activities.Services;
@@ -10,7 +13,10 @@ namespace Efforteo.Services.Activities.IoC.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-//            builder.RegisterInstance(new MapperConfiguration(cfg => { cfg.CreateMap<User, UserDto>(); }).CreateMapper())
+            builder.RegisterInstance(new MapperConfiguration(cfg => { cfg.CreateMap<Activity, ActivityDto>(); }).CreateMapper())
+                .SingleInstance();
+
+//            builder.RegisterInstance(new MapperConfiguration(cfg => { cfg.CreateMap<Activity, ActivityDto>(); }).CreateMapper())
 //                .SingleInstance();
 
             builder.RegisterType<CustomMongoSeeder>()

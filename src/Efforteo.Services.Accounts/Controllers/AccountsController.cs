@@ -37,7 +37,7 @@ namespace Efforteo.Services.Accounts.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            _logger.LogTrace("AccountsController::GetAll");
+            _logger.LogInformation("AccountsController::GetAll");
 
             var accounts = await _accountService.GetAllAsync();
             return new JsonResult(accounts.Select(account => new
@@ -52,7 +52,7 @@ namespace Efforteo.Services.Accounts.Controllers
         [HttpGet("{id}", Name="getById")]
         public async Task<IActionResult> Get(Guid id)
         {
-            _logger.LogTrace($"AccountsController::GetAccount id={id}");
+            _logger.LogInformation($"AccountsController::GetAccount id={id}");
 
             var account = await _accountService.GetAsync(id);
             return new JsonResult(account);
@@ -61,7 +61,7 @@ namespace Efforteo.Services.Accounts.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(UpdateAccount command)
         {
-            _logger.LogTrace($"AccountsController::Update command={JsonConvert.SerializeObject(command)}, UserId={UserId}");
+            _logger.LogInformation($"AccountsController::Update command={JsonConvert.SerializeObject(command)}, UserId={UserId}");
 
             command.UserId = UserId;
 
