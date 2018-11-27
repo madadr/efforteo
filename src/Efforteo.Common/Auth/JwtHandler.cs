@@ -51,14 +51,7 @@ namespace Efforteo.Common.Auth
             return new JsonWebToken
             {
                 Token = token,
-                Expires = exp//,
-//                Claims = new List<Claim>
-//                {
-//                    new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-//                    new Claim(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
-//                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-//                    new Claim(JwtRegisteredClaimNames.Iat, now.ToString()),
-//                }.ToDictionary(c => c.Type, c => c.Value)
+                Expires = exp
         };
         }
     }

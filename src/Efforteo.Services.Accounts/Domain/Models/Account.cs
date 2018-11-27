@@ -85,7 +85,7 @@ namespace Efforteo.Services.Accounts.Domain.Models
 
         private void SetBirthday(DateTime? birthday)
         {
-            if (birthday.HasValue && birthday.Value.CompareTo(DateTime.Now) >= 0)
+            if (birthday.HasValue && birthday.Value.CompareTo(DateTime.UtcNow) >= 0)
             {
                 throw new EfforteoException("invalid_birthday", "Birthday date cannot be earlier than today");
             }
@@ -114,7 +114,7 @@ namespace Efforteo.Services.Accounts.Domain.Models
 
         public void UpdateLastLoggedIn()
         {
-            LastLoggedIn = DateTime.Now;
+            LastLoggedIn = DateTime.UtcNow;
         }
     }
 }

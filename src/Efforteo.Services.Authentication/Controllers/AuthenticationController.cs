@@ -4,6 +4,7 @@ using Efforteo.Common.Commands;
 using Efforteo.Common.Events;
 using Efforteo.Common.Exceptions;
 using Efforteo.Services.Authentication.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -33,10 +34,10 @@ namespace Efforteo.Services.Authentication.Controllers
         }
 
         [HttpGet("id")]
-        [Authorize]
+        [Authorize/*(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)*/]
         public IActionResult GetId()
         {
-            return Content($"UserId: ${UserId}");
+            return Content($"UserId: {UserId}");
         }
 
         [HttpPost("register")]
@@ -44,7 +45,6 @@ namespace Efforteo.Services.Authentication.Controllers
         {
             _logger.LogTrace($"AuthenticationController::Register: command={JsonConvert.SerializeObject(command)}");
 
-            command.Id = Guid.NewGuid();
             await _commandDispatcher.DispatchAsync(command);
 
             return NoContent();
@@ -79,7 +79,7 @@ namespace Efforteo.Services.Authentication.Controllers
         [Authorize]
         public async Task<IActionResult> ChangePassword(ChangePassword command)
         {
-            _logger.LogTrace($"AuthenticationController::ChangePassword: command={JsonConvert.SerializeObject(command)}");
+            _logger.LogTrace($"AuthenticationController::ChangePassword: command={JsonConvert.SerializeObject(command)}, UserId={UserId}");
 
             // Securing command by swapping request UserId with JWT UserId
             command.UserId = UserId;
