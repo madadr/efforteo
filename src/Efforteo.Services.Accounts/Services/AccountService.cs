@@ -6,6 +6,7 @@ using Efforteo.Common.Exceptions;
 using Efforteo.Services.Accounts.Domain.DTO;
 using Efforteo.Services.Accounts.Domain.Models;
 using Efforteo.Services.Accounts.Domain.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace Efforteo.Services.Accounts.Services
 {
@@ -67,7 +68,7 @@ namespace Efforteo.Services.Accounts.Services
             var account = await _repository.GetAsync(accountDto.Id);
             if (account == null)
             {
-                throw new EfforteoException("account_not_exists", $"Account doesn't exist.");
+                throw new EfforteoException("account_not_exists", $"Account doesn't exist {accountDto.Id}.");
             }
             
             account.SetAccountData(accountDto.Email, accountDto.Name, accountDto.Location, accountDto.Weight, accountDto.Birthday);

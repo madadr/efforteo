@@ -26,13 +26,14 @@ namespace Efforteo.Services.Authentication.Handlers
 
         public async Task HandleAsync(CreateUser command)
         {
-            _logger.LogInformation($"Creating user... ID={command.Id}, Email='{command.Email}', name='{command.Name}'.");
+            _logger.LogInformation($"Creating user... Email='{command.Email}', name='{command.Name}'.");
 
             try
             {
                 await _userService.RegisterAsync(command.Email, command.Password, command.Name);
-                await _busClient.PublishAsync(new UserCreated(command.Id, command.Email, command.Name));
-                _logger.LogInformation($"User created. ID={command.Id}, Email='{command.Email}', name='{command.Name}'.");
+                var user = await _userService.GetAsync(command.Email);
+                await _busClient.PublishAsync(new UserCreated(user.Id, command.Email, command.Name));
+                _logger.LogInformation($"User created. ID={user.Id}, Email='{command.Email}', name='{command.Name}'.");
             }
             catch (EfforteoException ex)
             {
