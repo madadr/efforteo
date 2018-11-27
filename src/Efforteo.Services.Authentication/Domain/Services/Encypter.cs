@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace Efforteo.Services.Accounts.Domain.Services
+namespace Efforteo.Services.Authentication.Domain.Services
 {
     public class Encrypter : IEncrypter
     {

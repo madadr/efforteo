@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Efforteo.Common.Auth;
-using Efforteo.Services.Accounts.Domain.DTO;
+using Efforteo.Services.Authentication.Domain.DTO;
 
-namespace Efforteo.Services.Accounts.Services
+namespace Efforteo.Services.Authentication.Services
 {
     public interface IUserService
     {
         Task RegisterAsync(string email, string password, string name);
-        // TODO: think about updating user - different methods for different fields? If Use UserDto as parameter, then what about password?
-//        Task UpdateAsync(UserDto user);
-
         Task<UserDto> GetAsync(string email);
         Task<UserDto> GetAsync(Guid id);
         Task<JsonWebToken> LoginAsync(string email, string password);

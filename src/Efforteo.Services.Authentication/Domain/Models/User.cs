@@ -1,14 +1,13 @@
 ﻿using System;
 using Efforteo.Common.Exceptions;
-using Efforteo.Services.Accounts.Domain.Services;
+using Efforteo.Services.Authentication.Domain.Services;
 
-namespace Efforteo.Services.Accounts.Domain.Models
+namespace Efforteo.Services.Authentication.Domain.Models
 {
     public class User
     {
         public Guid Id { get; protected set; }
         public string Email { get; protected set; }
-        public string Name { get; protected set; }
         public string Password { get; protected set; }
         public string Salt { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
@@ -26,7 +25,6 @@ namespace Efforteo.Services.Accounts.Domain.Models
 
             Id = Guid.NewGuid();
             Email = email.ToLowerInvariant();
-            Name = name;
             CreatedAt = DateTime.UtcNow;
         }
 

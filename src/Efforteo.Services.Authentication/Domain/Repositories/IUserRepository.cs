@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Efforteo.Services.Accounts.Domain.Models;
+using Efforteo.Services.Authentication.Domain.Models;
 
-namespace Efforteo.Services.Accounts.Domain.Repositories
+namespace Efforteo.Services.Authentication.Domain.Repositories
 {
     public interface IUserRepository
     {

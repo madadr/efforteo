@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Efforteo.Common.Auth
+﻿namespace Efforteo.Common.Auth
 {
     // TODO: Add role!
     public class JsonWebToken

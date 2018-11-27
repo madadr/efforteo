@@ -10,30 +10,35 @@ using MongoDB.Driver.Linq;
 
 namespace Efforteo.Services.Accounts.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class AccountRepository : IAccountRepository
     {
         private readonly IMongoDatabase _database;
-        private IMongoCollection<User> Collection
-            => _database.GetCollection<User>("users");
+        private IMongoCollection<Account> Collection
+            => _database.GetCollection<Account>("accounts");
 
-        public UserRepository(IMongoDatabase database)
+        public AccountRepository(IMongoDatabase database)
             => _database = database;
 
-        public async Task AddAsync(User user)
-            => await Collection.InsertOneAsync(user);
+        public async Task AddAsync(Account account)
+            => await Collection.InsertOneAsync(account);
 
-        public async Task<User> GetAsync(Guid id)
+        public async Task<Account> GetAsync(Guid id)
             => await Collection
                 .AsQueryable()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<User> GetAsync(string email)
+        public async Task<Account> GetAsync(string email)
             => await Collection
                 .AsQueryable()
                 .FirstOrDefaultAsync(x => x.Email == email);
 
-        public async Task UpdateAsync(User user)
-            => await Collection.ReplaceOneAsync(x => x.Id == user.Id, user);
+        public async Task<IEnumerable<Account>> GetAllAsync()
+            => await Collection
+                .AsQueryable()
+                .ToListAsync();
+
+        public async Task UpdateAsync(Account account)
+            => await Collection.ReplaceOneAsync(x => x.Id == account.Id, account);
 
         public async Task RemoveAsync(Guid id)
             => await Collection.FindOneAndDeleteAsync(x => x.Id == id);

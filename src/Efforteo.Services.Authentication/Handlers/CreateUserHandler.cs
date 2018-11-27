@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Efforteo.Common.Commands;
 using Efforteo.Common.Events;
 using Efforteo.Common.Exceptions;
-using Efforteo.Services.Accounts.Services;
+using Efforteo.Services.Authentication.Services;
 using Microsoft.Extensions.Logging;
 using RawRabbit;
 
-namespace Efforteo.Services.Accounts.Handlers
+namespace Efforteo.Services.Authentication.Handlers
 {
     public class CreateUserHandler : ICommandHandler<CreateUser>
     {
@@ -26,13 +26,13 @@ namespace Efforteo.Services.Accounts.Handlers
 
         public async Task HandleAsync(CreateUser command)
         {
-            _logger.LogInformation($"Creating user... Email='{command.Email}', name='{command.Name}'.");
+            _logger.LogInformation($"Creating user... ID={command.Id}, Email='{command.Email}', name='{command.Name}'.");
 
             try
             {
                 await _userService.RegisterAsync(command.Email, command.Password, command.Name);
-                await _busClient.PublishAsync(new UserCreated(command.Email, command.Name));
-                _logger.LogInformation($"User created. Email='{command.Email}', name='{command.Name}'.");
+                await _busClient.PublishAsync(new UserCreated(command.Id, command.Email, command.Name));
+                _logger.LogInformation($"User created. ID={command.Id}, Email='{command.Email}', name='{command.Name}'.");
             }
             catch (EfforteoException ex)
             {

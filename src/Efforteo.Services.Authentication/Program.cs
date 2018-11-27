@@ -1,6 +1,6 @@
 ﻿using Efforteo.Common.Services;
 
-namespace Efforteo.Services.Activities
+namespace Efforteo.Services.Authentication
 {
     public class Program
     {

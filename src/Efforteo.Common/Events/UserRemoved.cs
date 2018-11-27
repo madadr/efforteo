@@ -2,21 +2,19 @@
 
 namespace Efforteo.Common.Events
 {
-    public class UserCreated : IEvent
+    public class UserRemoved : IEvent
     {
         public Guid Id { get; }
         public string Email { get; }
-        public string Name { get; }
 
-        protected UserCreated()
+        protected UserRemoved()
         {
         }
 
-        public UserCreated(Guid id, string email, string name)
+        public UserRemoved(Guid id, string email)
         {
             Id = id;
             Email = email;
-            Name = name;
         }
     }
 }

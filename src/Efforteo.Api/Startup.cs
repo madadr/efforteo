@@ -1,5 +1,4 @@
-﻿using System;
-using Efforteo.Api.Handlers;
+﻿using Efforteo.Api.Handlers;
 using Efforteo.Common.Auth;
 using Efforteo.Common.Events;
 using Efforteo.Common.Exceptions;
@@ -10,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Polly;
 
 namespace Efforteo.Api
 {

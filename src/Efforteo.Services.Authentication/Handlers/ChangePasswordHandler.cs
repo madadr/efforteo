@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Efforteo.Common.Commands;
 using Efforteo.Common.Events;
 using Efforteo.Common.Exceptions;
-using Efforteo.Services.Accounts.Services;
+using Efforteo.Services.Authentication.Services;
 using Microsoft.Extensions.Logging;
 using RawRabbit;
 
-namespace Efforteo.Services.Accounts.Handlers
+namespace Efforteo.Services.Authentication.Handlers
 {
     public class ChangePasswordHandler : ICommandHandler<ChangePassword>
     {

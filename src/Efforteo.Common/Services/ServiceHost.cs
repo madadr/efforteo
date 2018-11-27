@@ -1,11 +1,9 @@
-﻿using Efforteo.Common.Commands;
-using Efforteo.Common.Events;
+﻿using Efforteo.Common.Events;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using RawRabbit;
 using System;
-using Autofac.Extensions.DependencyInjection;
 using Efforteo.Common.RabbitMq;
 using Microsoft.Extensions.Logging;
 
@@ -32,7 +30,6 @@ namespace Efforteo.Common.Services
 
             var webHostBuilder = WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(config)
-//                .ConfigureServices(services => services.AddAutofac())
                 .UseDefaultServiceProvider(options => options.ValidateScopes = false)
                 .ConfigureLogging(logging =>
                 {

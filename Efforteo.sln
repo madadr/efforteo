@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efforteo.Common", "src\Effo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efforteo.Services.Activities", "src\Efforteo.Services.Activities\Efforteo.Services.Activities.csproj", "{ACE94A6A-93BF-49FA-80FF-7A40F51DA46A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efforteo.Services.Accounts", "src\Efforteo.Services.Accounts\Efforteo.Services.Accounts.csproj", "{7193A5AC-C642-47C6-8728-D37988960351}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efforteo.Services.Authentication", "src\Efforteo.Services.Authentication\Efforteo.Services.Authentication.csproj", "{7193A5AC-C642-47C6-8728-D37988960351}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efforteo.Services.Accounts", "src\Efforteo.Services.Accounts\Efforteo.Services.Accounts.csproj", "{32139110-50B9-429E-B4C2-2EF6096D9032}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,18 @@ Global
 		{7193A5AC-C642-47C6-8728-D37988960351}.Release|x64.Build.0 = Release|Any CPU
 		{7193A5AC-C642-47C6-8728-D37988960351}.Release|x86.ActiveCfg = Release|Any CPU
 		{7193A5AC-C642-47C6-8728-D37988960351}.Release|x86.Build.0 = Release|Any CPU
+		{32139110-50B9-429E-B4C2-2EF6096D9032}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32139110-50B9-429E-B4C2-2EF6096D9032}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32139110-50B9-429E-B4C2-2EF6096D9032}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{32139110-50B9-429E-B4C2-2EF6096D9032}.Debug|x64.Build.0 = Debug|Any CPU
+		{32139110-50B9-429E-B4C2-2EF6096D9032}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{32139110-50B9-429E-B4C2-2EF6096D9032}.Debug|x86.Build.0 = Debug|Any CPU
+		{32139110-50B9-429E-B4C2-2EF6096D9032}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32139110-50B9-429E-B4C2-2EF6096D9032}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32139110-50B9-429E-B4C2-2EF6096D9032}.Release|x64.ActiveCfg = Release|Any CPU
+		{32139110-50B9-429E-B4C2-2EF6096D9032}.Release|x64.Build.0 = Release|Any CPU
+		{32139110-50B9-429E-B4C2-2EF6096D9032}.Release|x86.ActiveCfg = Release|Any CPU
+		{32139110-50B9-429E-B4C2-2EF6096D9032}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +94,7 @@ Global
 		{D4D075D3-190A-4BE8-87D1-CE1DFD94590A} = {8FAD1B61-A0E8-43DC-AAA2-731F09869228}
 		{ACE94A6A-93BF-49FA-80FF-7A40F51DA46A} = {8FAD1B61-A0E8-43DC-AAA2-731F09869228}
 		{7193A5AC-C642-47C6-8728-D37988960351} = {8FAD1B61-A0E8-43DC-AAA2-731F09869228}
+		{32139110-50B9-429E-B4C2-2EF6096D9032} = {8FAD1B61-A0E8-43DC-AAA2-731F09869228}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE07C3B8-F443-409E-99C7-5FB515F3416B}

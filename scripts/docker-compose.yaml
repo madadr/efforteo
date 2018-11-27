@@ -1,12 +1,12 @@
 version: "3"
 
 services:
-  #start-dep:
-  #  image: dadarek/wait-for-dependencies
-  #  depends_on:
-  #    - mongo
-  #    - rabbitmq
-  #  command: rabbitmq:5672
+#  start-dep:
+#    image: dadarek/wait-for-dependencies
+#    depends_on:
+#      - mongo
+#      - rabbitmq
+#    command: rabbitmq:5672
  
   mongo:
     image: mongo:3.6
@@ -21,19 +21,19 @@ services:
       - '5672:5672'
       - '15672:15672'
 
-  api:
-    image: efforteo.api
-    build: ../src/Efforteo.Api
-    #restart: on-failure
-    depends_on:
-      - mongo
-      - rabbitmq
-    links:
-      - rabbitmq
-      - mongo
-    ports:
-      - '5000:5000'
-      - '5001:5001'
+#  api:
+#    image: efforteo.api
+#    build: ../src/Efforteo.Api
+#    #restart: on-failure
+#    depends_on:
+#      - mongo
+#      - rabbitmq
+#    links:
+#      - rabbitmq
+#      - mongo
+#    ports:
+#      - '5000:5000'
+#      - '5001:5001'
   
   activities-service:
     image: efforteo.services.activities
@@ -49,6 +49,20 @@ services:
       - '5010:5000'
       - '5011:5001'
 
+  authentication-service:
+    image: efforteo.services.authentication
+    build: ../src/Efforteo.Services.Authentication
+    #restart: on-failure
+    depends_on:
+      - mongo
+      - rabbitmq
+    links:
+      - rabbitmq
+      - mongo
+    ports:
+      - '5020:5000'
+      - '5021:5001'
+
   accounts-service:
     image: efforteo.services.accounts
     build: ../src/Efforteo.Services.Accounts
@@ -60,5 +74,5 @@ services:
       - rabbitmq
       - mongo
     ports:
-      - '5020:5000'
-      - '5021:5001'
+      - '5030:5000'
+      - '5031:5001'

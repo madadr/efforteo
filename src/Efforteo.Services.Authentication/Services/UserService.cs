@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Efforteo.Common.Auth;
 using Efforteo.Common.Exceptions;
-using Efforteo.Services.Accounts.Domain.DTO;
-using Efforteo.Services.Accounts.Domain.Models;
-using Efforteo.Services.Accounts.Domain.Repositories;
-using Efforteo.Services.Accounts.Domain.Services;
+using Efforteo.Services.Authentication.Domain.DTO;
+using Efforteo.Services.Authentication.Domain.Models;
+using Efforteo.Services.Authentication.Domain.Repositories;
+using Efforteo.Services.Authentication.Domain.Services;
 
-namespace Efforteo.Services.Accounts.Services
+namespace Efforteo.Services.Authentication.Services
 {
     public class UserService : IUserService
     {
@@ -35,6 +35,28 @@ namespace Efforteo.Services.Accounts.Services
             user = new User(email, name);
             user.SetPassword(password, _encrypter);
             await _repository.AddAsync(user);
+        }
+
+        public async Task<UserDto> GetAsync(Guid id)
+        {
+            var user = await _repository.GetAsync(id);
+            if (user == null)
+            {
+                throw new EfforteoException("user_not_exists", $"User doesn't exist.");
+            }
+
+            return _mapper.Map<UserDto>(user);
+        }
+
+        public async Task<UserDto> GetAsync(string email)
+        {
+            var user = await _repository.GetAsync(email);
+            if (user == null)
+            {
+                throw new EfforteoException("user_not_exists", $"User doesn't exist.");
+            }
+
+            return _mapper.Map<UserDto>(user);
         }
 
         public async Task<JsonWebToken> LoginAsync(string email, string password)
@@ -67,28 +89,6 @@ namespace Efforteo.Services.Accounts.Services
             user.SetPassword(newPassword, _encrypter);
 
             await _repository.UpdateAsync(user);
-        }
-
-        public async Task<UserDto> GetAsync(Guid id)
-        {
-            var user = await _repository.GetAsync(id);
-            if (user == null)
-            {
-                throw new EfforteoException("user_not_exists", $"User doesn't exist.");
-            }
-
-            return _mapper.Map<UserDto>(user);
-        }
-
-        public async Task<UserDto> GetAsync(string email)
-        {
-            var user = await _repository.GetAsync(email);
-            if (user == null)
-            {
-                throw new EfforteoException("user_not_exists", $"User doesn't exist.");
-            }
-
-            return _mapper.Map<UserDto>(user);
         }
     }
 }

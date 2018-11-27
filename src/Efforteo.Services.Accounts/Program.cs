@@ -1,7 +1,5 @@
-﻿using Efforteo.Common.Commands;
+﻿using Efforteo.Common.Events;
 using Efforteo.Common.Services;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
 
 namespace Efforteo.Services.Accounts
 {
@@ -11,6 +9,9 @@ namespace Efforteo.Services.Accounts
         {
             ServiceHost.Create<Startup>(args)
                 .UseRabbitMq()
+                .Subscribe<UserCreated>()
+                .Subscribe<UserAuthenticated>()
+                .Subscribe<UserRemoved>()
                 .Build()
                 .Run();
         }

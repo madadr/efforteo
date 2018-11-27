@@ -1,8 +1,5 @@
-﻿using System.Threading.Tasks;
-using Efforteo.Common.Commands;
-//using Efforteo.Services.Accounts.Services;
+﻿//using Efforteo.Services.Authentication.Services;
 using Microsoft.AspNetCore.Mvc;
-using RawRabbit;
 
 namespace Efforteo.Api.Controllers
 {

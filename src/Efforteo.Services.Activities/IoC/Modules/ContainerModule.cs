@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using Efforteo.Common.IoC.Modules;
+﻿using Autofac;
 using Efforteo.Common.Mongo;
 using Efforteo.Services.Activities.Domain.Repositories;
 using Efforteo.Services.Activities.Repositories;

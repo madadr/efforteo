@@ -5,29 +5,21 @@ using Efforteo.Common.Auth;
 using Efforteo.Common.Exceptions;
 using Efforteo.Common.Mongo;
 using Efforteo.Common.RabbitMq;
-using Efforteo.Services.Activities.IoC.Modules;
+using Efforteo.Services.Authentication.IoC.Modules;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
-namespace Efforteo.Services.Activities
+namespace Efforteo.Services.Authentication
 {
     public class Startup
     {
         private readonly ILogger _logger;
+        public IConfiguration Configuration { get; }
         public IContainer ApplicationContainer { get; private set; }
 
-        public Startup(IConfiguration configuration, ILogger<Startup> logger)
-        {
-            Configuration = configuration;
-            _logger = logger;
-        }
-
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             _logger.LogInformation("Configuring services");
@@ -36,7 +28,7 @@ namespace Efforteo.Services.Activities
                 .AddJsonFormatters()
                 .AddDataAnnotations()
                 .AddAuthorization();
-
+    
             services.AddJwt(Configuration);
             services.AddMongoDb(Configuration, _logger);
             services.AddRabbitMq(Configuration, _logger);
@@ -51,6 +43,14 @@ namespace Efforteo.Services.Activities
             return new AutofacServiceProvider(ApplicationContainer);
         }
 
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
+        {
+            Configuration = configuration;
+            _logger = logger;
+        }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -64,9 +64,7 @@ namespace Efforteo.Services.Activities
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthentication();
-            app.ApplicationServices.GetService<IDatabaseSeeder>().SeedAsync();
 
             app.UseMiddleware<BasicExceptionHandlingMiddleware>();
             app.UseMvc();

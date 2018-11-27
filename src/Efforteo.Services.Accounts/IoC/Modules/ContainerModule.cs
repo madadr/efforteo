@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
 using AutoMapper;
+using Efforteo.Common.Events;
 using Efforteo.Common.IoC.Modules;
 using Efforteo.Services.Accounts.Domain.DTO;
 using Efforteo.Services.Accounts.Domain.Models;
 using Efforteo.Services.Accounts.Domain.Repositories;
-using Efforteo.Services.Accounts.Domain.Services;
+using Efforteo.Services.Accounts.Handlers;
 using Efforteo.Services.Accounts.Repositories;
 using Efforteo.Services.Accounts.Services;
-using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Efforteo.Services.Accounts.IoC.Modules
 {
@@ -20,22 +15,28 @@ namespace Efforteo.Services.Accounts.IoC.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterInstance(new MapperConfiguration(cfg => { cfg.CreateMap<User, UserDto>(); }).CreateMapper())
+            builder.RegisterInstance(new MapperConfiguration(cfg => { cfg.CreateMap<Account, AccountDto>(); }).CreateMapper())
                 .SingleInstance();
 
-            builder.RegisterType<Encrypter>()
-                .As<IEncrypter>()
-                .SingleInstance();
+            builder.RegisterType<AccountRepository>()
+                .As<IAccountRepository>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<AccountService>()
+                .As<IAccountService>()
+                .InstancePerLifetimeScope();
 
             builder.RegisterModule<DispatcherModule>();
 
-            builder.RegisterType<UserRepository>()
-                .As<IUserRepository>()
+            // Dispatcher not working well for now, so ...
+            builder.RegisterType<UserCreatedHandler>()
+                .As<IEventHandler<UserCreated>>()
                 .InstancePerLifetimeScope();
-            builder.RegisterType<UserService>()
-                .As<IUserService>()
+            builder.RegisterType<UserAuthenticatedHandler>()
+                .As<IEventHandler<UserAuthenticated>>()
                 .InstancePerLifetimeScope();
-
+            builder.RegisterType<UserRemovedHandler>()
+                .As<IEventHandler<UserRemoved>>()
+                .InstancePerLifetimeScope();
         }
     }
 }
