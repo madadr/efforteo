@@ -90,5 +90,16 @@ namespace Efforteo.Services.Authentication.Services
 
             await _repository.UpdateAsync(user);
         }
+
+        public async Task RemoveAsync(Guid id)
+        {
+            var user = await _repository.GetAsync(id);
+            if (user == null)
+            {
+                throw new EfforteoException("user_not_exists", $"User doesn't exist.");
+            }
+
+            await _repository.RemoveAsync(id);
+        }
     }
 }

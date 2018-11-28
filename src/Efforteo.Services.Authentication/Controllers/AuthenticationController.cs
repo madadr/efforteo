@@ -25,7 +25,8 @@ namespace Efforteo.Services.Authentication.Controllers
         private Guid UserId =>
             string.IsNullOrWhiteSpace(User?.Identity?.Name) ? Guid.Empty : Guid.Parse(User.Identity.Name);
 
-        public AuthenticationController(IUserService userService, ILogger<AuthenticationController> logger, ICommandDispatcher commandDispatcher , IBusClient busClient)
+        public AuthenticationController(IUserService userService, ILogger<AuthenticationController> logger,
+            ICommandDispatcher commandDispatcher, IBusClient busClient)
         {
             _userService = userService;
             _logger = logger;
@@ -85,6 +86,15 @@ namespace Efforteo.Services.Authentication.Controllers
             // Securing command by swapping request UserId with JWT UserId
             command.UserId = UserId;
             await _commandDispatcher.DispatchAsync(command);
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> RemoveUser()
+        {
+            _logger.LogInformation($"AuthenticationController::RemoveUser id={UserId}");
+            await _commandDispatcher.DispatchAsync(new RemoveUser() {UserId = UserId});
 
             return Ok();
         }

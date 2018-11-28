@@ -2,19 +2,19 @@
 
 namespace Efforteo.Common.Events
 {
-    public class RemoveActivityRejected : IRejectedEvent
+    public class AuthenticateUserRejected : IRejectedEvent
     {
-        public Guid Id { get; }
+        public string Email { get; }
         public string Code { get; }
         public string Reason { get; }
 
-        protected RemoveActivityRejected()
+        protected AuthenticateUserRejected()
         {
         }
 
-        public RemoveActivityRejected(Guid id, string code, string reason)
+        public AuthenticateUserRejected(string email, string code, string reason)
         {
-            Id = id;
+            Email = email;
             Code = code;
             Reason = reason;
         }
