@@ -16,14 +16,14 @@ namespace Efforteo.Services.Activities.Domain.Models
         {
         }
 
-        public Activity(Guid userId, Guid id, string name, Category category, string description, DateTime createdAt)
+        public Activity(Guid userId, Guid id, string name, Category category, string description)
         {
             UserId = userId;
             Id = id;
 
             SetName(name);
-            SetCategory(name);
-            SetDescription(name);
+            SetCategory(category.Name);
+            SetDescription(description);
 
             CreatedAt = DateTime.UtcNow;
         }
@@ -50,12 +50,7 @@ namespace Efforteo.Services.Activities.Domain.Models
 
         private void SetDescription(string description)
         {
-            if (string.IsNullOrWhiteSpace(description))
-            {
-                throw new EfforteoException("empty_description", "Description cannot be empty");
-            }
-
-            Description = description;
+            Description = description ?? "";
         }
 
         public void SetData(string name, string category, string description)

@@ -12,13 +12,15 @@ namespace Efforteo.Common.IoC.Modules
             builder.RegisterAssemblyTypes(Assembly.GetEntryAssembly())
                 .AsClosedTypesOf(typeof(ICommandHandler<>))
                 .InstancePerLifetimeScope();
-
-            builder.RegisterType<EventDispatcher>()
-                .As<IEventDispatcher>()
+            builder.RegisterAssemblyTypes(Assembly.GetEntryAssembly())
+                .AsClosedTypesOf(typeof(IEventHandler<>))
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<CommandDispatcher>()
                 .As<ICommandDispatcher>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<EventDispatcher>()
+                .As<IEventDispatcher>()
                 .InstancePerLifetimeScope();
         }
     }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using RawRabbit;
 using System;
+using Efforteo.Common.Commands;
 using Efforteo.Common.RabbitMq;
 using Microsoft.Extensions.Logging;
 

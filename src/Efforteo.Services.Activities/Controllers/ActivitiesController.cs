@@ -2,11 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Efforteo.Common.Commands;
+using Efforteo.Services.Activities.Domain.DTO;
 using Efforteo.Services.Activities.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RawRabbit;
@@ -42,12 +41,12 @@ namespace Efforteo.Services.Activities.Controllers
             command.Id = Guid.NewGuid();
             command.UserId = UserId;
             command.CreatedAt = DateTime.UtcNow;
-            await _busClient.PublishAsync(command);
+            await _commandDispatcher.DispatchAsync(command);
 
-            return Accepted($"activities/{command.Id}");
+            return Accepted($"api/activities/activity/{command.Id}");
         }
 
-        [HttpGet("{id}", Name ="GetActivityById")]
+        [HttpGet("activity/{id}", Name ="GetActivityById")]
         public async Task<IActionResult> GetActivity(Guid id)
         {
             _logger.LogInformation($"ActivitiesController::GetActivity: id={id.ToString()}");
@@ -55,11 +54,14 @@ namespace Efforteo.Services.Activities.Controllers
             var activity = await _activityService.GetAsync(id);
             return new JsonResult(activity);
         }
-
-        [Route("user")]
-        [HttpGet("{id}", Name = "GetActivityByUserId")]
+        
+        [HttpGet("user/{id}", Name = "GetActivityByUserId")]
         public async Task<IActionResult> GetUserActivity(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                id = UserId;
+            }
             _logger.LogInformation($"ActivitiesController::GetUserActivity: userId={id.ToString()}");
 
             var activities = await _activityService.GetUserActivitiesAsync(id);
@@ -72,16 +74,22 @@ namespace Efforteo.Services.Activities.Controllers
             }));
         }
 
-        [Route("user")]
-        [HttpGet(Name = "GetThisUserActivity")]
-        public async Task<IActionResult> GetThisUserActivity()
+        [HttpPut("activity")]
+        public async Task<IActionResult> Update(ActivityDto command)
         {
-            return await GetUserActivity(UserId);
+            _logger.LogInformation($"ActivitiesController::Update command={JsonConvert.SerializeObject(command)}, UserId={UserId}");
+
+            command.UserId = UserId;
+
+            await _activityService.UpdateAsync(command);
+
+            return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("activity/{id}")]
         public async Task<IActionResult> RemoveActivity(Guid id)
         {
+            _logger.LogInformation($"ActivitiesController::RemoveActivity id={id}, UserId={UserId}");
             await _commandDispatcher.DispatchAsync(new RemoveActivity()
             {
                 Id = id,
