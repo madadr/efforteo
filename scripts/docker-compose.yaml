@@ -21,19 +21,17 @@ services:
       - '5672:5672'
       - '15672:15672'
 
-#  api:
-#    image: efforteo.api
-#    build: ../src/Efforteo.Api
-#    #restart: on-failure
-#    depends_on:
-#      - mongo
-#      - rabbitmq
-#    links:
-#      - rabbitmq
-#      - mongo
-#    ports:
-#      - '5000:5000'
-#      - '5001:5001'
+  api-service:
+    image: efforteo.services.api
+    build: ../src/Efforteo.Services.Api
+    #restart: on-failure
+    depends_on:
+      - authentication-service
+      - accounts-service
+      - activities-service
+    ports:
+      - '5000:5000'
+      - '5001:5001'
   
   activities-service:
     image: efforteo.services.activities
