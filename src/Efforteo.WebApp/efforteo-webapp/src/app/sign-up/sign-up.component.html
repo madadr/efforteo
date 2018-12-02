@@ -1,0 +1,37 @@
+<div class="jumbotron">
+  <div class="container">
+    <form>
+      <div class="form-group">
+        <label for="exampleInputName">Email name</label>
+        <!--<input [(ngModel)]="name"-->
+        <input
+               type="name" class="form-control" id="exampleInputName" placeholder="Enter name" required="true"
+               pattern=".{3,}"
+               oninput="setCustomValidity('')"
+               oninvalid="this.setCustomValidity('Name must contain at least 3 characters')">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <!--<input [(ngModel)]="email"-->
+        <input
+               type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"
+               required="true"
+               oninvalid="this.setCustomValidity('Please enter valid email')"
+               oninput="setCustomValidity('')">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <!--<input [(ngModel)]="password"-->
+        <input
+               type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+               required="true"
+               pattern=".{4,}"
+               oninvalid="this.setCustomValidity('Password must contain at least 4 characters')"
+               oninput="setCustomValidity('')">
+        <small id="passwordHelp" class="form-text text-muted">With us your password is safe.</small>
+      </div>
+      <button id="submitButton" class="btn btn-success" type="submit" (click)="signUp()">Sign up</button>
+      <small id="submitHelp" class="form-text text-primary">By clicking this button you agree on our terms of use.</small>
+    </form>
+  </div>
+</div>
