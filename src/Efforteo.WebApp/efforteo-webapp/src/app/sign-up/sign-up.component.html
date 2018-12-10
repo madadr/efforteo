@@ -1,37 +1,45 @@
 <div class="jumbotron">
   <div class="container">
-    <form>
-      <div class="form-group">
-        <label for="exampleInputName">Email name</label>
-        <!--<input [(ngModel)]="name"-->
-        <input
-               type="name" class="form-control" id="exampleInputName" placeholder="Enter name" required="true"
-               pattern=".{3,}"
-               oninput="setCustomValidity('')"
-               oninvalid="this.setCustomValidity('Name must contain at least 3 characters')">
-      </div>
-      <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <!--<input [(ngModel)]="email"-->
-        <input
-               type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"
-               required="true"
-               oninvalid="this.setCustomValidity('Please enter valid email')"
-               oninput="setCustomValidity('')">
-      </div>
-      <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <!--<input [(ngModel)]="password"-->
-        <input
-               type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
-               required="true"
-               pattern=".{4,}"
-               oninvalid="this.setCustomValidity('Password must contain at least 4 characters')"
-               oninput="setCustomValidity('')">
-        <small id="passwordHelp" class="form-text text-muted">With us your password is safe.</small>
-      </div>
-      <button id="submitButton" class="btn btn-success" type="submit" (click)="signUp()">Sign up</button>
-      <small id="submitHelp" class="form-text text-primary">By clicking this button you agree on our terms of use.</small>
+    <h1 class="display-5 text-info">Sign up</h1>
+    <app-alerts></app-alerts>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">Name is required</div>
+            <div *ngIf="f.name.errors.minlength">Name is too short</div>
+            <div *ngIf="f.name.errors.maxLength">Name is too long</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+            <div *ngIf="f.email.errors.maxLength">Email is too long</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.minlength">Password must be at least 5 characters</div>
+            <div *ngIf="f.password.errors.maxLength">Password is too long</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+          <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+            <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+            <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+          </div>
+        </div>
+        <button class="btn btn-success" type="submit">Sign up</button>
+        <small id="submitHelp" class="form-text text-primary">By clicking this button you agree on our terms of use.</small>
     </form>
   </div>
 </div>

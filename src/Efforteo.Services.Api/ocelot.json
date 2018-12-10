@@ -9,7 +9,7 @@
           "Port": 5000
         }
       ],
-      "UpstreamPathTemplate": "/authentication/{catchAll}",
+      "UpstreamPathTemplate": "/api/authentication/{catchAll}",
       "UpstreamHttpMethod": [ "Get", "Post", "Delete" ]
     },
     {
@@ -21,7 +21,7 @@
           "Port": 5000
         }
       ],
-      "UpstreamPathTemplate": "/accounts/{catchAll}",
+      "UpstreamPathTemplate": "/api/accounts/{catchAll}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put" ]
     },
     {
@@ -33,7 +33,7 @@
           "Port": 5000
         }
       ],
-      "UpstreamPathTemplate": "/activities/{catchAll}",
+      "UpstreamPathTemplate": "/api/activities/{catchAll}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
     }
   ],
