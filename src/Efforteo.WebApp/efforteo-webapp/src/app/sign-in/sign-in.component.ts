@@ -3,6 +3,8 @@ import {AuthService} from '../auth.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AlertService} from '../alert.service';
 import {Router} from '@angular/router';
+import {first} from 'rxjs/operators';
+import {Alert} from '../alert';
 
 @Component({
   selector: 'app-sign-in',
@@ -39,14 +41,24 @@ export class SignInComponent implements OnInit {
 
     console.log('email = ' + this.loginForm.controls['email'].value + ', pass = ' + this.loginForm.controls['password'].value)
 
-    const response = this.authService.signIn(this.loginForm.controls['email'].value, this.loginForm.controls['password'].value);
+    this.authService.signIn(this.loginForm.controls['email'].value, this.loginForm.controls['password'].value)
+      .pipe(first())
+      .subscribe(
+        (response) => {
+          console.log('Sign in: successful', response);
 
-    if (response == null) {
-      this.router.navigate(['/home']);
-    }
+          // @ts-ignore
+          localStorage.setItem('currentUser', JSON.stringify({token: response.token, expires: response.expires}));
 
-    // if (response.code != '') {
-    //   this.router.navigate(['/home']);
-    // }
+          this.router.navigate(['/home']);
+        },
+        response => {
+          console.log('Sign up: error; response.error' + response.error);
+          if (response.error.message != null) {
+            this.alertService.add(new Alert('danger', 'Failed to log in. ' + response.error.message));
+          } else {
+            this.alertService.add(new Alert('warning', 'Service is currently not available. Please try again later.'));
+          }
+        });
   }
 }

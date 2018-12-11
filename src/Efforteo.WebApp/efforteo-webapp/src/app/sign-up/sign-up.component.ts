@@ -43,19 +43,17 @@ export class SignUpComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (val) => {
-          console.log('Sign Up: successful', val);
+          console.log('Sign up: successful', val);
           this.alertService.add(new Alert('success', 'Successfully registered!'));
           this.submitted = false;
           this.ngOnInit();
         },
         response => {
-          console.log('Sign Up: error; response.error.code' + response.error.code);
-          console.log('Sign Up: error; response.error.message' + response.error.message);
-
+          console.log('Sign up: error; response.error' + response.error);
           if (response.error.message != null) {
             this.alertService.add(new Alert('danger', 'Failed to register.\n' + response.error.message));
           } else {
-            this.alertService.add(new Alert('warning', 'Sorry! Service is currently not available'));
+            this.alertService.add(new Alert('warning', 'Service is currently not available. Please try again later.'));
           }
         });
   }

@@ -1,4 +1,4 @@
-import { FormControl } from '@angular/forms';
+import {FormControl} from '@angular/forms';
 
 export function ConfirmPasswordValidator(passwordInput: string) {
   let confirmPasswordControl: FormControl;

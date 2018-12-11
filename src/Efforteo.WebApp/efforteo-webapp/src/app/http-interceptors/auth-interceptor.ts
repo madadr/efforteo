@@ -5,7 +5,6 @@ import {Injectable} from '@angular/core';
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor() {}
-
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (currentUser && currentUser.token) {
