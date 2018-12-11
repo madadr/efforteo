@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,13 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
   title = 'Efforteo';
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
 
   isAuthenticated() {
-    // TODO: get value from service
-    return false;
+    return this.authService.isAuthenticated();
   }
 }

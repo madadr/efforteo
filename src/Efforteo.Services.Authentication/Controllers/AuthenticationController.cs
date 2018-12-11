@@ -38,8 +38,9 @@ namespace Efforteo.Services.Authentication.Controllers
         [Authorize]
         public IActionResult GetId()
         {
-            _logger.LogInformation($"AuthenticationController::GetId");
-            return Content($"UserId: {UserId}");
+            _logger.LogInformation($"AuthenticationController::GetId: UserId = {UserId.ToString()}");
+            
+            return Content($"{UserId.ToString()}");
         }
 
         [HttpPost("register")]
