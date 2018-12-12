@@ -7,7 +7,7 @@ namespace Efforteo.Services.Activities.Domain.Models
     {
         public Guid UserId { get; protected set; }
         public Guid Id { get; protected set; }
-        public string Name { get; protected set; }
+        public string Title { get; protected set; }
         public string Category { set; protected get; }
         public string Description { get; protected set; }
         public long Time { get; protected set; }
@@ -18,12 +18,12 @@ namespace Efforteo.Services.Activities.Domain.Models
         {
         }
 
-        public Activity(Guid userId, Guid id, string name, Category category, string description, long time, float distance)
+        public Activity(Guid userId, Guid id, string title, Category category, string description, long time, float distance)
         {
             UserId = userId;
             Id = id;
 
-            SetName(name);
+            SetTitle(title);
             SetCategory(category.Name);
             SetDescription(description);
             SetTime(time);
@@ -42,14 +42,14 @@ namespace Efforteo.Services.Activities.Domain.Models
             Category = category;
         }
 
-        private void SetName(string name)
+        private void SetTitle(string title)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(title))
             {
-                throw new EfforteoException("empty_name", "Name cannot be empty");
+                throw new EfforteoException("empty_title", "Title cannot be empty");
             }
 
-            Name = name;
+            Title = title;
         }
 
         private void SetDescription(string description)
@@ -77,9 +77,9 @@ namespace Efforteo.Services.Activities.Domain.Models
             Distance = distance;
         }
 
-        public void SetData(string name, string category, string description, long? time, float? distance)
+        public void SetData(string title, string category, string description, long? time, float? distance)
         {
-            if(name != null) SetName(name);
+            if(title != null) SetTitle(title);
             if(category != null) SetCategory(category);
             if(description != null) SetDescription(description);
             if (time != null) SetTime(time.Value);

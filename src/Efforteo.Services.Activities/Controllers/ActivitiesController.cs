@@ -69,7 +69,7 @@ namespace Efforteo.Services.Activities.Controllers
             {
                 activity.Id,
                 activity.UserId,
-                activity.Name,
+                activity.Title,
                 activity.Category
             }));
         }

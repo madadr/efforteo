@@ -24,14 +24,14 @@ namespace Efforteo.Services.Activities.Handlers
 
         public async Task HandleAsync(CreateActivity command)
         {
-            _logger.LogInformation($"Creating activity... {command.Name}");
+            _logger.LogInformation($"Creating activity... {command.Title}");
 
             try
             {
                 await _activityService.AddAsync(command.UserId, command.Id, command.Category,
-                    command.Name, command.Description, command.Time, command.Distance);
+                    command.Title, command.Description, command.Time, command.Distance);
                 await _busClient.PublishAsync(new ActivityCreated(command.UserId, command.Id, command.Category,
-                    command.Name, command.Description, command.Time, command.Distance));
+                    command.Title, command.Description, command.Time, command.Distance));
                 _logger.LogInformation($"Published event ActivityCreated(id={command.Id})");
             }
             catch (EfforteoException exception)
