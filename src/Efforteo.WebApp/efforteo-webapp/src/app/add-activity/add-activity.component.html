@@ -22,13 +22,13 @@
           <label class="input-group-text" for="catSelect">Category</label>
         </div>
           <select class="custom-select" id="catSelect" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.category.errors }">
-            <option selected>Choose...</option>
+            <!--<option selected>Choose...</option>-->
             <option value="run">Run</option>
             <option value="ride">Ride</option>
             <option value="swim">Swim</option>
           </select>
           <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
-            <div *ngIf="f.category.errors.required">Category is required</div>
+            <div *ngIf="f.category.errors.minLength">Select a category</div>
           </div>
         </div>
         <div class="row">
@@ -39,9 +39,15 @@
             <input type="number" min="0" max="99" formControlName="timeHour" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.timeHour.errors }" />
             <input type="number" min="0" max="59" formControlName="timeMin" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.timeMin.errors }" />
             <input type="number" min="0" max="59" formControlName="timeSec" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.timeSec.errors }" />
-            <!--<div *ngIf="submitted && f.timeSec.errors" class="invalid-feedback">-->
-              <!--<div *ngIf="f.timeSec.errors.positive">Time must be positive</div>-->
-            <!--</div>-->
+            <div *ngIf="submitted && f.timeHour.errors" class="invalid-feedback">
+              <div *ngIf="f.timeHour.errors.min || f.timeHour.errors.max">Invalid hours</div>
+            </div>
+            <div *ngIf="submitted && f.timeMin.errors" class="invalid-feedback">
+              <div *ngIf="f.timeMin.errors.min || f.timeMin.errors.max">Invalid minutes</div>
+            </div>
+            <div *ngIf="submitted && f.timeSec.errors" class="invalid-feedback">
+              <div *ngIf="f.timeSec.errors.min || f.timeSec.errors.max">Invalid seconds</div>
+            </div>
           </div>
           <div class="form-group input-group col-5">
             <div class="input-group-prepend">
@@ -53,6 +59,8 @@
             </div>
             <div *ngIf="submitted && f.distance.errors" class="invalid-feedback">
               <div *ngIf="f.distance.errors.required">Distance is required</div>
+              <div *ngIf="f.distance.errors.min">Your distance must be positive</div>
+              <div *ngIf="f.distance.errors.max">Your can provide max 5000km distance</div>
             </div>
           </div>
 
@@ -63,7 +71,7 @@
           </div>
           <textarea formControlName="description" class="form-control"  placeholder="Write about your adventure..." [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
           <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-            <div *ngIf="f.title.errors.maxLength">Description is too long</div>
+            <div *ngIf="f.description.errors.maxLength">Description is too long</div>
           </div>
         </div>
         <button class="btn btn-primary" type="submit">Add activity</button>
