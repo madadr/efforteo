@@ -9,19 +9,23 @@ namespace Efforteo.Common.Events
         public string Category { get; }
         public string Name { get; }
         public string Description { get; }
+        public long Time { get; }
+        public float Distance { get; }
 
         protected ActivityCreated()
         {
 
         }
 
-        public ActivityCreated(Guid userId, Guid id, string category, string name, string description)
+        public ActivityCreated(Guid id, Guid userId, string category, string name, string description, long time, float distance)
         {
-            UserId = userId;
             Id = id;
+            UserId = userId;
             Category = category;
             Name = name;
             Description = description;
+            Time = time;
+            Distance = distance;
         }
     }
 }

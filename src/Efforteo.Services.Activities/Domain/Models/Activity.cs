@@ -10,13 +10,15 @@ namespace Efforteo.Services.Activities.Domain.Models
         public string Name { get; protected set; }
         public string Category { set; protected get; }
         public string Description { get; protected set; }
+        public long Time { get; protected set; }
+        public float Distance { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
 
         protected Activity()
         {
         }
 
-        public Activity(Guid userId, Guid id, string name, Category category, string description)
+        public Activity(Guid userId, Guid id, string name, Category category, string description, long time, float distance)
         {
             UserId = userId;
             Id = id;
@@ -24,6 +26,8 @@ namespace Efforteo.Services.Activities.Domain.Models
             SetName(name);
             SetCategory(category.Name);
             SetDescription(description);
+            SetTime(time);
+            SetDistance(distance);
 
             CreatedAt = DateTime.UtcNow;
         }
@@ -53,11 +57,33 @@ namespace Efforteo.Services.Activities.Domain.Models
             Description = description ?? "";
         }
 
-        public void SetData(string name, string category, string description)
+        private void SetTime(long time)
+        {
+            if (time < 0)
+            {
+                throw new EfforteoException("invalid_time", "Time cannot be negative");
+            }
+
+            Time = time;
+        }
+
+        private void SetDistance(float distance)
+        {
+            if (distance < 0)
+            {
+                throw new EfforteoException("invalid_distance", "Distance cannot be negative");
+            }
+
+            Distance = distance;
+        }
+
+        public void SetData(string name, string category, string description, long? time, float? distance)
         {
             if(name != null) SetName(name);
             if(category != null) SetCategory(category);
             if(description != null) SetDescription(description);
+            if (time != null) SetTime(time.Value);
+            if (distance != null) SetDistance(distance.Value);
         }
     }
 }

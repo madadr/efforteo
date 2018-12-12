@@ -22,15 +22,17 @@ export class AddActivityComponent implements OnInit {
     this.addActivityForm = this.formBuilder.group({
       title: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       category: [''],
+      distance: [0, Validators.compose([Validators.required, Validators.min(0), Validators.max(5000)])],
       timeHour: [0, Validators.compose([Validators.required, Validators.min(0), Validators.max(90)])],
       timeMin: [0, Validators.compose([Validators.required, Validators.min(0), Validators.max(59)])],
       timeSec: [0, Validators.compose([Validators.required, Validators.min(0), Validators.max(59)])],
-      distance: [0, Validators.compose([Validators.required, Validators.min(0), Validators.max(5000)])],
       description: ['', [Validators.maxLength(1000)]],
     });
   }
 
   onSubmit() {
     this.submitted = true;
+
+    
   }
 }

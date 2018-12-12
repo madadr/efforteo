@@ -7,7 +7,7 @@ namespace Efforteo.Services.Activities.Services
 {
     public interface IActivityService
     {
-        Task AddAsync(Guid userId, Guid id, string category, string name, string description);
+        Task AddAsync(Guid userId, Guid id, string category, string name, string description, long time, float distance);
         Task<ActivityDto> GetAsync(Guid id);
         Task<IEnumerable<ActivityDto>> GetUserActivitiesAsync(Guid userId);
         Task UpdateAsync(ActivityDto activity);

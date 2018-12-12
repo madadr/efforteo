@@ -29,9 +29,9 @@ namespace Efforteo.Services.Activities.Handlers
             try
             {
                 await _activityService.AddAsync(command.UserId, command.Id, command.Category,
-                    command.Name, command.Description);
+                    command.Name, command.Description, command.Time, command.Distance);
                 await _busClient.PublishAsync(new ActivityCreated(command.UserId, command.Id, command.Category,
-                    command.Name, command.Description));
+                    command.Name, command.Description, command.Time, command.Distance));
                 _logger.LogInformation($"Published event ActivityCreated(id={command.Id})");
             }
             catch (EfforteoException exception)

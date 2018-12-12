@@ -22,7 +22,7 @@ namespace Efforteo.Services.Activities.Services
             _mapper = mapper;
         }
 
-        public async Task AddAsync(Guid userId, Guid id, string category, string name, string description)
+        public async Task AddAsync(Guid userId, Guid id, string category, string name, string description, long time, float distance)
         {
             var categoryObject = await _categoryRepository.GetAsync(category.ToLowerInvariant());
 
@@ -31,7 +31,7 @@ namespace Efforteo.Services.Activities.Services
                 throw new EfforteoException("invalid_category", $"Category {category} not found");
             }
 
-            await _activityRepository.AddAsync(new Activity(userId, id, name, categoryObject, description));
+            await _activityRepository.AddAsync(new Activity(userId, id, name, categoryObject, description, time, distance));
         }
 
         public async Task<ActivityDto> GetAsync(Guid id)
@@ -71,7 +71,7 @@ namespace Efforteo.Services.Activities.Services
                 }
             }
 
-            activity.SetData(activityDto.Name, activityDto.Category, activityDto.Description);
+            activity.SetData(activityDto.Name, activityDto.Category, activityDto.Description, activityDto.Time, activityDto.Distance);
 
             await _activityRepository.UpdateAsync(activity);
         }
