@@ -43,9 +43,9 @@ services:
     links:
       - rabbitmq
       - mongo
-    ports:
-      - '5010:5000'
-      - '5011:5001'
+    #ports:
+    #  - '5010:5000'
+    #  - '5011:5001'
 
   authentication-service:
     image: efforteo.services.authentication
@@ -57,9 +57,9 @@ services:
     links:
       - rabbitmq
       - mongo
-    ports:
-      - '5020:5000'
-      - '5021:5001'
+    #ports:
+    #  - '5020:5000'
+    #  - '5021:5001'
 
   accounts-service:
     image: efforteo.services.accounts
@@ -71,6 +71,6 @@ services:
     links:
       - rabbitmq
       - mongo
-    ports:
-      - '5030:5000'
-      - '5031:5001'
+    #ports:
+    #  - '5030:5000'
+    #  - '5031:5001'

@@ -1,7 +1,7 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/api/authentication/{catchAll}",
+      "DownstreamPathTemplate": "/api/authentication/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -9,11 +9,23 @@
           "Port": 5000
         }
       ],
-      "UpstreamPathTemplate": "/api/authentication/{catchAll}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Delete" ]
+      "UpstreamPathTemplate": "/api/authentication/",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ]
     },
     {
-      "DownstreamPathTemplate": "/api/accounts/{catchAll}",
+      "DownstreamPathTemplate": "/api/authentication/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authentication-service",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/api/authentication/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/accounts/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -21,11 +33,23 @@
           "Port": 5000
         }
       ],
-      "UpstreamPathTemplate": "/api/accounts/{catchAll}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put" ]
+      "UpstreamPathTemplate": "/api/accounts/",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
     },
     {
-      "DownstreamPathTemplate": "/api/activities/{catchAll}",
+      "DownstreamPathTemplate": "/api/accounts/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "accounts-service",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/api/accounts/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activities/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -33,8 +57,20 @@
           "Port": 5000
         }
       ],
-      "UpstreamPathTemplate": "/api/activities/{catchAll}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+      "UpstreamPathTemplate": "/api/activities/",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activities/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "activities-service",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/api/activities/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     }
   ],
   "GlobalConfiguration": {
