@@ -12,6 +12,12 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppInterceptor} from './http-interceptors/app-interceptor';
 import {AlertsComponent} from './alerts/alerts.component';
 import {AuthInterceptor} from './http-interceptors/auth-interceptor';
+import {MatProgressBarModule} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ActivitiesComponent } from './activities/activities.component';
+import { AddActivityComponent } from './add-activity/add-activity.component';
+
 
 @NgModule({
   declarations: [
@@ -20,14 +26,19 @@ import {AuthInterceptor} from './http-interceptors/auth-interceptor';
     SignUpComponent,
     HomeComponent,
     SignInComponent,
-    AlertsComponent
+    AlertsComponent,
+    DashboardComponent,
+    ActivitiesComponent,
+    AddActivityComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressBarModule,
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },

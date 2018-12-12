@@ -50,12 +50,12 @@ export class SignInComponent implements OnInit {
           // @ts-ignore
           localStorage.setItem('currentUser', JSON.stringify({token: response.token, expires: response.expires}));
 
-          this.router.navigate(['/home']);
+          this.router.navigate(['/activities']);
         },
         response => {
           console.log('Sign up: error; response.error' + response.error);
           if (response.error.message != null) {
-            this.alertService.add(new Alert('danger', 'Failed to log in. ' + response.error.message));
+            this.alertService.add(new Alert('danger', response.error.message));
           } else {
             this.alertService.add(new Alert('warning', 'Service is currently not available. Please try again later.'));
           }
