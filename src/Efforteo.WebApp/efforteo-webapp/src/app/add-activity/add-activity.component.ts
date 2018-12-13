@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AlertService} from '../alert.service';
 import {ActivityService} from '../activity.service';
-import {first} from 'rxjs/operators';
+import {catchError, first, map} from 'rxjs/operators';
 import {Alert} from '../alert';
 import {CategoryValidator} from '../form-validators/category-validator';
+import {HttpResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-add-activity',
@@ -51,16 +52,21 @@ export class AddActivityComponent implements OnInit {
       this.addActivityForm.controls['distance'].value,
       timeInSec,
       this.addActivityForm.controls['description'].value)
-      .pipe(first())
-      .subscribe(
-        (val) => {
-          console.log('Add activity: successful', val);
-          this.alertService.add(new Alert('success', 'Your request is being processed'));
+      .pipe(map((resp: HttpResponse<any>) => {
+        console.log('Add activity: successful' + resp);
+        if (resp != null) {
+          console.log('Location: ' + resp.headers.get('location'));
+          this.alertService.add(new Alert('success', 'Your request is being processed. ' +
+            'Your activity will be available', '/show-activity/' + resp.headers.get('location')));
           this.submitted = false;
           this.ngOnInit();
-        },
+        } else {
+          this.alertService.add(new Alert('success', 'Your request is being processed.'));
+        }
+      }))
+      .subscribe(
+        () => {},
         response => {
-          // console.log('Add activity: error; response.error' + response.error);
           if (response.error.message != null) {
             this.alertService.add(new Alert('danger', 'Failed to add activity. ' + response.error.message));
           } else {

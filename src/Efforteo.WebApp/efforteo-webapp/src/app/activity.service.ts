@@ -15,6 +15,6 @@ export class ActivityService {
                             category: category,
                             distance: distance,
                             time: time,
-                            description: description}));
+                            description: description}), {observe: 'response'});
   }
 }

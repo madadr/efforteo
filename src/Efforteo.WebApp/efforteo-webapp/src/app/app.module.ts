@@ -17,6 +17,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ActivitiesComponent } from './activities/activities.component';
 import { AddActivityComponent } from './add-activity/add-activity.component';
+import {Router} from '@angular/router';
 
 
 @NgModule({
@@ -42,7 +43,11 @@ import { AddActivityComponent } from './add-activity/add-activity.component';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useFactory: function(router: Router) {
+        return new AuthInterceptor(router);
+      },
+      multi: true,
+      deps: [Router] }
   ],
   bootstrap: [AppComponent]
 })
