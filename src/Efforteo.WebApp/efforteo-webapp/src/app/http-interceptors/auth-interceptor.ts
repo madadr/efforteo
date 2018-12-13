@@ -8,8 +8,9 @@ import {catchError} from 'rxjs/operators';
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
 
-  private handleAuthError(err: HttpErrorResponse): Observable<any> {
+  public handleAuthError(err: HttpErrorResponse): Observable<any> {
     if (err.status === 401 || err.status === 403) {
+      console.log('Unauthorized!');
       this.router.navigateByUrl(`/sign-in`);
       return of(err.message);
     }
@@ -19,16 +20,15 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (currentUser && currentUser.token) {
-      const authReq = req.clone({
+      req = req.clone({
         setHeaders: {
           Authorization: `Bearer ${currentUser.token}`
         }
       });
-      return next.handle(authReq).pipe(
-          catchError(x => this.handleAuthError(x))
-      );
     }
 
-    return next.handle(req);
+    return next.handle(req).pipe(
+      catchError(x => this.handleAuthError(x))
+    );
   }
 }

@@ -18,6 +18,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ActivitiesComponent } from './activities/activities.component';
 import { AddActivityComponent } from './add-activity/add-activity.component';
 import {Router} from '@angular/router';
+import { ShowActivityComponent } from './show-activity/show-activity.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import {Router} from '@angular/router';
     AlertsComponent,
     DashboardComponent,
     ActivitiesComponent,
-    AddActivityComponent
+    AddActivityComponent,
+    ShowActivityComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

@@ -55,9 +55,11 @@ export class AddActivityComponent implements OnInit {
       .pipe(map((resp: HttpResponse<any>) => {
         console.log('Add activity: successful' + resp);
         if (resp != null) {
-          console.log('Location: ' + resp.headers.get('location'));
+          let id = resp.headers.get('location');
+          id = id.substring(id.lastIndexOf('/') + 1, id.length + 1);
+          console.log('Location: ' + resp.headers.get('location') + ', id=' + id);
           this.alertService.add(new Alert('success', 'Your request is being processed. ' +
-            'Your activity will be available', '/show-activity/' + resp.headers.get('location')));
+            'Your activity will be available', '/show-activity/' + id));
           this.submitted = false;
           this.ngOnInit();
         } else {

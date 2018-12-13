@@ -6,6 +6,8 @@ import {SignInComponent} from './sign-in/sign-in.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {ActivitiesComponent} from './activities/activities.component';
 import {AddActivityComponent} from './add-activity/add-activity.component';
+import {ShowActivityComponent} from './show-activity/show-activity.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -14,11 +16,15 @@ const routes: Routes = [
   {path: 'sign-in', component: SignInComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'activities', component: ActivitiesComponent},
-  {path: 'add-activity', component: AddActivityComponent}
+  {path: 'add-activity', component: AddActivityComponent},
+  {path: 'show-activity/:id', component: ShowActivityComponent},
+  {path: 'not-found', component: PageNotFoundComponent},
+  {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

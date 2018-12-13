@@ -22,7 +22,7 @@ export class AuthService {
 
   isAuthenticated() {
     const user = localStorage.getItem('currentUser');
-    console.log('currentUser = ' + user);
+    console.log('currentUser isNull? ' + (user === null).valueOf());
     return user != null;
   }
 }

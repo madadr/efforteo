@@ -17,4 +17,9 @@ export class ActivityService {
                             time: time,
                             description: description}), {observe: 'response'});
   }
+
+  getActivity(id: string) {
+    console.log('called get activity for id =' + id);
+    return this.http.get(`/api/activities/activity/` + id, {observe: 'response'});
+  }
 }
