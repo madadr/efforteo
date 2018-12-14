@@ -6,15 +6,6 @@ import {LoadingService} from '../loading.service';
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.css']
 })
-export class LoaderComponent implements OnInit, OnDestroy {
+export class LoaderComponent {
   @Input() size = 35;
-
-  constructor(public loadingService: LoadingService) {
-  }
-
-  ngOnInit() {
-  }
-
-  ngOnDestroy() {
-  }
 }

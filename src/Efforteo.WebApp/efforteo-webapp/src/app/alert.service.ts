@@ -18,6 +18,11 @@ export class AlertService {
     }
   }
 
+  has(alert: Alert) {
+    const index: number = this.alerts.indexOf(alert);
+    return index !== -1;
+  }
+
   clear() {
     this.alerts = [];
   }
