@@ -25,7 +25,7 @@ export class AddActivityComponent implements OnInit {
 
   ngOnInit() {
     this.addActivityForm = this.formBuilder.group({
-      title: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+      title: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
       category: ['', CategoryValidator(this.categories)],
       distance: [0, Validators.compose([Validators.required, Validators.min(0), Validators.max(5000)])],
       timeHour: [0, Validators.compose([Validators.required, Validators.min(0), Validators.max(90)])],

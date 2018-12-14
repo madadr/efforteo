@@ -13,6 +13,8 @@ export class AuthInterceptor implements HttpInterceptor {
       console.log('Unauthorized!');
       this.router.navigateByUrl(`/sign-in`);
       return of(err.message);
+    } else {
+      console.log('Authorized! ' + err.status);
     }
     return throwError(err);
   }

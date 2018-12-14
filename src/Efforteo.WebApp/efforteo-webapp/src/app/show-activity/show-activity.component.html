@@ -1,3 +1,62 @@
-<div>
-  Details for {{id}}
+<div class="mt-2 mx-3">
+  <div class="jumbotron">
+    <p class="lead">Activity {{ id }}</p>
+    <a class="btn btn-outline-primary" href="/activities" role="button">Back to activities</a>
+  </div>
+
+  <app-loader *ngIf="toggleService.isShown(onCreateLoaderName)" class="my-3 d-flex justify-content-center"
+              size="100"></app-loader>
+
+  <div ngDefaultControl [(ngModel)]="activity" name="activity" *ngIf="activity != null"
+       class="card text-dark bg-light mb-3">
+    <div class="card-header">Created {{ createdAgo | timeAgo }} by
+      <app-loader *ngIf="toggleService.isShown(userNmaeLoaderName)" size="15"></app-loader>
+      <a *ngIf="!toggleService.isShown(userNmaeLoaderName)" href="" [(ngModel)]="userName" ngDefaultControl>{{userName}}</a>
+    </div>
+    <div class="card-body border-bottom border-info">
+      <h5><span
+        class="badge text-light bg-dark">{{activity.category | uppercase}}</span></h5>
+      <h4 class="card-title">{{activity.title}}</h4>
+      <p class="card-text text-secondary">{{activity.description}}</p>
+
+      <div class="row justify-content-center mt-1 mb-2">
+        <div class="card text-center mx-1">
+          <div class="card-header border-success">
+            Distance
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{activity.distance}} km</h5>
+          </div>
+        </div>
+        <div class="card text-center mx-1">
+          <div class="card-header border-danger">
+            Time
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{converter.getTimeString(activity.time)}}</h5>
+          </div>
+        </div>
+        <div class="card text-center ml-3 mr-1">
+          <div class="card-header border-warning">
+            Pace
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">
+              <app-loader *ngIf="toggleService.isShown('componentThree')"></app-loader>
+              <span
+                *ngIf="!toggleService.isShown('componentThree')">{{converter.calculatePace(activity.time, activity.distance)}}
+                min/km</span></h5>
+          </div>
+        </div>
+        <div class="card text-center mx-1">
+          <div class="card-header border-warning">
+            Speed
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{converter.calculateSpeed(activity.time, activity.distance)}} km/h</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -13,13 +13,18 @@ import {AppInterceptor} from './http-interceptors/app-interceptor';
 import {AlertsComponent} from './alerts/alerts.component';
 import {AuthInterceptor} from './http-interceptors/auth-interceptor';
 import {MatProgressBarModule} from '@angular/material';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ActivitiesComponent } from './activities/activities.component';
-import { AddActivityComponent } from './add-activity/add-activity.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {ActivitiesComponent} from './activities/activities.component';
+import {AddActivityComponent} from './add-activity/add-activity.component';
 import {Router} from '@angular/router';
-import { ShowActivityComponent } from './show-activity/show-activity.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {ShowActivityComponent} from './show-activity/show-activity.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import {ServiceNotAvailableComponent} from './service-not-available/service-not-available.component';
+import {LoaderComponent} from './loader/loader.component';
+import {LoadingService} from './loading.service';
+import {TimeAgoPipe} from 'time-ago-pipe';
 
 
 @NgModule({
@@ -33,8 +38,11 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     DashboardComponent,
     ActivitiesComponent,
     AddActivityComponent,
+    LoaderComponent,
     ShowActivityComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ServiceNotAvailableComponent,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,
@@ -42,17 +50,21 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     MatProgressBarModule,
-    BrowserAnimationsModule
+    MatProgressSpinnerModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useFactory: function(router: Router) {
+    {provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true},
+    {
+      provide: HTTP_INTERCEPTORS, useFactory: function (router: Router) {
         return new AuthInterceptor(router);
       },
       multi: true,
-      deps: [Router] }
+      deps: [Router]
+    }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
