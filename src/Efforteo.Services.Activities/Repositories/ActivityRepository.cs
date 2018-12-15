@@ -28,6 +28,11 @@ namespace Efforteo.Services.Activities.Repositories
                 .AsQueryable()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
+        public async Task<IEnumerable<Activity>> GetAllAsync()
+            => await Collection
+                .AsQueryable()
+                .ToListAsync();
+
         public async Task<IEnumerable<Activity>> GetUserActivitiesAsync(Guid userId)
             => await Collection
                 .Find(a => a.UserId == userId)

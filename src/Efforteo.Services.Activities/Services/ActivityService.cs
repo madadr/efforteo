@@ -45,6 +45,13 @@ namespace Efforteo.Services.Activities.Services
             return _mapper.Map<ActivityDto>(activity);
         }
 
+        public async Task<IEnumerable<ActivityDto>> GetAllAsync()
+        {
+            var activities = await _activityRepository.GetAllAsync();
+
+            return _mapper.Map<IEnumerable<ActivityDto>>(activities);
+        }
+
         public async Task<IEnumerable<ActivityDto>> GetUserActivitiesAsync(Guid userId)
         {
             var activities = await _activityRepository.GetUserActivitiesAsync(userId);

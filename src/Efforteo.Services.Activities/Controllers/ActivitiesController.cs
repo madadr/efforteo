@@ -56,7 +56,24 @@ namespace Efforteo.Services.Activities.Controllers
             var activity = await _activityService.GetAsync(id);
             return new JsonResult(activity);
         }
-        
+
+        [HttpGet(Name = "GetAllActivities")]
+        public async Task<IActionResult> GetAllActivities()
+        {
+            _logger.LogInformation($"ActivitiesController::GetAllActivities");
+
+            var activities = await _activityService.GetAllAsync();
+            return new JsonResult(activities.Select(activity => new
+            {
+                activity.Id,
+                activity.UserId,
+                activity.Title,
+                activity.Category,
+                activity.Time,
+                activity.Distance
+            }));
+        }
+
         [HttpGet("user/{id}", Name = "GetActivityByUserId")]
         public async Task<IActionResult> GetUserActivity(Guid id)
         {
