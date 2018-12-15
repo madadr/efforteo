@@ -1,12 +1,4 @@
 export class Converter {
-  static dateTimeStringToDate(inDate: string): Date {
-    return new Date(inDate);
-  }
-
-  static dateTimeStringToHumanReadableString(createdAt: string) {
-    return 'asdas';
-  }
-
   static getTimeString(timeInSec: number): string {
     let time = timeInSec;
 

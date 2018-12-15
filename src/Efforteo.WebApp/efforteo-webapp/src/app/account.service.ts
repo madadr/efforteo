@@ -10,7 +10,7 @@ export class AccountService {
 
   getUserData(userId: string) {
     console.log('called getUserData for userId =' + userId);
-    console.log('api url = ' + `/api/accounts/` + userId)
+    console.log('api url = ' + `/api/accounts/` + userId);
     return this.http.get(`/api/accounts/` + userId, {observe: 'response'});
   }
 }

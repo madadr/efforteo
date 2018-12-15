@@ -33,4 +33,9 @@ export class ActivityService {
     console.log('called get activity for id =' + id);
     return this.http.get(`/api/activities/activity/` + id, {observe: 'response'});
   }
+
+  getAllActivites() {
+    console.log('called get all activities');
+    return this.http.get(`/api/activities`, {observe: 'response'});
+  }
 }

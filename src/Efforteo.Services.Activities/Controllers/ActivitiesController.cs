@@ -70,8 +70,9 @@ namespace Efforteo.Services.Activities.Controllers
                 activity.Title,
                 activity.Category,
                 activity.Time,
-                activity.Distance
-            }));
+                activity.Distance,
+                activity.CreatedAt
+            }).OrderByDescending(activity => activity.CreatedAt));
         }
 
         [HttpGet("user/{id}", Name = "GetActivityByUserId")]

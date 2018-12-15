@@ -1,0 +1,42 @@
+<div *ngIf="activity" class="card text-dark bg-light mb-3">
+  <div class="card-header">Created {{ createdAgo | timeAgo }} by <a href=""><span *ngIf="userName">{{userName}}</span><span *ngIf="!userName"> user {{activity.userId | slice:0:4}}...</span></a>
+  </div>
+  <div class="card-body border-bottom border-info">
+    <h5 class="card-title"><a class="text-dark" href="/show-activity/{{activity.id}}">{{ (activity.title.length > 25)?((activity.title | slice:0:20) + '...'):(activity.title)}} <span
+      class="badge text-light bg-dark">{{activity.category | uppercase}}</span></a></h5>
+    <div class="row justify-content-center mt-1 mb-2">
+      <div class="card text-center">
+        <div class="card-header border-success">
+          Distance
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{activity.distance}}</h5>
+        </div>
+      </div>
+      <div class="card text-center">
+        <div class="card-header border-danger">
+          Time
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{converter.getTimeString(activity.time)}}</h5>
+        </div>
+      </div>
+    </div>
+
+    <a class="btn btn-warning btn-sm btn-block" href="/show-activity/{{activity.id}}">Show details</a>
+  </div>
+  <!--<div class="collapse" id="comments">-->
+    <!--<div class="card-header text-dark bg-light border-bottom border-secondary"><b>Mike: </b>Comment 1</div>-->
+    <!--<div class="card-header text-dark bg-light border-bottom border-secondary"><b>John: </b>Comment 1</div>-->
+    <!--<div class="card-header text-dark bg-light border-bottom border-secondary"><b>Fastest rider ever: </b>Thank you-->
+      <!--too!-->
+    <!--</div>-->
+    <!--<div class="card-header text-light bg-light">-->
+      <!--<form class="form-inline my-2 my-lg-0">-->
+        <!--<input class="form-control mr-sm-2 border border-info w-auto" type="search" placeholder="Write comment..."-->
+               <!--aria-label="Add comment">-->
+        <!--<button class="btn btn-info my-2 my-sm-0" type="submit">+</button>-->
+      <!--</form>-->
+    <!--</div>-->
+  <!--</div>-->
+</div>
