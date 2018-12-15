@@ -63,6 +63,10 @@
             </div>
           </div>
         </div>
+
+        <a *ngIf="isOwner" class="btn btn-outline-dark btn-sm btn-block mt-4" href="/edit-activity/{{activity.id}}">
+          Edit
+        </a>
       </div>
     </div>
   </div>

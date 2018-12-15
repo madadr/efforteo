@@ -25,4 +25,9 @@ export class AuthService {
     console.log('currentUser isNull? ' + (user === null).valueOf());
     return user != null;
   }
+
+  getId() {
+    console.log('called getId');
+    return this.http.get(`/api/authentication/id`, {observe: 'response'});
+  }
 }

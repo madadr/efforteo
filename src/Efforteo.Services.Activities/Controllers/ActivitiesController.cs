@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Efforteo.Common.Commands;
+using Efforteo.Common.Events;
+using Efforteo.Common.Exceptions;
 using Efforteo.Services.Activities.Domain.DTO;
 using Efforteo.Services.Activities.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -80,10 +82,26 @@ namespace Efforteo.Services.Activities.Controllers
             _logger.LogInformation($"ActivitiesController::Update command={JsonConvert.SerializeObject(command)}, UserId={UserId}");
 
             command.UserId = UserId;
+            
+            try
+            {
+                await _activityService.UpdateAsync(command);
+                await _busClient.PublishAsync(new ActivityUpdated(command.Id, command.UserId, command.Category, command.Title, command.Description, command.Time.GetValueOrDefault(-1), command.Distance.GetValueOrDefault(-1)));
+                return Ok();
+            }
+            catch (EfforteoException ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                await _busClient.PublishAsync(new ActivityUpdateRejected(command.Id, command.UserId, ex.Code, ex.Message));
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                await _busClient.PublishAsync(new ActivityUpdateRejected(command.Id, command.UserId, "error", ex.Message));
+                throw;
+            }
 
-            await _activityService.UpdateAsync(command);
-
-            return Ok();
         }
 
         [HttpDelete("activity/{id}")]

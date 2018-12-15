@@ -25,6 +25,7 @@ import {ServiceNotAvailableComponent} from './service-not-available/service-not-
 import {LoaderComponent} from './loader/loader.component';
 import {LoadingService} from './loading.service';
 import {TimeAgoPipe} from 'time-ago-pipe';
+import { EditActivityComponent } from './edit-activity/edit-activity.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import {TimeAgoPipe} from 'time-ago-pipe';
     ShowActivityComponent,
     PageNotFoundComponent,
     ServiceNotAvailableComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    EditActivityComponent
   ],
   imports: [
     BrowserModule,

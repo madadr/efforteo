@@ -9,6 +9,7 @@ import {Converter} from '../utils/converter';
 import {AccountService} from '../account.service';
 import {AlertService} from '../alert.service';
 import {Alert} from '../alert';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-show-activity',
@@ -21,9 +22,11 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
   activity: Activity = null;
   userName: string = null;
   createdAgo: Date;
+  isOwner: boolean;
 
   onCreateLoaderName = 'onInitLoader';
   userNameLoaderName = 'userNameLoader';
+  editLoaderName = 'editLoader';
   userNameLoadFailAlert = new Alert('danger', 'Account service is not available. Failed to fetch username. Try to refresh later.');
   paceLoaderName = 'paceLoader';
   speedLoaderName = 'speedLoader';
@@ -37,6 +40,7 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
               private router: Router,
               private toggleService: LoadingService,
               private accountService: AccountService,
+              private authService: AuthService,
               private alertService: AlertService) {
   }
 
@@ -54,6 +58,7 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
   createLoaders() {
     this.toggleService.create(this.onCreateLoaderName);
     this.toggleService.create(this.userNameLoaderName);
+    this.toggleService.create(this.editLoaderName);
     // this.toggleService.create(this.paceLoaderName);
     // this.toggleService.create(this.speedLoaderName);
   }
@@ -70,6 +75,7 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
           }
           this.createdAgo = new Date(this.activity.createdAt);
           this.loadUserName();
+          this.checkIfOwner();
         }),
         catchError(err => {
           if (err.status >= 500 && err.status < 600) {
@@ -115,10 +121,32 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
       });
   }
 
+  public checkIfOwner() {
+    this.toggleService.show(this.editLoaderName);
+    this.authService.getId()
+      .pipe(map(resp => {
+          // @ts-ignore
+          if (resp.body.id != null && resp.body.id === this.activity.userId) {
+            this.isOwner = true;
+          }
+        }),
+        catchError(err => {
+          this.isOwner = false;
+          return throwError(err);
+        }),
+        timeout(new Date(new Date().getTime() + 3000)),
+        finalize(() => {
+          this.toggleService.hide(this.editLoaderName);
+        }))
+      .subscribe(() => {
+      });
+  }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
     this.toggleService.remove(this.onCreateLoaderName);
-    this.toggleService.create(this.userNameLoaderName);
+    this.toggleService.remove(this.userNameLoaderName);
+    this.toggleService.remove(this.editLoaderName);
     // this.toggleService.remove(this.paceLoaderName);
     // this.toggleService.remove(this.speedLoaderName);
   }

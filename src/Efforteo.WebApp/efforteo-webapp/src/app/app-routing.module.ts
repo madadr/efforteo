@@ -9,6 +9,7 @@ import {AddActivityComponent} from './add-activity/add-activity.component';
 import {ShowActivityComponent} from './show-activity/show-activity.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {ServiceNotAvailableComponent} from './service-not-available/service-not-available.component';
+import {EditActivityComponent} from './edit-activity/edit-activity.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'activities', component: ActivitiesComponent},
   {path: 'add-activity', component: AddActivityComponent},
   {path: 'show-activity/:id', component: ShowActivityComponent},
+  {path: 'edit-activity/:id', component: EditActivityComponent},
   {path: 'not-available', component: ServiceNotAvailableComponent},
   {path: 'not-found', component: PageNotFoundComponent},
   {path: '**', component: PageNotFoundComponent}

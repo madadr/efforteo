@@ -29,20 +29,6 @@
             <div *ngIf="f.category.errors.mustBeValid">Category must match one of following: (ride, run, swim).</div>
           </div>
         </div>
-
-        <!--<div class="form-group input=group">-->
-          <!--<div class="input-group-prepend">-->
-            <!--<label class="input-group-text bg-white" for="catSelect">Category</label>-->
-          <!--</div>-->
-          <!--<select class="custom-select" id="catSelect" class="form-control"-->
-                  <!--[(ngModel)]="selectedOption"-->
-                  <!--[ngClass]="{ 'is-invalid': submitted && f.category.errors }">-->
-            <!--<option *ngFor="let cat of categories">{{cat | titlecase}}</option>-->
-          <!--</select>-->
-          <!--<div *ngIf="submitted && f.category.errors" class="invalid-feedback">-->
-            <!--<div *ngIf="f.category.errors.minLength">Select a category</div>-->
-          <!--</div>-->
-        <!--</div>-->
         <div class="row">
           <div class="form-group input-group col-5">
             <div class="input-group-prepend">
