@@ -74,3 +74,17 @@ services:
     #ports:
     #  - '5030:5000'
     #  - '5031:5001'
+
+  stats-service:
+    image: efforteo.services.stats
+    build: ../src/Efforteo.Services.Stats
+    #restart: on-failure
+    depends_on:
+      - mongo
+      - rabbitmq
+    links:
+      - rabbitmq
+      - mongo
+    #ports:
+    #  - '5040:5000'
+    #  - '5041:5001'
