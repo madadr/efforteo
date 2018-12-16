@@ -27,6 +27,7 @@ import {LoadingService} from './loading.service';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { EditActivityComponent } from './edit-activity/edit-activity.component';
 import { BriefActivityComponent } from './brief-activity/brief-activity.component';
+import {ChartsModule} from 'ng2-charts';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { BriefActivityComponent } from './brief-activity/brief-activity.componen
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ChartsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true},
