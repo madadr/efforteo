@@ -104,7 +104,7 @@ namespace Efforteo.Services.Activities.Controllers
             try
             {
                 await _activityService.UpdateAsync(command);
-                await _busClient.PublishAsync(new ActivityUpdated(command.Id, command.UserId, command.Category, command.Title, command.Description, command.Time.GetValueOrDefault(-1), command.Distance.GetValueOrDefault(-1)));
+                await _busClient.PublishAsync(new ActivityUpdated(command.Id, command.UserId, command.Category, command.Title, command.Description, command.Time.GetValueOrDefault(-1), command.Distance.GetValueOrDefault(-1), command.CreatedAt));
                 return Ok();
             }
             catch (EfforteoException ex)

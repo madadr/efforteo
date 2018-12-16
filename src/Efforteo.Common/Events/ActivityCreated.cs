@@ -11,13 +11,14 @@ namespace Efforteo.Common.Events
         public string Description { get; }
         public long Time { get; }
         public float Distance { get; }
+        public DateTime CreatedAt { get; }
 
         protected ActivityCreated()
         {
 
         }
 
-        public ActivityCreated(Guid id, Guid userId, string category, string title, string description, long time, float distance)
+        public ActivityCreated(Guid id, Guid userId, string category, string title, string description, long time, float distance, DateTime createdAt)
         {
             Id = id;
             UserId = userId;
@@ -26,6 +27,7 @@ namespace Efforteo.Common.Events
             Description = description;
             Time = time;
             Distance = distance;
+            CreatedAt = createdAt;
         }
     }
 }

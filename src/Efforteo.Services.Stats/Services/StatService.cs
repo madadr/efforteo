@@ -55,7 +55,7 @@ namespace Efforteo.Services.Stats.Services
                 return null;
             }
 
-            var userStatsByCategory = userStats.GroupBy(stat => stat.Category);
+            var userStatsByCategory = userStats.GroupBy(stat => stat.Category.ToLowerInvariant());
             List<CategoryTotal> totalStats = new List<CategoryTotal>();
             foreach (var categoryStats in userStatsByCategory)
             {
@@ -78,7 +78,7 @@ namespace Efforteo.Services.Stats.Services
                 throw new EfforteoException("negative_days", "Period cannot have negative days");
             }
 
-            var userStatsByCategory = userStats.GroupBy(stat => stat.Category);
+            var userStatsByCategory = userStats.GroupBy(stat => stat.Category.ToLowerInvariant());
             List <CategoryDetails> periodStats = new List<CategoryDetails>();
             foreach (var categoryStats in userStatsByCategory)
             {

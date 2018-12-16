@@ -71,9 +71,22 @@
       ],
       "UpstreamPathTemplate": "/api/activities/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/stats/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "stats-service",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/api/stats/{everything}",
+      "UpstreamHttpMethod": [ "GET" ]
     }
   ],
+
   "GlobalConfiguration": {
-    "BaseUrl" : "api-service:5000" 
+    "BaseUrl": "api-service:5000"
   }
 }

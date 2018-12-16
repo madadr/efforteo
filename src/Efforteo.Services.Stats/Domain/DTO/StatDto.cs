@@ -11,6 +11,6 @@ namespace Efforteo.Services.Stats.Domain.DTO
         public long Time { get; set; }
         public float? Speed { get; set; }
         public int? Pace { get; set; }
-        public DateTime CreatedAt { get; protected set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

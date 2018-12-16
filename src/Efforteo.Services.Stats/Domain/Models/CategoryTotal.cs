@@ -25,7 +25,7 @@ namespace Efforteo.Services.Stats.Domain.Models
                 return;
             }
 
-            Category = stats.First().Category;
+            Category = stats.First().Category.ToLowerInvariant();
             Amount = stats.Count();
             Time = stats.Sum(s => s.Time);
             Distance = stats.Sum(s => s.Distance);

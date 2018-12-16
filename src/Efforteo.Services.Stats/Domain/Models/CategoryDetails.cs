@@ -22,7 +22,7 @@ namespace Efforteo.Services.Stats.Domain.Models
                 return;
             }
 
-            Category = stats.First().Category;
+            Category = stats.First().Category.ToLowerInvariant();
             Days = days;
             var day = DateTime.UtcNow.AddDays(1 - Days);
             PeriodStart = new DateTime(day.Year, day.Month, day.Day, 0, 0, 0, DateTimeKind.Utc);

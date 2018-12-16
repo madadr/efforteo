@@ -8,6 +8,7 @@ namespace Efforteo.Services.Stats.Domain.DTO
 {
     public class CategoryTotalDto
     {
+        public string Category { get; set; }
         public int Amount { get; set; }
         public long Time { get; set; }
         public float Distance { get; set; }

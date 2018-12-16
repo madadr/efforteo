@@ -7,6 +7,7 @@ using Efforteo.Services.Stats.Domain.Models;
 using Efforteo.Services.Stats.Domain.Repositories;
 using Efforteo.Services.Stats.Repositories;
 using Efforteo.Services.Stats.Services;
+using Efforteo.Services.Stats.Handlers;
 
 namespace Efforteo.Services.Stats.IoC.Modules
 {
@@ -32,15 +33,15 @@ namespace Efforteo.Services.Stats.IoC.Modules
             builder.RegisterModule<DispatcherModule>();
 
             // Dispatcher not working well for now, so ...
-//            builder.RegisterType<UserCreatedHandler>()
-//                .As<IEventHandler<UserCreated>>()
-//                .InstancePerLifetimeScope();
-//            builder.RegisterType<UserAuthenticatedHandler>()
-//                .As<IEventHandler<UserAuthenticated>>()
-//                .InstancePerLifetimeScope();
-//            builder.RegisterType<UserRemovedHandler>()
-//                .As<IEventHandler<UserRemoved>>()
-//                .InstancePerLifetimeScope();
+            builder.RegisterType<ActivityCreatedHandler>()
+                .As<IEventHandler<ActivityCreated>>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<ActivityUpdatedHandler>()
+                .As<IEventHandler<ActivityUpdated>>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<ActivityRemovedHandler>()
+                .As<IEventHandler<ActivityRemoved>>()
+                .InstancePerLifetimeScope();
         }
     }
 }
