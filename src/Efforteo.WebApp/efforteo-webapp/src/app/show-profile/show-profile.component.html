@@ -1,0 +1,168 @@
+<div class="mt-2 mx-3">
+
+  <app-alerts></app-alerts>
+
+  <div class="jumbotron">
+    <app-loader *ngIf="toggleService.isShown(accountLoaderName)"
+                class="my-3 d-flex justify-content-center"
+                size="100"></app-loader>
+    <div *ngIf="!account && !accountAvailable">
+      <h5>Could not fetch account data.</h5>
+      <button (click)="loadAccountData()" class="btn btn-outline-success btn-sm">Refresh</button>
+    </div>
+    <app-profile-details *ngIf="!toggleService.isShown(accountLoaderName) && account" [account]="account"></app-profile-details>
+  </div>
+
+  <!--<div class="jumbotron">-->
+    <!--<h3>Period stats</h3>-->
+    <!--<hr/>-->
+
+    <!--<app-loader *ngIf="toggleService.isShown(totalLoaderName)"-->
+                <!--class="my-3 d-flex justify-content-center"-->
+                <!--size="100"></app-loader>-->
+    <!--<div *ngIf="!totalStats && totalStatsAvailable">-->
+      <!--<h5>No stats to display.</h5>-->
+    <!--</div>-->
+    <!--<div *ngIf="!totalStats && !totalStatsAvailable">-->
+      <!--<h5>Could not fetch total stats data.</h5>-->
+      <!--<button (click)="loadTotalStats()" class="btn btn-outline-success btn-sm">Refresh</button>-->
+    <!--</div>-->
+    <!--<app-total-stats *ngIf="!toggleService.isShown(totalLoaderName) && totalStats" [stats]="totalStats"></app-total-stats>-->
+  <!--</div>-->
+
+  <div class="jumbotron">
+    <h3>Period stats</h3>
+    <hr/>
+    <p>
+      <button class="btn btn-primary mr-2" type="button" data-toggle="collapse" data-target="#multiCollapseExample1"
+              aria-expanded="false" aria-controls="multiCollapseExample1">7 days
+      </button>
+      <button class="btn btn-primary mr-3" type="button" data-toggle="collapse" data-target="#multiCollapseExample2"
+              aria-expanded="false" aria-controls="multiCollapseExample2">30 days
+      </button>
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse"
+              aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Both
+      </button>
+    </p>
+    <div class="row">
+      <div class="col-6 collapse multi-collapse" id="multiCollapseExample1">
+        <h3>Last 7 days stats</h3>
+        <hr/>
+        <app-loader *ngIf="toggleService.isShown(stats7LoaderName)"
+                    class="my-3 d-flex justify-content-center"
+                    size="100"></app-loader>
+        <div *ngIf="!toggleService.isShown(stats7LoaderName)">
+          <div *ngIf="!stats7 && stats7available">
+            <h5>No stats to display.</h5>
+          </div>
+          <div *ngIf="!stats7 && !stats7available">
+            <h5>Could not fetch data.</h5>
+            <button (click)="loadStats7Data()" class="btn btn-outline-success btn-sm">Refresh</button>
+          </div>
+          <div *ngIf="stats7">
+            <div class="accordion" id="accordionExample7">
+              <div class="card">
+                <div class="card-header" id="headingOne7">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link text-dark" type="button" data-toggle="collapse"
+                            data-target="#collapseOne7"
+                            aria-expanded="true" aria-controls="collapseOne7">
+                      <p class="lead">Time in hours</p>
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseOne7" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample7">
+                  <div class="card-body">
+                    <div style="display: block; margin: auto;" align="center">
+                      <app-period-chart [(ngModel)]="stats7" [stats]="stats7" statType="time" chartType="bar"
+                                        ngDefaultControl style="display: block; margin: auto;"
+                                        align="center"></app-period-chart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingTwo7">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo7" aria-expanded="false" aria-controls="collapseTwo7">
+                      <p class="lead">Distance in km</p>
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseTwo7" class="collapse" aria-labelledby="headingTwo7" data-parent="#accordionExample7">
+                  <div class="card-body">
+                    <div style="display: block; margin: auto;" align="center">
+                      <app-period-chart [(ngModel)]="stats7" [stats]="stats7" statType="distance" chartType="line"
+                                        ngDefaultControl></app-period-chart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 collapse multi-collapse" id="multiCollapseExample2">
+        <h3>Last 30 days stats</h3>
+        <hr/>
+        <app-loader *ngIf="toggleService.isShown(stats30LoaderName)"
+                    class="my-3 d-flex justify-content-center"
+                    size="100"></app-loader>
+        <div *ngIf="!toggleService.isShown(stats30LoaderName)">
+          <div *ngIf="!stats30 && stats30available">
+            <h5>No stats to display.</h5>
+          </div>
+          <div *ngIf="!stats30 && !stats30available">
+            <h5>Could not fetch data.</h5>
+            <button (click)="loadStats30Data()" class="btn btn-outline-success btn-sm">Refresh</button>
+          </div>
+          <div *ngIf="stats30">
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link text-dark" type="button" data-toggle="collapse"
+                            data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">
+                      <p class="lead">Time in hours</p>
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <div style="display: block; margin: auto;" align="center">
+                      <app-period-chart [(ngModel)]="stats30" [stats]="stats30" statType="time" chartType="bar"
+                                        ngDefaultControl style="display: block; margin: auto;"
+                                        align="center"></app-period-chart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      <p class="lead">Distance in km</p>
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <div style="display: block; margin: auto;" align="center">
+                      <app-period-chart [(ngModel)]="stats30" [stats]="stats30" statType="distance" chartType="line"
+                                        ngDefaultControl></app-period-chart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -14,7 +14,7 @@
         Created {{ createdAgo | timeAgo }} by
         <app-loader *ngIf="toggleService.isShown(userNameLoaderName)" size="15"></app-loader>
         <span *ngIf="!toggleService.isShown(userNameLoaderName)">
-          <a *ngIf="userName" routerLink="/profile/{{activity.userId}}" [(ngModel)]="userName"
+          <a *ngIf="userName" routerLink="/show-profile/{{activity.userId}}" [(ngModel)]="userName"
              ngDefaultControl>{{userName}}</a>
           <button *ngIf="!userName" (click)="loadUserName()" class="btn btn-outline-success btn-sm">Refresh</button>
       </span>

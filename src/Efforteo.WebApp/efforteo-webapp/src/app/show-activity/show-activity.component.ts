@@ -12,6 +12,7 @@ import {Alert} from '../alert';
 import {AuthService} from '../auth.service';
 import {StatsService} from '../stats.service';
 import {ActivityStats} from '../model/activity-stats';
+import {Account} from '../model/account';
 
 @Component({
   selector: 'app-show-activity',
@@ -99,12 +100,11 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
   }
 
   public loadUserName() {
-    let account: Account;
     this.toggleService.show(this.userNameLoaderName);
     this.accountService.getUserData(this.activity.userId)
       .pipe(map(resp => {
-          account = <Account>JSON.parse(JSON.stringify(resp.body));
-          console.log('Account = ' + JSON.stringify(this.activity));
+          const account = <Account>JSON.parse(JSON.stringify(resp.body));
+          console.log('Account = ' + JSON.stringify(account));
 
           if (account != null) {
             this.userName = account.name;

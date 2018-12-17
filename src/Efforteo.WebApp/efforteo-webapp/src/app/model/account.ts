@@ -1,4 +1,4 @@
-export class Activity {
+export class Account {
   public id: string;
   public email: string;
   public name: string;

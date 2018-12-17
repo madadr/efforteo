@@ -6,10 +6,10 @@
   <div class="jumbotron">
     <h3>Last 7 days stats</h3>
     <hr/>
-    <app-loader *ngIf="toggleService.isShown(lastDaysStatsLoaderName)"
+    <app-loader *ngIf="toggleService.isShown(statsLoaderName)"
                 class="my-3 d-flex justify-content-center"
                 size="100"></app-loader>
-    <div *ngIf="!toggleService.isShown(lastDaysStatsLoaderName)">
+    <div *ngIf="!toggleService.isShown(statsLoaderName)">
       <div *ngIf="!stats">
         <h5>No stats to display.</h5>
       </div>
@@ -51,13 +51,6 @@
             </div>
           </div>
         </div>
-
-        <!--<div class="col-md-8">-->
-          <!--<p class="lead">Time in hours</p>-->
-
-        <!--</div>-->
-        <!--<br/>-->
-      <!--</div>-->
     </div>
   </div>
 

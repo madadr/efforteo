@@ -1,5 +1,5 @@
 <div *ngIf="activity" class="card text-dark bg-light mb-3">
-  <div class="card-header">Created {{ createdAgo | timeAgo }} by <a routerLink="/profile/{{activity.userId}}"><span *ngIf="userName">{{userName}}</span><span *ngIf="!userName"> user {{activity.userId | slice:0:4}}...</span></a>
+  <div class="card-header">Created {{ createdAgo | timeAgo }} by <a routerLink="/show-profile/{{activity.userId}}"><span *ngIf="userName">{{userName}}</span><span *ngIf="!userName"> user {{activity.userId | slice:0:4}}...</span></a>
   </div>
   <div class="card-body border-bottom border-info">
     <h5 class="card-title"><span class="badge text-light bg-{{(activity.category | lowercase)}}">{{activity.category | uppercase}}</span><br/>

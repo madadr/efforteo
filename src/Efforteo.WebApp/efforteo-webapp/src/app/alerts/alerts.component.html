@@ -1,7 +1,7 @@
 <div *ngIf="alertService.alerts.length">
   <div *ngFor='let alert of alertService.alerts' class="alert alert-{{alert.type}} alert-dismissible fade show" role="alert">
     {{ alert.value }}
-    <span *ngIf="alert.link !== ''"><a href="{{alert.link}}"> here</a></span>
+    <span *ngIf="alert.link !== ''"><a routerLink="{{alert.link}}"> here</a></span>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="alertService.remove(alert)">
       <span aria-hidden="true">&times;</span>
     </button>

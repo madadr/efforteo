@@ -91,7 +91,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }))
       .subscribe(() => {
       });
-
   }
 
   private loadLastActivities() {

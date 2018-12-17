@@ -11,7 +11,6 @@ export class PeriodChartComponent implements OnInit {
   @Input() statType = 'distance';
   @Input() chartType = 'line';
 
-  // lineChart
   public chartData: Array<any> = [];
   public chartLabels: Array<any> = [];
 
