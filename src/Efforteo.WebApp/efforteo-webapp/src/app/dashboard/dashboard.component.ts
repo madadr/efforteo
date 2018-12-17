@@ -6,6 +6,8 @@ import {Activity} from '../model/activity';
 import {catchError, finalize, map, timeout} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import {AuthService} from '../auth.service';
+import {StatsService} from '../stats.service';
+import {UserPeriodStats} from '../model/user-period-stats';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +17,9 @@ import {AuthService} from '../auth.service';
 export class DashboardComponent implements OnInit, OnDestroy {
   lastCommunityActivity: Activity = null;
   lastUserActivity: Activity = null;
+  stats: UserPeriodStats[] = null;
 
+  statsLoaderName = 'statsLoader';
   lastCommunityActivityLoaderName = 'communityLoader';
   lastUserActivityLoaderName = 'userLoader';
   private userId: string;
@@ -23,11 +27,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private activityService: ActivityService,
               private authService: AuthService,
+              private statsService: StatsService,
               private router: Router,
               private toggleService: LoadingService) {
   }
 
   ngOnInit() {
+    this.toggleService.create(this.statsLoaderName);
     this.toggleService.create(this.lastCommunityActivityLoaderName);
     this.toggleService.create(this.lastUserActivityLoaderName);
 
@@ -35,12 +41,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.toggleService.remove(this.statsLoaderName);
     this.toggleService.remove(this.lastCommunityActivityLoaderName);
     this.toggleService.remove(this.lastUserActivityLoaderName);
   }
 
   private loadData() {
+    this.toggleService.show(this.statsLoaderName);
     this.toggleService.show(this.lastCommunityActivityLoaderName);
+    this.toggleService.show(this.lastUserActivityLoaderName);
     this.authService.getId()
       .pipe(map(resp => {
           // @ts-ignore
@@ -48,6 +57,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             // @ts-ignore
             this.userId = resp.body.id;
 
+            this.loadStatsData();
             this.loadLastActivities();
           }
         }),
@@ -56,10 +66,32 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }),
         timeout(new Date(new Date().getTime() + 3000)),
         finalize(() => {
+          this.toggleService.hide(this.statsLoaderName);
           this.toggleService.hide(this.lastCommunityActivityLoaderName);
+          this.toggleService.hide(this.lastUserActivityLoaderName);
         } ))
       .subscribe(() => {
       });
+  }
+
+  private loadStatsData() {
+    this.statsService.getPeriodStats(this.userId, 7)
+      .pipe(map(resp => {
+          const stats = <UserPeriodStats[]>JSON.parse(JSON.stringify(resp.body));
+
+          if (stats != null) {
+            this.stats = stats;
+            this.toggleService.hide(this.statsLoaderName);
+          }
+        }),
+        catchError(err => {
+          return throwError(err);
+        }),
+        finalize(() => {
+        }))
+      .subscribe(() => {
+      });
+
   }
 
   private loadLastActivities() {

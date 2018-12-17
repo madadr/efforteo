@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Efforteo.Common.Commands;
+using Efforteo.Common.Exceptions;
 using Efforteo.Services.Stats.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -55,12 +56,15 @@ namespace Efforteo.Services.Stats.Controllers
             return new JsonResult(stat);
         }
 
-        [HttpGet("period", Name = "getPeriodStats")]
-        public async Task<IActionResult> GetPeriodStats(GetPeriodStats command)
+        [HttpGet("period/{userId}/{days}", Name = "getPeriodStats")]
+        public async Task<IActionResult> GetPeriodStats(Guid userId, int days)
         {
-            _logger.LogInformation($"StatsController::GetPeriodStats command={JsonConvert.SerializeObject(command)}");
-
-            var stat = await _statService.GetPeriodAsync(command.UserId, command.Days);
+            _logger.LogInformation($"StatsController::GetPeriodStats userId={userId}, days={days}");
+            if (days <= 0)
+            {
+                throw new EfforteoException("empty_days", "Cannot get period stats. Invalid days period.");
+            }
+            var stat = await _statService.GetPeriodAsync(userId, days);
             if (stat == null)
             {
                 return NoContent();

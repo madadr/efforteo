@@ -24,10 +24,11 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {ServiceNotAvailableComponent} from './service-not-available/service-not-available.component';
 import {LoaderComponent} from './loader/loader.component';
 import {TimeAgoPipe} from 'time-ago-pipe';
-import { EditActivityComponent } from './edit-activity/edit-activity.component';
-import { BriefActivityComponent } from './brief-activity/brief-activity.component';
-import {ChartsModule} from 'ng2-charts';
+import {EditActivityComponent} from './edit-activity/edit-activity.component';
+import {BriefActivityComponent} from './brief-activity/brief-activity.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {PeriodChartComponent} from './period-chart/period-chart.component';
+import {ChartsModule} from 'ng2-charts/ng2-charts';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     ServiceNotAvailableComponent,
     TimeAgoPipe,
     EditActivityComponent,
-    BriefActivityComponent
+    BriefActivityComponent,
+    PeriodChartComponent
   ],
   imports: [
     BrowserModule,

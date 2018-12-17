@@ -25,7 +25,8 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {
@@ -81,7 +82,8 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -131,5 +133,5 @@
       }
     }
   },
-  "defaultProject": "efforteo-webapp"
+  "defaultProject": "efforteo-webapp",
 }

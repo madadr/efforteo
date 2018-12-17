@@ -71,11 +71,12 @@ namespace Efforteo.Services.Stats.Domain.Models
             }
         }
 
-        public void SetStatData(string category, float distance, long time)
+        public void SetStatData(string category, float distance, long time, DateTime createdAt)
         {
             Category = category;
             Distance = distance;
             Time = time;
+            CreatedAt = createdAt;
 
             CalculateSpeed();
             CalculatePace();

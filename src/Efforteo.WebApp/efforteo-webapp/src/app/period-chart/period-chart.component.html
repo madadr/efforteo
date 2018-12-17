@@ -1,0 +1,8 @@
+<div>
+  <canvas baseChart
+          *ngIf="stats.length > 0"
+          [datasets]="chartData"
+          [labels]="chartLabels"
+          [options]="chartOptions"
+          [chartType]='chartType'></canvas>
+</div>

@@ -96,7 +96,7 @@ namespace Efforteo.Services.Stats.Services
                throw new EfforteoException("stat_not_exists", $"Stat doesn't exist {statDto.Id}.");
             }
                         
-            stat.SetStatData(statDto.Category, statDto.Distance, statDto.Time);
+            stat.SetStatData(statDto.Category, statDto.Distance, statDto.Time, statDto.CreatedAt);
             
             await _repository.UpdateAsync(stat);
         }

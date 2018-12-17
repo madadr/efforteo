@@ -14,11 +14,18 @@
         <h5>No stats to display.</h5>
       </div>
       <div *ngIf="stats">
-        <!--<activity-chart data="stats"></activity-chart>-->
+        <div class="col-md-8">
+          <p class="lead">Time in hours</p>
+          <app-period-chart [(ngModel)]="stats" [stats]="stats" statType="time" chartType="bar" ngDefaultControl></app-period-chart>
+        </div>
+      <br/>
+        <div class="col-md-8">
+          <p class="lead">Distance in km</p>
+          <app-period-chart [(ngModel)]="stats" [stats]="stats" statType="distance" chartType="line" ngDefaultControl></app-period-chart>
+        </div>
       </div>
     </div>
   </div>
-  <!--<activity-chart data=""></activity-chart>-->
 
   <div class="jumbotron">
     <h3>Last activity in community</h3>
