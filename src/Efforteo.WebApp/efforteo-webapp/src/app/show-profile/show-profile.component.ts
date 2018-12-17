@@ -20,7 +20,8 @@ import {UserTotalStats} from '../model/user-total-stats';
 })
 export class ShowProfileComponent implements OnInit, OnDestroy {
   userId: string;
-  // totalStats: UserTotalStats[] = null;
+  totalStats: UserTotalStats[] = null;
+  totalStatsAvailable = false;
   stats7: UserPeriodStats[] = null;
   stats7available = false;
   stats30: UserPeriodStats[] = null;
@@ -29,13 +30,13 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
   accountAvailable = false;
   private sub: any;
 
+  totalLoaderName = 'totalStatsLoader';
   stats7LoaderName = 'stats7Loader';
   stats30LoaderName = 'stats30Loader';
   accountLoaderName = 'accountLoader';
 
   accountLoadFailAlert = new Alert('danger', 'Account service is not available. Failed to fetch account data. Try to refresh later.');
   statsLoadFailAlert = new Alert('danger', 'Stats service is not available. Failed to fetch statistics. Try to refresh later.');
-
 
   constructor(private route: ActivatedRoute,
               private activityService: ActivityService,
@@ -48,22 +49,55 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.toggleService.create(this.totalLoaderName);
     this.toggleService.create(this.stats7LoaderName);
     this.toggleService.create(this.stats30LoaderName);
     this.toggleService.create(this.accountLoaderName);
     this.sub = this.route.params.subscribe(params => {
       this.userId = params['id'];
     });
+    this.loadTotalStatsData();
     this.loadStats7Data();
     this.loadStats30Data();
     this.loadAccountData();
   }
 
   ngOnDestroy(): void {
+    this.toggleService.remove(this.totalLoaderName);
     this.toggleService.remove(this.stats7LoaderName);
     this.toggleService.remove(this.stats30LoaderName);
     this.toggleService.remove(this.accountLoaderName);
     this.sub.unsubscribe();
+  }
+
+  private loadTotalStatsData() {
+    this.toggleService.show(this.totalLoaderName);
+    this.statsService.getTotalStats(this.userId)
+      .pipe(map(resp => {
+          const stats = <UserTotalStats[]>JSON.parse(JSON.stringify(resp.body));
+
+          if (stats != null) {
+            this.totalStats = stats;
+            this.alertService.remove(this.statsLoadFailAlert);
+          }
+
+          this.totalStatsAvailable = true;
+        }),
+        catchError(err => {
+          if (err.status >= 500 || err.status < 600) {
+            if (!this.alertService.has(this.statsLoadFailAlert)) {
+              this.alertService.add(this.statsLoadFailAlert);
+              this.totalStatsAvailable = false;
+            }
+          }
+          return throwError(err);
+        }),
+        timeout(new Date(new Date().getTime() + 3000)),
+        finalize(() => {
+          this.toggleService.hide(this.totalLoaderName);
+        }))
+      .subscribe(() => {
+      });
   }
 
   private loadStats7Data() {

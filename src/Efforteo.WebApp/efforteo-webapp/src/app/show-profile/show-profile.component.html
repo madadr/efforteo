@@ -1,34 +1,37 @@
 <div class="mt-2 mx-3">
 
   <app-alerts></app-alerts>
-
-  <div class="jumbotron">
-    <app-loader *ngIf="toggleService.isShown(accountLoaderName)"
-                class="my-3 d-flex justify-content-center"
-                size="100"></app-loader>
-    <div *ngIf="!account && !accountAvailable">
-      <h5>Could not fetch account data.</h5>
-      <button (click)="loadAccountData()" class="btn btn-outline-success btn-sm">Refresh</button>
+  <div class="row">
+    <div class="jumbotron col-6 border-right border-white">
+      <app-loader *ngIf="toggleService.isShown(accountLoaderName)"
+                  class="my-3 d-flex justify-content-center"
+                  size="100"></app-loader>
+      <div *ngIf="!account && !accountAvailable">
+        <h5>Could not fetch account data.</h5>
+        <button (click)="loadAccountData()" class="btn btn-outline-success btn-sm">Refresh</button>
+      </div>
+      <app-profile-details *ngIf="!toggleService.isShown(accountLoaderName) && account"
+                           [account]="account"></app-profile-details>
     </div>
-    <app-profile-details *ngIf="!toggleService.isShown(accountLoaderName) && account" [account]="account"></app-profile-details>
+    <div class="jumbotron col-6 border-left border-white">
+      <h3 class="pt-5 text-center">Total stats</h3>
+      <hr/>
+
+      <app-loader *ngIf="toggleService.isShown(totalLoaderName)"
+                  class="my-3 d-flex justify-content-center"
+                  size="100"></app-loader>
+      <div *ngIf="!totalStats && totalStatsAvailable">
+        <h5>No stats to display.</h5>
+      </div>
+      <div *ngIf="!totalStats && !totalStatsAvailable">
+        <h5>Could not fetch total stats data.</h5>
+        <button (click)="loadTotalStatsData()" class="btn btn-outline-success btn-sm">Refresh</button>
+      </div>
+      <app-total-stats *ngIf="!toggleService.isShown(totalLoaderName) && totalStats"
+                       [stats]="totalStats"></app-total-stats>
+    </div>
   </div>
 
-  <!--<div class="jumbotron">-->
-    <!--<h3>Period stats</h3>-->
-    <!--<hr/>-->
-
-    <!--<app-loader *ngIf="toggleService.isShown(totalLoaderName)"-->
-                <!--class="my-3 d-flex justify-content-center"-->
-                <!--size="100"></app-loader>-->
-    <!--<div *ngIf="!totalStats && totalStatsAvailable">-->
-      <!--<h5>No stats to display.</h5>-->
-    <!--</div>-->
-    <!--<div *ngIf="!totalStats && !totalStatsAvailable">-->
-      <!--<h5>Could not fetch total stats data.</h5>-->
-      <!--<button (click)="loadTotalStats()" class="btn btn-outline-success btn-sm">Refresh</button>-->
-    <!--</div>-->
-    <!--<app-total-stats *ngIf="!toggleService.isShown(totalLoaderName) && totalStats" [stats]="totalStats"></app-total-stats>-->
-  <!--</div>-->
 
   <div class="jumbotron">
     <h3>Period stats</h3>

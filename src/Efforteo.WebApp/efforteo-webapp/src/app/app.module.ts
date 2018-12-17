@@ -31,6 +31,7 @@ import {PeriodChartComponent} from './period-chart/period-chart.component';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
 import { ShowProfileComponent } from './show-profile/show-profile.component';
 import { ProfileDetailsComponent } from './profile-details/profile-details.component';
+import { TotalStatsComponent } from './total-stats/total-stats.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { ProfileDetailsComponent } from './profile-details/profile-details.compo
     PeriodChartComponent,
     ShowProfileComponent,
     ProfileDetailsComponent,
+    TotalStatsComponent,
   ],
   imports: [
     BrowserModule,

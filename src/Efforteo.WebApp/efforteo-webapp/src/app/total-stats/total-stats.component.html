@@ -1,0 +1,28 @@
+<table *ngIf="stats && stats.length > 0"
+       class="table table-sm table-responsive table-light table-bordered table-hover lead">
+  <thead>
+  <tr>
+    <th>Category</th>
+    <th scope="col">Amount</th>
+    <th scope="col">Time</th>
+    <th scope="col">Distance</th>
+    <th scope="col">Avg. speed</th>
+    <th scope="col">Avg. pace</th>
+    <th scope="col">Longest distance</th>
+    <th scope="col">Longest time</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let stat of stats">
+    <th scope="row" class="lead">{{stat.category}}</th>
+    <td>{{stat.amount}}</td>
+    <td>{{stat.time}}</td>
+    <td>{{stat.distance}}</td>
+    <td>{{stat.averageSpeed | number:'1.2-2'}}</td>
+    <td>{{converter.getPaceTimeString(stat.averagePace)}}</td>
+    <td><a routerLink="/show-activity/{{stat.longestDistance.id}}">{{stat.longestDistance.distance}} km</a></td>
+    <td><a routerLink="/show-activity/{{stat.longestTime.id}}">{{converter.getTimeString(stat.longestTime.time)}}</a>
+    </td>
+  </tr>
+  </tbody>
+</table>

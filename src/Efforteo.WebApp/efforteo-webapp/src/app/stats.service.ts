@@ -14,7 +14,12 @@ export class StatsService {
   }
 
   getPeriodStats(userId: string, days: number) {
-    console.log('called get stats for userId =' + userId + ', days = ' + days);
+    console.log('called get period stats for userId =' + userId + ', days = ' + days);
     return this.http.get(`/api/stats/period/` + userId + '/' + days, {observe: 'response'});
+  }
+
+  getTotalStats(userId: string) {
+    console.log('called get total stats for userId =' + userId);
+    return this.http.get(`/api/stats/total/` + userId, {observe: 'response'});
   }
 }
