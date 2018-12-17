@@ -2,7 +2,7 @@
   <div class="card-header">Created {{ createdAgo | timeAgo }} by <a routerLink="/show-profile/{{activity.userId}}"><span *ngIf="userName">{{userName}}</span><span *ngIf="!userName"> user {{activity.userId | slice:0:4}}...</span></a>
   </div>
   <div class="card-body border-bottom border-info">
-    <h5 class="card-title"><span class="badge text-light bg-{{(activity.category | lowercase)}}">{{activity.category | uppercase}}</span><br/>
+    <h5 class="card-title"><span class="badge text-light bg-{{(activity.category | lowercase)}} mb-1">{{activity.category | uppercase}}</span><br/>
       <a class="text-dark" routerLink="/show-activity/{{activity.id}}">{{ (activity.title.length > 25)?((activity.title | slice:0:20) + '...'):(activity.title)}}</a></h5>
     <div class="row justify-content-center mt-1 mb-2">
       <div class="card text-center">

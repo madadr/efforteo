@@ -14,7 +14,7 @@
                            [account]="account"></app-profile-details>
     </div>
     <div class="jumbotron col-6 border-left border-white">
-      <h3 class="pt-5 text-center">Total stats</h3>
+      <h3 class="text-center">Total stats</h3>
       <hr/>
 
       <app-loader *ngIf="toggleService.isShown(totalLoaderName)"
@@ -49,7 +49,7 @@
     </p>
     <div class="row">
       <div class="col-6 collapse multi-collapse" id="multiCollapseExample1">
-        <h3>Last 7 days stats</h3>
+        <h5>Last 7 days</h5>
         <hr/>
         <app-loader *ngIf="toggleService.isShown(stats7LoaderName)"
                     class="my-3 d-flex justify-content-center"
@@ -108,7 +108,7 @@
       </div>
 
       <div class="col-6 collapse multi-collapse" id="multiCollapseExample2">
-        <h3>Last 30 days stats</h3>
+        <h5>Last 30 days</h5>
         <hr/>
         <app-loader *ngIf="toggleService.isShown(stats30LoaderName)"
                     class="my-3 d-flex justify-content-center"

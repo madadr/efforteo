@@ -1,28 +1,36 @@
-<table *ngIf="stats && stats.length > 0"
-       class="table table-sm table-responsive table-light table-bordered table-hover lead">
-  <thead>
-  <tr>
-    <th>Category</th>
-    <th scope="col">Amount</th>
-    <th scope="col">Time</th>
-    <th scope="col">Distance</th>
-    <th scope="col">Avg. speed</th>
-    <th scope="col">Avg. pace</th>
-    <th scope="col">Longest distance</th>
-    <th scope="col">Longest time</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let stat of stats">
-    <th scope="row" class="lead">{{stat.category}}</th>
-    <td>{{stat.amount}}</td>
-    <td>{{stat.time}}</td>
-    <td>{{stat.distance}}</td>
-    <td>{{stat.averageSpeed | number:'1.2-2'}}</td>
-    <td>{{converter.getPaceTimeString(stat.averagePace)}}</td>
-    <td><a routerLink="/show-activity/{{stat.longestDistance.id}}">{{stat.longestDistance.distance}} km</a></td>
-    <td><a routerLink="/show-activity/{{stat.longestTime.id}}">{{converter.getTimeString(stat.longestTime.time)}}</a>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<ngb-tabset *ngIf="stats && stats.length > 0" type="pills" justify="center">
+  <ngb-tab *ngFor="let stat of stats" title="{{stat.category | titlecase}}">
+    <ng-template ngbTabContent class="mb-2">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span class="">Amount</span>
+          <span class="">{{stat.amount}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span class="">Time</span>
+          <span class="">{{converter.getTimeString(stat.time)}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span class="">Distance</span>
+          <span class="">{{stat.distance}} km</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span class="">Avg. speed</span>
+          <span class="">{{stat.averageSpeed | number:'1.2-2'}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span class="">Avg. pace</span>
+          <span class="">{{converter.getPaceTimeString(stat.averagePace)}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span class="">Longest distance</span>
+          <span class=""><a routerLink="/show-activity/{{stat.longestDistance.id}}">{{stat.longestDistance.distance}} km</a></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span class="">Longest time</span>
+          <span class=""><a routerLink="/show-activity/{{stat.longestTime.id}}">{{converter.getTimeString(stat.longestTime.time)}}</a></span>
+        </li>
+      </ul>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
