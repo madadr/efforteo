@@ -1,9 +1,9 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ActivityService} from '../activity.service';
 import {Activity} from '../model/activity';
-import {catchError, delay, finalize, map, timeout} from 'rxjs/operators';
-import {Observable, throwError} from 'rxjs';
+import {catchError, finalize, map, timeout} from 'rxjs/operators';
+import {throwError} from 'rxjs';
 import {LoadingService} from '../loading.service';
 import {Converter} from '../utils/converter';
 import {AccountService} from '../account.service';

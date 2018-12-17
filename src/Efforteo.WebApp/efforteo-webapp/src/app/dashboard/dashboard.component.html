@@ -1,0 +1,60 @@
+<div class="mt-2 mx-3">
+  <div class="jumbotron">
+    <h1>Dashboard</h1>
+  </div>
+
+  <div class="jumbotron">
+    <h3>Last 7 days stats</h3>
+    <hr/>
+    <app-loader *ngIf="toggleService.isShown(lastDaysStatsLoaderName)"
+                class="my-3 d-flex justify-content-center"
+                size="100"></app-loader>
+    <div *ngIf="!toggleService.isShown(lastDaysStatsLoaderName)">
+      <div *ngIf="!stats">
+        <h5>No stats to display.</h5>
+      </div>
+      <div *ngIf="stats">
+        <!--<activity-chart data="stats"></activity-chart>-->
+      </div>
+    </div>
+  </div>
+  <!--<activity-chart data=""></activity-chart>-->
+
+  <div class="jumbotron">
+    <h3>Last activity in community</h3>
+    <hr/>
+    <app-loader *ngIf="toggleService.isShown(lastCommunityActivityLoaderName)"
+                class="my-3 d-flex justify-content-center"
+                size="100"></app-loader>
+    <div *ngIf="!toggleService.isShown(lastCommunityActivityLoaderName)">
+      <div *ngIf="!lastCommunityActivity">
+        <h5>No activities to display.</h5>
+      </div>
+      <div *ngIf="lastCommunityActivity">
+        <app-brief-activity [activity]="lastCommunityActivity"></app-brief-activity>
+      </div>
+    </div>
+  </div>
+
+  <div class="jumbotron">
+    <h3>Your last activity</h3>
+    <hr/>
+    <app-loader *ngIf="toggleService.isShown(lastUserActivityLoaderName)"
+                class="my-3 d-flex justify-content-center"
+                size="100"></app-loader>
+    <div *ngIf="!toggleService.isShown(lastUserActivityLoaderName)">
+      <div *ngIf="!lastUserActivity">
+        <h5>No activities to display.</h5>
+      </div>
+      <div *ngIf="lastUserActivity">
+        <app-brief-activity [activity]="lastUserActivity"></app-brief-activity>
+      </div>
+    </div>
+  </div>
+
+  <div class="jumbotron">
+    <a class="btn btn-outline-primary btn-sm btn-block" routerLink="/add-activity">Add new activity</a>
+    <br/>
+    <a class="btn btn-outline-primary btn-sm btn-block" routerLink="/activities">Go to activity feed</a>
+  </div>
+</div>

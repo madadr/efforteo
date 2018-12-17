@@ -50,7 +50,7 @@ export class SignInComponent implements OnInit {
           // @ts-ignore
           localStorage.setItem('currentUser', JSON.stringify({token: response.token, expires: response.expires}));
 
-          this.router.navigate(['/activities']);
+          this.router.navigate(['/dashboard']);
         },
         response => {
           console.log('Sign up: error; response.error' + response.error);
