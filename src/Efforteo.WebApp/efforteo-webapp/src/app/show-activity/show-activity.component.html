@@ -1,7 +1,7 @@
 <div class="mt-2 mx-3">
   <div class="jumbotron">
     <p class="lead">Activity {{ id }}</p>
-    <a class="btn btn-outline-primary" href="/activities" role="button">Back to activities</a>
+    <a class="btn btn-outline-primary" routerLink="/activities" role="button">Back to activities</a>
   </div>
 
   <app-alerts></app-alerts>
@@ -14,17 +14,16 @@
         Created {{ createdAgo | timeAgo }} by
         <app-loader *ngIf="toggleService.isShown(userNameLoaderName)" size="15"></app-loader>
         <span *ngIf="!toggleService.isShown(userNameLoaderName)">
-          <a *ngIf="userName" href="" [(ngModel)]="userName"
+          <a *ngIf="userName" routerLink="/profile/{{activity.userId}}" [(ngModel)]="userName"
              ngDefaultControl>{{userName}}</a>
           <button *ngIf="!userName" (click)="loadUserName()" class="btn btn-outline-success btn-sm">Refresh</button>
       </span>
       </div>
       <div class="card-body border-bottom border-info">
-        <h5><span
-          class="badge text-light bg-dark">{{activity.category | uppercase}}</span></h5>
+        <h5><span class="badge text-light bg-primary" style="background-color: purple">{{activity.createdAt | date:'HH:mm' | uppercase}} | {{activity.createdAt | date | uppercase}}</span></h5>
+        <h5><span class="badge text-light bg-{{(activity.category | lowercase)}}">{{activity.category | uppercase}}</span></h5>
         <h4 class="card-title">{{activity.title}}</h4>
-        <p class="card-text text-secondary">{{activity.description}}</p>
-
+        <p class="card-text text-dark col-6">{{activity.description}}</p>
         <div class="row justify-content-center mt-1 mb-2">
           <div class="card text-center mx-1">
             <div class="card-header border-success">
@@ -47,11 +46,11 @@
               Pace
             </div>
             <div class="card-body">
-              <h5 class="card-title">
-                <app-loader *ngIf="toggleService.isShown('componentThree')"></app-loader>
-                <span
-                  *ngIf="!toggleService.isShown('componentThree')">{{converter.calculatePace(activity.time, activity.distance)}}
-                  min/km</span></h5>
+              <app-loader *ngIf="toggleService.isShown(paceLoaderName)" size="15"></app-loader>
+              <span *ngIf="!toggleService.isShown(paceLoaderName)">
+                  <span *ngIf="activityStats">{{converter.getPaceTimeString(activityStats.pace)}} min/km</span>
+                  <button *ngIf="!activityStats" (click)="loadStats()" class="btn btn-outline-success btn-sm">Refresh</button>
+                </span>
             </div>
           </div>
           <div class="card text-center mx-1">
@@ -59,12 +58,18 @@
               Speed
             </div>
             <div class="card-body">
-              <h5 class="card-title">{{converter.calculateSpeed(activity.time, activity.distance)}} km/h</h5>
+              <h5 class="card-title">
+                <app-loader *ngIf="toggleService.isShown(speedLoaderName)" size="15"></app-loader>
+                <span *ngIf="!toggleService.isShown(speedLoaderName)">
+                  <span *ngIf="activityStats">{{activityStats.speed | number:'1.2-2'}} km/h</span>
+                  <button *ngIf="!activityStats" (click)="loadStats()" class="btn btn-outline-success btn-sm">Refresh</button>
+                </span>
+              </h5>
             </div>
           </div>
         </div>
 
-        <a *ngIf="isOwner" class="btn btn-outline-dark btn-sm btn-block mt-4" href="/edit-activity/{{activity.id}}">
+        <a *ngIf="isOwner" class="btn btn-outline-dark btn-sm btn-block mt-4" routerLink="/edit-activity/{{activity.id}}">
           Edit
         </a>
       </div>

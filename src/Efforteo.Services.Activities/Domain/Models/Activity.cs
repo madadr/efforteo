@@ -18,7 +18,7 @@ namespace Efforteo.Services.Activities.Domain.Models
         {
         }
 
-        public Activity(Guid userId, Guid id, string title, Category category, string description, long time, float distance)
+        public Activity(Guid userId, Guid id, string title, Category category, string description, long time, float distance, DateTime createdAt)
         {
             UserId = userId;
             Id = id;
@@ -28,8 +28,7 @@ namespace Efforteo.Services.Activities.Domain.Models
             SetDescription(description);
             SetTime(time);
             SetDistance(distance);
-
-            CreatedAt = DateTime.UtcNow;
+            SetCreatedAt(createdAt);
         }
 
         private void SetCategory(string category)
@@ -77,13 +76,24 @@ namespace Efforteo.Services.Activities.Domain.Models
             Distance = distance;
         }
 
-        public void SetData(string title, string category, string description, long? time, float? distance)
+        private void SetCreatedAt(DateTime createdAt)
+        {
+            CreatedAt = createdAt;
+
+//            if (CreatedAt > DateTime.UtcNow.AddMinutes(1))
+//            {
+//                CreatedAt = DateTime.UtcNow;
+//            }
+        }
+
+        public void SetData(string title, string category, string description, long? time, float? distance, DateTime? createdAt)
         {
             if(title != null) SetTitle(title);
             if(category != null) SetCategory(category);
             if(description != null) SetDescription(description);
             if (time != null) SetTime(time.Value);
             if (distance != null) SetDistance(distance.Value);
+            if (createdAt != null) SetCreatedAt(createdAt.GetValueOrDefault(DateTime.UtcNow));
         }
     }
 }

@@ -12,6 +12,6 @@ namespace Efforteo.Common.Commands
         public string Description { get; set; }
         public long Time { get; set; }
         public float Distance { get;  set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
     }
 }

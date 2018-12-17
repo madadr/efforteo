@@ -1,1 +1,13 @@
 @import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+
+.bg-run {
+  background-color: purple;
+}
+
+.bg-ride {
+  background-color: orange;
+}
+
+.bg-swim {
+  background-color: darkolivegreen;
+}

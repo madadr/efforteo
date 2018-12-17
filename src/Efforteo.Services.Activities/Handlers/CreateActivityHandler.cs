@@ -28,10 +28,20 @@ namespace Efforteo.Services.Activities.Handlers
 
             try
             {
+                var date = DateTime.UtcNow;
+                if (command.CreatedAt.HasValue && command.CreatedAt.Value < DateTime.UtcNow.AddMinutes(1))
+                {
+                    date = command.CreatedAt.Value;
+                }
+                else
+                {
+                    _logger.LogInformation($"Creating activity - activity={command.Id}, had time in future. Swapping with {date}");
+                }
+
                 await _activityService.AddAsync(command.UserId, command.Id, command.Category,
-                    command.Title, command.Description, command.Time, command.Distance);
+                    command.Title, command.Description, command.Time, command.Distance, date);
                 await _busClient.PublishAsync(new ActivityCreated(command.UserId, command.Id, command.Category,
-                    command.Title, command.Description, command.Time, command.Distance, command.CreatedAt));
+                    command.Title, command.Description, command.Time, command.Distance, date));
                 _logger.LogInformation($"Published event ActivityCreated(id={command.Id})");
             }
             catch (EfforteoException exception)

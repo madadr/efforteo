@@ -9,6 +9,7 @@ using Efforteo.Services.Activities.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MoreLinq;
 using Newtonsoft.Json;
 using RawRabbit;
 
@@ -27,7 +28,8 @@ namespace Efforteo.Services.Activities.Controllers
         private Guid UserId =>
             string.IsNullOrWhiteSpace(User?.Identity?.Name) ? Guid.Empty : Guid.Parse(User.Identity.Name);
 
-        public ActivitiesController(IBusClient busClient, ILogger<ActivitiesController> logger, IActivityService activityService, ICommandDispatcher commandDispatcher)
+        public ActivitiesController(IBusClient busClient, ILogger<ActivitiesController> logger,
+            IActivityService activityService, ICommandDispatcher commandDispatcher)
         {
             _busClient = busClient;
             _logger = logger;
@@ -42,13 +44,12 @@ namespace Efforteo.Services.Activities.Controllers
 
             command.Id = Guid.NewGuid();
             command.UserId = UserId;
-            command.CreatedAt = DateTime.UtcNow;
             await _commandDispatcher.DispatchAsync(command);
 
             return Accepted($"api/activities/activity/{command.Id}");
         }
 
-        [HttpGet("activity/{id}", Name ="GetActivityById")]
+        [HttpGet("activity/{id}", Name = "GetActivityById")]
         public async Task<IActionResult> GetActivity(Guid id)
         {
             _logger.LogInformation($"ActivitiesController::GetActivity: id={id.ToString()}");
@@ -72,7 +73,7 @@ namespace Efforteo.Services.Activities.Controllers
                 activity.Time,
                 activity.Distance,
                 activity.CreatedAt
-            }).OrderByDescending(activity => activity.CreatedAt));
+            }).OrderBy(activity => activity.CreatedAt, direction: OrderByDirection.Descending));
         }
 
         [HttpGet("user/{id}", Name = "GetActivityByUserId")]
@@ -82,6 +83,7 @@ namespace Efforteo.Services.Activities.Controllers
             {
                 id = UserId;
             }
+
             _logger.LogInformation($"ActivitiesController::GetUserActivity: userId={id.ToString()}");
 
             var activities = await _activityService.GetUserActivitiesAsync(id);
@@ -97,29 +99,33 @@ namespace Efforteo.Services.Activities.Controllers
         [HttpPut("activity")]
         public async Task<IActionResult> Update(ActivityDto command)
         {
-            _logger.LogInformation($"ActivitiesController::Update command={JsonConvert.SerializeObject(command)}, UserId={UserId}");
+            _logger.LogInformation(
+                $"ActivitiesController::Update command={JsonConvert.SerializeObject(command)}, UserId={UserId}");
 
             command.UserId = UserId;
-            
+
             try
             {
                 await _activityService.UpdateAsync(command);
-                await _busClient.PublishAsync(new ActivityUpdated(command.Id, command.UserId, command.Category, command.Title, command.Description, command.Time.GetValueOrDefault(-1), command.Distance.GetValueOrDefault(-1), command.CreatedAt));
+                await _busClient.PublishAsync(new ActivityUpdated(command.Id, command.UserId, command.Category,
+                    command.Title, command.Description, command.Time.GetValueOrDefault(-1),
+                    command.Distance.GetValueOrDefault(-1), command.CreatedAt));
                 return Ok();
             }
             catch (EfforteoException ex)
             {
                 _logger.LogError(ex, ex.Message);
-                await _busClient.PublishAsync(new ActivityUpdateRejected(command.Id, command.UserId, ex.Code, ex.Message));
+                await _busClient.PublishAsync(new ActivityUpdateRejected(command.Id, command.UserId, ex.Code,
+                    ex.Message));
                 throw;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                await _busClient.PublishAsync(new ActivityUpdateRejected(command.Id, command.UserId, "error", ex.Message));
+                await _busClient.PublishAsync(new ActivityUpdateRejected(command.Id, command.UserId, "error",
+                    ex.Message));
                 throw;
             }
-
         }
 
         [HttpDelete("activity/{id}")]

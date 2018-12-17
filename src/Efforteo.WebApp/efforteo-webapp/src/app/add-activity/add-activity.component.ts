@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AlertService} from '../alert.service';
 import {ActivityService} from '../activity.service';
-import {catchError, first, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {Alert} from '../alert';
 import {CategoryValidator} from '../form-validators/category-validator';
 import {HttpResponse} from '@angular/common/http';
+import {NgbCalendar, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-activity',
@@ -17,9 +18,19 @@ export class AddActivityComponent implements OnInit {
   submitted = false;
   categories = ['run', 'ride', 'swim'];
 
+  today = this.calendar.getToday();
+  datePickerModel: NgbDateStruct;
+  timePickerCtrl = new FormControl('', (control: FormControl) => {
+    return null;
+  });
+  datePickerCtrl = new FormControl('', (control: FormControl) => {
+    return null;
+  });
+
   constructor(private formBuilder: FormBuilder,
               private alertService: AlertService,
-              private activityService: ActivityService) { }
+              private activityService: ActivityService,
+              private calendar: NgbCalendar) { }
 
   get f() { return this.addActivityForm.controls; } // accessibel from HTML
 
@@ -31,8 +42,12 @@ export class AddActivityComponent implements OnInit {
       timeHour: [0, Validators.compose([Validators.required, Validators.min(0), Validators.max(90)])],
       timeMin: [0, Validators.compose([Validators.required, Validators.min(0), Validators.max(59)])],
       timeSec: [0, Validators.compose([Validators.required, Validators.min(0), Validators.max(59)])],
-      description: ['', [Validators.maxLength(1000)]],
+      description: ['', [Validators.maxLength(1000)]]
     });
+
+    const date = new Date();
+    this.timePickerCtrl.setValue({hour: date.getHours(), minute: date.getMinutes()});
+    this.datePickerModel = this.calendar.getToday();
   }
 
   onSubmit() {
@@ -46,12 +61,19 @@ export class AddActivityComponent implements OnInit {
     const timeInSec = this.addActivityForm.controls['timeSec'].value
       + 60 * this.addActivityForm.controls['timeMin'].value
       + 3600 * this.addActivityForm.controls['timeHour'].value;
-
+    const date = new Date(this.datePickerModel.year,
+      this.datePickerModel.month - 1,
+      this.datePickerModel.day,
+      this.timePickerCtrl.value.hour,
+      this.timePickerCtrl.value.minute,
+      0,
+      0).toJSON();
     this.activityService.addActivity(this.addActivityForm.controls['title'].value,
       this.addActivityForm.controls['category'].value,
       this.addActivityForm.controls['distance'].value,
       timeInSec,
-      this.addActivityForm.controls['description'].value)
+      this.addActivityForm.controls['description'].value,
+      date)
       .pipe(map((resp: HttpResponse<any>) => {
         console.log('Add activity: successful' + resp);
         if (resp != null) {

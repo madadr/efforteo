@@ -8,10 +8,11 @@ import {LoadingService} from '../loading.service';
 import {AccountService} from '../account.service';
 import {AuthService} from '../auth.service';
 import {AlertService} from '../alert.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {CategoryValidator} from '../form-validators/category-validator';
 import {HttpResponse} from '@angular/common/http';
 import {Alert} from '../alert';
+import {NgbCalendar, NgbDate, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-edit-activity',
@@ -30,6 +31,15 @@ export class EditActivityComponent implements OnInit, OnDestroy {
   onCreateLoaderName = 'onInitLoader';
   onSubmitLoaderName = 'onSubmitLoader';
 
+  today = this.calendar.getToday();
+  datePickerModel: NgbDateStruct;
+  timePickerCtrl = new FormControl('', (control: FormControl) => {
+    return null;
+  });
+  datePickerCtrl = new FormControl('', (control: FormControl) => {
+    return null;
+  });
+
   private sub: any;
 
   constructor(private route: ActivatedRoute,
@@ -39,7 +49,8 @@ export class EditActivityComponent implements OnInit, OnDestroy {
               private accountService: AccountService,
               private authService: AuthService,
               private alertService: AlertService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private calendar: NgbCalendar) {
   }
 
   get f() {
@@ -113,6 +124,10 @@ export class EditActivityComponent implements OnInit, OnDestroy {
       timeSec: [this.activity.time % 60, Validators.compose([Validators.required, Validators.min(0), Validators.max(59)])],
       description: [this.activity.description, [Validators.maxLength(1000)]],
     });
+
+    const date = new Date(this.activity.createdAt);
+    this.timePickerCtrl.setValue({hour: date.getHours(), minute: date.getMinutes()});
+    this.datePickerModel = new NgbDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
   }
 
   ngOnDestroy() {
@@ -130,12 +145,23 @@ export class EditActivityComponent implements OnInit, OnDestroy {
       + 60 * this.editActivityForm.controls['timeMin'].value
       + 3600 * this.editActivityForm.controls['timeHour'].value;
 
+    const date = new Date(
+      this.datePickerModel.year,
+      this.datePickerModel.month - 1,
+      this.datePickerModel.day,
+      this.timePickerCtrl.value.hour,
+      this.timePickerCtrl.value.minute,
+      0,
+      0).toJSON();
+
     this.activityService.editActivity(this.activity.id,
       this.editActivityForm.controls['title'].value,
       this.editActivityForm.controls['category'].value,
       this.editActivityForm.controls['distance'].value,
       timeInSec,
-      this.editActivityForm.controls['description'].value)
+      this.editActivityForm.controls['description'].value,
+      date
+      )
       .pipe(map((resp: HttpResponse<any>) => {
         console.log('Edit activity: successful' + resp);
         this.alertService.add(new Alert('success', 'Your activity was updated successfully!'));

@@ -2,7 +2,7 @@
   <a class="navbar-brand" routerLink="/">
     <b>{{title}}</b>
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+  <button name="toggler" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
           aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -35,8 +35,8 @@
             Activities
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarActivitiesDropdownMenuLink">
-            <a class="dropdown-item" href="/activities">Activity feed</a>
-            <a class="dropdown-item" href="/add-activity">Add new activity</a>
+            <a class="dropdown-item" routerLink="/activities">Activity feed</a>
+            <a class="dropdown-item" routerLink="/add-activity">Add new activity</a>
           </div>
         </li>
         <li class="nav-item">

@@ -8,17 +8,18 @@ export class ActivityService {
 
   constructor(private http: HttpClient) { }
 
-  addActivity(title: string, category: string, distance: number, time: number, description: string) {
+  addActivity(title: string, category: string, distance: number, time: number, description: string, createdAt: string) {
     console.log('called add activity');
     return this.http.post(`/api/activities/`,
       JSON.stringify({title: title,
                             category: category,
                             distance: distance,
                             time: time,
-                            description: description}), {observe: 'response'});
+                            description: description,
+                            createdAt: createdAt}), {observe: 'response'});
   }
 
-  editActivity(id: string, title: string, category: string, distance: number, time: number, description: string) {
+  editActivity(id: string, title: string, category: string, distance: number, time: number, description: string, createdAt: string) {
     console.log('called edit activity');
     return this.http.put(`/api/activities/activity/`,
       JSON.stringify({id: id,
@@ -26,7 +27,8 @@ export class ActivityService {
         category: category,
         distance: distance,
         time: time,
-        description: description}), {observe: 'response'});
+        description: description,
+        createdAt: createdAt}), {observe: 'response'});
   }
 
   getActivity(id: string) {

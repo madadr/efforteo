@@ -12,7 +12,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppInterceptor} from './http-interceptors/app-interceptor';
 import {AlertsComponent} from './alerts/alerts.component';
 import {AuthInterceptor} from './http-interceptors/auth-interceptor';
-import {MatProgressBarModule} from '@angular/material';
+import {MatDatepickerModule, MatFormFieldModule, MatProgressBarModule} from '@angular/material';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DashboardComponent} from './dashboard/dashboard.component';
@@ -23,12 +23,11 @@ import {ShowActivityComponent} from './show-activity/show-activity.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {ServiceNotAvailableComponent} from './service-not-available/service-not-available.component';
 import {LoaderComponent} from './loader/loader.component';
-import {LoadingService} from './loading.service';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { EditActivityComponent } from './edit-activity/edit-activity.component';
 import { BriefActivityComponent } from './brief-activity/brief-activity.component';
 import {ChartsModule} from 'ng2-charts';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -58,7 +57,10 @@ import {ChartsModule} from 'ng2-charts';
     BrowserAnimationsModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-    ChartsModule
+    MatDatepickerModule,
+    MatFormFieldModule,
+    ChartsModule,
+    NgbModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true},

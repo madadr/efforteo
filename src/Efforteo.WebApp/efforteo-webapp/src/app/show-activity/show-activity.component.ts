@@ -10,6 +10,8 @@ import {AccountService} from '../account.service';
 import {AlertService} from '../alert.service';
 import {Alert} from '../alert';
 import {AuthService} from '../auth.service';
+import {StatsService} from '../stats.service';
+import {ActivityStats} from '../model/activity-stats';
 
 @Component({
   selector: 'app-show-activity',
@@ -22,12 +24,14 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
   activity: Activity = null;
   userName: string = null;
   createdAgo: Date;
+  activityStats: ActivityStats = null;
   isOwner: boolean;
 
   onCreateLoaderName = 'onInitLoader';
   userNameLoaderName = 'userNameLoader';
   editLoaderName = 'editLoader';
   userNameLoadFailAlert = new Alert('danger', 'Account service is not available. Failed to fetch username. Try to refresh later.');
+  statsLoadFailAlert = new Alert('danger', 'Stats service is not available. Failed to fetch statistics. Try to refresh later.');
   paceLoaderName = 'paceLoader';
   speedLoaderName = 'speedLoader';
 
@@ -40,6 +44,7 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
               private router: Router,
               private toggleService: LoadingService,
               private accountService: AccountService,
+              private statsService: StatsService,
               private authService: AuthService,
               private alertService: AlertService) {
   }
@@ -59,8 +64,8 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
     this.toggleService.create(this.onCreateLoaderName);
     this.toggleService.create(this.userNameLoaderName);
     this.toggleService.create(this.editLoaderName);
-    // this.toggleService.create(this.paceLoaderName);
-    // this.toggleService.create(this.speedLoaderName);
+    this.toggleService.create(this.paceLoaderName);
+    this.toggleService.create(this.speedLoaderName);
   }
 
   loadActivityDetails() {
@@ -75,6 +80,7 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
           }
           this.createdAgo = new Date(this.activity.createdAt);
           this.loadUserName();
+          this.loadStats();
           this.checkIfOwner();
         }),
         catchError(err => {
@@ -121,6 +127,36 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
       });
   }
 
+  private loadStats() {
+    this.toggleService.show(this.paceLoaderName);
+    this.toggleService.show(this.speedLoaderName);
+    this.statsService.getStats(this.id)
+      .pipe(map(resp => {
+          const activityStats = <ActivityStats>JSON.parse(JSON.stringify(resp.body));
+          console.log('ActivityStats = ' + JSON.stringify(activityStats));
+
+          if (activityStats != null) {
+            this.activityStats = activityStats;
+            this.alertService.remove(this.statsLoadFailAlert);
+          }
+        }),
+        catchError(err => {
+          if (err.status >= 500 || err.status < 600) {
+            if (!this.alertService.has(this.statsLoadFailAlert)) {
+              this.alertService.add(this.statsLoadFailAlert);
+            }
+          }
+          return throwError(err);
+        }),
+        timeout(new Date(new Date().getTime() + 3000)),
+        finalize(() => {
+          this.toggleService.hide(this.paceLoaderName);
+          this.toggleService.hide(this.speedLoaderName);
+        }))
+      .subscribe(() => {
+      });
+  }
+
   public checkIfOwner() {
     this.toggleService.show(this.editLoaderName);
     this.authService.getId()
@@ -147,7 +183,7 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
     this.toggleService.remove(this.onCreateLoaderName);
     this.toggleService.remove(this.userNameLoaderName);
     this.toggleService.remove(this.editLoaderName);
-    // this.toggleService.remove(this.paceLoaderName);
-    // this.toggleService.remove(this.speedLoaderName);
+    this.toggleService.remove(this.paceLoaderName);
+    this.toggleService.remove(this.speedLoaderName);
   }
 }

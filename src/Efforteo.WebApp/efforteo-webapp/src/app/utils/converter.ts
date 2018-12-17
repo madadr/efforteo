@@ -1,4 +1,14 @@
 export class Converter {
+  static getPaceTimeString(timeInSec: number): string {
+    let time = timeInSec;
+
+    const min = Math.floor(time / 60);
+    time = time - min * 60;
+    const sec = time;
+
+    return this.toStringNumber(min) + ':' + this.toStringNumber(sec);
+  }
+
   static getTimeString(timeInSec: number): string {
     let time = timeInSec;
 

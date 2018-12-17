@@ -9,7 +9,7 @@
       <form [formGroup]="addActivityForm" (ngSubmit)="onSubmit()">
         <div class="form-group input-group">
           <div class="input-group-prepend">
-            <label class="input-group-text bg-white">Title</label>
+            <label class="input-group-text text-white bg-dark">Title</label>
           </div>
           <input type="text" formControlName="title" class="form-control"
                  [ngClass]="{ 'is-invalid': submitted && f.title.errors }"/>
@@ -20,7 +20,7 @@
         </div>
         <div class="form-group input-group">
           <div class="input-group-prepend">
-            <label class="input-group-text bg-white">Category</label>
+            <label class="input-group-text text-white bg-dark">Category</label>
           </div>
           <input type="text" formControlName="category" class="form-control"
                  [ngClass]="{ 'is-invalid': submitted && f.category.errors }"/>
@@ -32,7 +32,7 @@
         <div class="row">
           <div class="form-group input-group col-5">
             <div class="input-group-prepend">
-              <label class="input-group-text bg-white border border-success">Distance</label>
+              <label class="input-group-text text-white bg-dark border">Distance</label>
             </div>
             <input type="number" step="0.01" min="0" max="5000" formControlName="distance" class="form-control"
                    [ngClass]="{ 'is-invalid': submitted && f.distance.errors }"/>
@@ -47,13 +47,13 @@
           </div>
           <div class="form-group input-group col-7">
             <div class="input-group-prepend">
-              <label class="input-group-text bg-white border border-info">Time <span class="text-secondary"> (HH:MM:SS)</span></label>
+              <label class="input-group-text text-white bg-dark">Time</label>
             </div>
-            <input type="number" min="0" max="99" formControlName="timeHour" class="form-control"
+            <input type="number" min="0" max="99" placeholder="HH" formControlName="timeHour" class="form-control"
                    [ngClass]="{ 'is-invalid': submitted && f.timeHour.errors }"/>
-            <input type="number" min="0" max="59" formControlName="timeMin" class="form-control"
+            <input type="number" min="0" max="59" placeholder="MM" formControlName="timeMin" class="form-control"
                    [ngClass]="{ 'is-invalid': submitted && f.timeMin.errors }"/>
-            <input type="number" min="0" max="59" formControlName="timeSec" class="form-control"
+            <input type="number" min="0" max="59" placeholder="SS" formControlName="timeSec" class="form-control"
                    [ngClass]="{ 'is-invalid': submitted && f.timeSec.errors }"/>
             <div *ngIf="submitted && f.timeHour.errors" class="invalid-feedback">
               <div *ngIf="f.timeHour.errors.min || f.timeHour.errors.max">Invalid hours</div>
@@ -66,9 +66,42 @@
             </div>
           </div>
         </div>
+        <div class="card mb-2">
+          <div class="card-header text-white bg-dark">
+            Start time
+          </div>
+          <div class="card-body">
+            <form class="`d-flex justify-content-center text-center`">
+              <div class="form-group">
+                <ngb-timepicker [formControl]="timePickerCtrl" required></ngb-timepicker>
+                <div class="small form-text text-danger" *ngIf="!timePickerCtrl.valid">
+                  <div *ngIf="submitted && timePickerCtrl.errors['required']">Start time is required</div>
+                </div>
+              </div>
+            </form>
+            <form class="form-inline justify-content-center mb-2">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" placeholder="yyyy-mm-dd" [formControl]="datePickerCtrl"
+                         name="dp" [(ngModel)]="datePickerModel" ngbDatepicker [footerTemplate]="footerTemplate" #d="ngbDatepicker" required>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-primary" (click)="d.toggle()"><small>\/</small></button>
+                    <button class="btn btn-outline-primary" (click)="datePickerModel = today">Today</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="small form-text text-danger" *ngIf="!datePickerCtrl.valid">
+              <div *ngIf="submitted && datePickerCtrl.errors['required']">Start date is required</div>
+            </div>
+            <div class="small form-text text-secondary text-center mt-1">
+              Please note, that if you select time in future, it will be replaced with current time.
+            </div>
+          </div>
+        </div>
         <div class="form-group input-group">
           <div class="input-group-prepend">
-            <span class="input-group-text bg-white">Description</span>
+            <span class="input-group-text text-white bg-dark">Description</span>
           </div>
           <textarea formControlName="description" class="form-control" placeholder="Write about your adventure..."
                     [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
