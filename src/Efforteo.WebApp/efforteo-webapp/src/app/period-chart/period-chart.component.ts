@@ -30,9 +30,6 @@ export class PeriodChartComponent implements OnInit {
         this.chartData.push({data: stat.distance, label: stat.category});
       } else if (this.statType === 'time') {
         const time = stat.time.map(t => (t / 3600).toFixed(2));
-        // for (let t of time) {
-        //   t = t / 3600;
-        // }
         this.chartData.push({data: time, label: stat.category});
       }
     }

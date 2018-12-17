@@ -14,16 +14,50 @@
         <h5>No stats to display.</h5>
       </div>
       <div *ngIf="stats">
-        <div class="col-md-8">
-          <p class="lead">Time in hours</p>
-          <app-period-chart [(ngModel)]="stats" [stats]="stats" statType="time" chartType="bar" ngDefaultControl></app-period-chart>
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link text-dark" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <p class="lead">Time in hours</p>
+                </button>
+              </h5>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                <div class="col-lg-6" style="display: block; margin: auto;" align="center">
+                <app-period-chart [(ngModel)]="stats" [stats]="stats" statType="time" chartType="bar"
+                                  ngDefaultControl style="display: block; margin: auto;" align="center"></app-period-chart>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h5 class="mb-0">
+                <button class="btn btn-link text-dark collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <p class="lead">Distance in km</p>
+                </button>
+              </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <div class="card-body">
+                <div class="col-lg-6" style="display: block; margin: auto;" align="center">
+                  <app-period-chart [(ngModel)]="stats" [stats]="stats" statType="distance" chartType="line"
+                                    ngDefaultControl></app-period-chart>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      <br/>
-        <div class="col-md-8">
-          <p class="lead">Distance in km</p>
-          <app-period-chart [(ngModel)]="stats" [stats]="stats" statType="distance" chartType="line" ngDefaultControl></app-period-chart>
-        </div>
-      </div>
+
+        <!--<div class="col-md-8">-->
+          <!--<p class="lead">Time in hours</p>-->
+
+        <!--</div>-->
+        <!--<br/>-->
+      <!--</div>-->
     </div>
   </div>
 
