@@ -14,6 +14,7 @@ namespace Efforteo.Services.Stats.Services
         Task<StatDto> GetAsync(Guid id);
         Task<IEnumerable<CategoryTotalDto>> GetTotalAsync(Guid userId);
         Task<IEnumerable<CategoryDetailsDto>> GetPeriodAsync(Guid userId, int days);
+        Task<IEnumerable<CategoryDetailedStatsDto>> GetDetailedStats(Guid userId);
         Task UpdateAsync(StatDto stat);
         Task RemoveAsync(Guid id);
     }

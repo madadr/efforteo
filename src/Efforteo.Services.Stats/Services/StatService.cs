@@ -88,6 +88,24 @@ namespace Efforteo.Services.Stats.Services
             return _mapper.Map<IEnumerable<CategoryDetailsDto>>(periodStats);
         }
 
+        public async Task<IEnumerable<CategoryDetailedStatsDto>> GetDetailedStats(Guid userId)
+        {
+            var userStats = await _repository.GetUserAsync(userId);
+            if (!userStats.Any())
+            {
+                return null;
+            }
+
+            var userStatsByCategory = userStats.GroupBy(stat => stat.Category.ToLowerInvariant());
+            List<CategoryDetailedStats> detailedStats = new List<CategoryDetailedStats>();
+            foreach (var categoryStats in userStatsByCategory)
+            {
+                detailedStats.Add(new CategoryDetailedStats(categoryStats, _mapper));
+            }
+
+            return _mapper.Map<IEnumerable<CategoryDetailedStatsDto>>(detailedStats);
+        }
+
         public async Task UpdateAsync(StatDto statDto)
         {
             var stat = await _repository.GetAsync(statDto.Id);

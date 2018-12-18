@@ -72,5 +72,19 @@ namespace Efforteo.Services.Stats.Controllers
 
             return new JsonResult(stat);
         }
+
+
+        [HttpGet("detailed/{userId}", Name = "GetDetailedStats")]
+        public async Task<IActionResult> GetDetailedStats(Guid userId)
+        {
+            _logger.LogInformation($"StatsController::GetDetailedStats userId={userId}");
+            var stat = await _statService.GetDetailedStats(userId);
+            if (stat == null)
+            {
+                return NoContent();
+            }
+
+            return new JsonResult(stat);
+        }
     }
 }
