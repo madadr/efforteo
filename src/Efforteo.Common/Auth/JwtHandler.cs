@@ -51,6 +51,7 @@ namespace Efforteo.Common.Auth
             return new JsonWebToken
             {
                 Token = token,
+                UserId = userId.ToString(),
                 Expires = exp
         };
         }

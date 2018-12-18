@@ -5,15 +5,16 @@
          style="width: 64px; height: 64px; border-width:3px !important">
     <div class="media-body">
       <h5 class="mt-0">{{account.name}}</h5>
-      <p class="lead">{{account.location === null ? '-' : account.location}}</p>
+      <p class="lead">{{account.location === null || account.location == '' ? '-' : account.location}}</p>
       <hr/>
-      <p><b class="text-secondary">Weight:</b> {{account.weight === 0 ? '-' : account.weight}}</p>
-      <p><b class="text-secondary">Birthday:</b> {{account.birthday === null ? '-' : account.birthday}}</p>
+      <p><b class="text-secondary">Weight:</b> {{account.weight === 0 ? '-' : (account.weight + ' kg')}}</p>
+      <p><b class="text-secondary">Born:</b> {{account.birthday === null || account.birthday == '' ? '-' : account.birthday | date:'d/M/y'}}</p>
       <p><b class="text-secondary">Member since:</b> {{account.createdAt | timeAgo}}</p>
       <p><b class="text-secondary">Last logged in:</b> {{account.lastLoggedIn | timeAgo}}</p>
     </div>
   </div>
-  <div *ngIf="isOwner" class="my-3">
-    <a class="btn btn-outline-primary btn-block" routerLink="/edit-profile" role="button">Edit profile</a>
+  <div *ngIf="isOwner">
+    <hr/>
+    <a class="btn btn-outline-primary btn-block my-3" routerLink="/edit-profile" role="button">Edit profile</a>
   </div>
 </div>

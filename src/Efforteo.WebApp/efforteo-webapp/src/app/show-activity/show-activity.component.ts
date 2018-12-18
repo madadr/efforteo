@@ -30,7 +30,6 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
 
   onCreateLoaderName = 'onInitLoader';
   userNameLoaderName = 'userNameLoader';
-  editLoaderName = 'editLoader';
   userNameLoadFailAlert = new Alert('danger', 'Account service is not available. Failed to fetch username. Try to refresh later.');
   statsLoadFailAlert = new Alert('danger', 'Stats service is not available. Failed to fetch statistics. Try to refresh later.');
   paceLoaderName = 'paceLoader';
@@ -64,7 +63,6 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
   createLoaders() {
     this.toggleService.create(this.onCreateLoaderName);
     this.toggleService.create(this.userNameLoaderName);
-    this.toggleService.create(this.editLoaderName);
     this.toggleService.create(this.paceLoaderName);
     this.toggleService.create(this.speedLoaderName);
   }
@@ -158,31 +156,13 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
   }
 
   public checkIfOwner() {
-    this.toggleService.show(this.editLoaderName);
-    this.authService.getId()
-      .pipe(map(resp => {
-          // @ts-ignore
-          if (resp.body.id != null && resp.body.id === this.activity.userId) {
-            this.isOwner = true;
-          }
-        }),
-        catchError(err => {
-          this.isOwner = false;
-          return throwError(err);
-        }),
-        timeout(new Date(new Date().getTime() + 3000)),
-        finalize(() => {
-          this.toggleService.hide(this.editLoaderName);
-        }))
-      .subscribe(() => {
-      });
+    this.isOwner = this.authService.getId() === this.activity.userId;
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
     this.toggleService.remove(this.onCreateLoaderName);
     this.toggleService.remove(this.userNameLoaderName);
-    this.toggleService.remove(this.editLoaderName);
     this.toggleService.remove(this.paceLoaderName);
     this.toggleService.remove(this.speedLoaderName);
   }

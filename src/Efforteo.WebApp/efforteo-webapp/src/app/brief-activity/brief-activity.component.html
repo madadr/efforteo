@@ -1,9 +1,13 @@
 <div *ngIf="activity" class="card text-dark bg-light mb-3">
-  <div class="card-header">Created {{ createdAgo | timeAgo }} by <a routerLink="/show-profile/{{activity.userId}}"><span *ngIf="userName">{{userName}}</span><span *ngIf="!userName"> user {{activity.userId | slice:0:4}}...</span></a>
+  <div class="card-header">Created {{ createdAgo | timeAgo }} by <a routerLink="/show-profile/{{activity.userId}}"><span
+    *ngIf="userName">{{userName}}</span><span *ngIf="!userName"> user {{activity.userId | slice:0:4}}...</span></a>
   </div>
-  <div class="card-body border-bottom border-info">
-    <h5 class="card-title"><span class="badge text-light bg-{{(activity.category | lowercase)}} mb-1">{{activity.category | uppercase}}</span><br/>
-      <a class="text-dark" routerLink="/show-activity/{{activity.id}}">{{ (activity.title.length > 25)?((activity.title | slice:0:20) + '...'):(activity.title)}}</a></h5>
+  <div class="card-body border-bottom border-info ml-2">
+    <h5 class="card-title"><span
+      class="badge text-light bg-{{(activity.category | lowercase)}} mb-1">{{activity.category | uppercase}}</span><br/>
+      <a class="text-dark"
+         routerLink="/show-activity/{{activity.id}}">{{ (activity.title.length > 25) ? ((activity.title | slice:0:20) + '...') : (activity.title)}}</a>
+    </h5>
     <div class="row justify-content-center mt-1 mb-2">
       <div class="card text-center">
         <div class="card-header border-success">
@@ -23,6 +27,6 @@
       </div>
     </div>
 
-    <a class="btn btn-primary btn-sm btn-block" routerLink="/show-activity/{{activity.id}}">Show details</a>
+    <a class="btn btn-outline-primary btn-sm btn-block" routerLink="/show-activity/{{activity.id}}">Show details</a>
   </div>
 </div>

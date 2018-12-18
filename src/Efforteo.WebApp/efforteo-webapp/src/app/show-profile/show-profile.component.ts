@@ -55,6 +55,9 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
     this.toggleService.create(this.accountLoaderName);
     this.sub = this.route.params.subscribe(params => {
       this.userId = params['id'];
+      if (!this.userId) {
+        this.userId = this.authService.getId();
+      }
     });
     this.loadTotalStatsData();
     this.loadStats7Data();

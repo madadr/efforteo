@@ -39,8 +39,6 @@ export class SignInComponent implements OnInit {
     }
     this.alertService.clear();
 
-    console.log('email = ' + this.loginForm.controls['email'].value + ', pass = ' + this.loginForm.controls['password'].value)
-
     this.authService.signIn(this.loginForm.controls['email'].value, this.loginForm.controls['password'].value)
       .pipe(first())
       .subscribe(
@@ -48,7 +46,7 @@ export class SignInComponent implements OnInit {
           console.log('Sign in: successful', response);
 
           // @ts-ignore
-          localStorage.setItem('currentUser', JSON.stringify({token: response.token, expires: response.expires}));
+          localStorage.setItem('currentUser', JSON.stringify({token: response.token, userId: response.userId, expires: response.expires}));
 
           this.router.navigate(['/dashboard']);
         },

@@ -1,0 +1,78 @@
+<div class="mt-2 mx-3">
+  <div class="jumbotron">
+    <p class="lead">Edit profile</p>
+    <a class="btn btn-outline-primary" routerLink="/show-profile" role="button">Back to profile</a>
+  </div>
+
+  <app-alerts></app-alerts>
+
+  <div class="jumbotron border-right border-white">
+    <app-loader *ngIf="toggleService.isShown(accountLoaderName)"
+                class="my-3 d-flex justify-content-center"
+                size="100"></app-loader>
+    <div *ngIf="!account && !accountAvailable">
+      <h5>Could not fetch account data.</h5>
+      <button (click)="loadAccountData()" class="btn btn-outline-success btn-sm">Refresh</button>
+    </div>
+    <div *ngIf="!toggleService.isShown(accountLoaderName) && account">
+
+
+      <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" formControlName="name" class="form-control"
+                 [ngClass]="{ 'is-invalid': f.name.errors }"/>
+          <div *ngIf="f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">Name is required</div>
+            <div *ngIf="f.name.errors.minlength">Name is too short</div>
+            <div *ngIf="f.name.errors.maxLength">Name is too long</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" formControlName="email" class="form-control"
+                 [ngClass]="{ 'is-invalid': f.email.errors }"/>
+          <div *ngIf="f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+            <div *ngIf="f.email.errors.maxLength">Email is too long</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" formControlName="location" class="form-control"
+                 [ngClass]="{ 'is-invalid': f.location.errors }"/>
+          <div *ngIf="f.location.errors" class="invalid-feedback">
+            <div *ngIf="f.location.errors.maxLength">Location is too long</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Weight</label>
+          <input type="number" step="0.1" min="0" max="500" formControlName="weight" class="form-control"
+                 [ngClass]="{ 'is-invalid': f.weight.errors }"/>
+          <div *ngIf="f.weight.errors" class="invalid-feedback">
+            <div *ngIf="f.weight.errors.min">Your weight must be positive</div>
+            <div *ngIf="f.weight.errors.max">You are way too heavy!</div>
+          </div>
+        </div>
+        <div class="form-group form-inline">
+          <label class="mr-3">Birthday</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" [formControl]="datePickerCtrl"
+                   name="dp" [(ngModel)]="datePickerModel" ngbDatepicker [footerTemplate]="footerTemplate"
+                   #d="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-primary" (click)="d.toggle()" type="button">
+                <small>\/</small>
+              </button>
+              <button *ngIf="!toggleService.isShown(onSubmitLoaderName)" class="btn btn-outline-primary" (click)="datePickerModel = today" type="button">Today</button>
+              <app-loader *ngIf="toggleService.isShown(onSubmitLoaderName)" class="my-3 d-flex justify-content-center"
+                          size="20"></app-loader>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-success btn-block mt-2" type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+</div>

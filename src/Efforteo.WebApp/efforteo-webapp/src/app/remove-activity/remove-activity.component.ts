@@ -1,7 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Activity} from '../model/activity';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {NgbCalendar, NgbDate, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ActivityService} from '../activity.service';
 import {LoadingService} from '../loading.service';
@@ -10,7 +8,6 @@ import {AuthService} from '../auth.service';
 import {AlertService} from '../alert.service';
 import {catchError, finalize, map, timeout} from 'rxjs/operators';
 import {throwError} from 'rxjs';
-import {CategoryValidator} from '../form-validators/category-validator';
 import {HttpResponse} from '@angular/common/http';
 import {Alert} from '../alert';
 
@@ -35,9 +32,7 @@ export class RemoveActivityComponent implements OnInit, OnDestroy {
               private toggleService: LoadingService,
               private accountService: AccountService,
               private authService: AuthService,
-              private alertService: AlertService,
-              private formBuilder: FormBuilder,
-              private calendar: NgbCalendar) {
+              private alertService: AlertService) {
   }
 
   ngOnInit() {
@@ -77,20 +72,7 @@ export class RemoveActivityComponent implements OnInit, OnDestroy {
   }
 
   checkIfOwner() {
-    this.authService.getId()
-      .pipe(map(resp => {
-          // @ts-ignore
-          if (resp.body.id != null && resp.body.id === this.activity.userId) {
-            this.isOwner = true;
-          }
-        }),
-        catchError(err => {
-          this.isOwner = false;
-          return throwError(err);
-        }),
-        timeout(new Date(new Date().getTime() + 3000)))
-      .subscribe(() => {
-      });
+    this.isOwner = this.authService.getId() === this.activity.userId;
   }
 
   ngOnDestroy() {

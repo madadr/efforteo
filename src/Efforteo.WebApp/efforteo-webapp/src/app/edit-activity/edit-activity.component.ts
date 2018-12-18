@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {catchError, finalize, map, timeout} from 'rxjs/operators';
+import {catchError, finalize, map} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import {Activity} from '../model/activity';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -95,22 +95,7 @@ export class EditActivityComponent implements OnInit, OnDestroy {
   }
 
   checkIfOwner() {
-    this.authService.getId()
-      .pipe(map(resp => {
-          // @ts-ignore
-          if (resp.body.id != null && resp.body.id === this.activity.userId) {
-            this.isOwner = true;
-          }
-        }),
-        catchError(err => {
-          this.isOwner = false;
-          return throwError(err);
-        }),
-        timeout(new Date(new Date().getTime() + 3000)),
-        finalize(() => {
-        }))
-      .subscribe(() => {
-      });
+    this.isOwner = this.authService.getId() === this.activity.userId;
   }
 
   initForm() {

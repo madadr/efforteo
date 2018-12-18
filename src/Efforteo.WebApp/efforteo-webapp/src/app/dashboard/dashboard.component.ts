@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ActivityService} from '../activity.service';
 import {LoadingService} from '../loading.service';
 import {Activity} from '../model/activity';
-import {catchError, finalize, map, timeout} from 'rxjs/operators';
+import {catchError, finalize, map} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import {AuthService} from '../auth.service';
 import {StatsService} from '../stats.service';
@@ -47,34 +47,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   private loadData() {
-    this.toggleService.show(this.statsLoaderName);
-    this.toggleService.show(this.lastCommunityActivityLoaderName);
-    this.toggleService.show(this.lastUserActivityLoaderName);
-    this.authService.getId()
-      .pipe(map(resp => {
-          // @ts-ignore
-          if (resp.body.id != null) {
-            // @ts-ignore
-            this.userId = resp.body.id;
-
-            this.loadStatsData();
-            this.loadLastActivities();
-          }
-        }),
-        catchError(err => {
-          return throwError(err);
-        }),
-        timeout(new Date(new Date().getTime() + 3000)),
-        finalize(() => {
-          this.toggleService.hide(this.statsLoaderName);
-          this.toggleService.hide(this.lastCommunityActivityLoaderName);
-          this.toggleService.hide(this.lastUserActivityLoaderName);
-        } ))
-      .subscribe(() => {
-      });
+    this.userId = this.authService.getId();
+    this.loadStatsData();
+    this.loadLastActivities();
   }
 
   private loadStatsData() {
+    this.toggleService.show(this.statsLoaderName);
     this.statsService.getPeriodStats(this.userId, 7)
       .pipe(map(resp => {
           const stats = <UserPeriodStats[]>JSON.parse(JSON.stringify(resp.body));
@@ -88,12 +67,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
           return throwError(err);
         }),
         finalize(() => {
+          this.toggleService.hide(this.statsLoaderName);
         }))
       .subscribe(() => {
       });
   }
 
   private loadLastActivities() {
+    this.toggleService.show(this.lastCommunityActivityLoaderName);
+    this.toggleService.show(this.lastUserActivityLoaderName);
     this.activityService.getAllActivites()
       .pipe(map(resp => {
           const activities = <Activity[]>JSON.parse(JSON.stringify(resp.body));
@@ -115,6 +97,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
           return throwError(err);
         }),
         finalize(() => {
+          this.toggleService.hide(this.lastCommunityActivityLoaderName);
+          this.toggleService.hide(this.lastUserActivityLoaderName);
         }))
       .subscribe(() => {
       });

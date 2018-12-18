@@ -12,6 +12,8 @@ import {ServiceNotAvailableComponent} from './service-not-available/service-not-
 import {EditActivityComponent} from './edit-activity/edit-activity.component';
 import {ShowProfileComponent} from './show-profile/show-profile.component';
 import {RemoveActivityComponent} from './remove-activity/remove-activity.component';
+import {EditProfileComponent} from './edit-profile/edit-profile.component';
+import {ProfileListComponent} from './profile-list/profile-list.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -24,7 +26,10 @@ const routes: Routes = [
   {path: 'show-activity/:id', component: ShowActivityComponent},
   {path: 'edit-activity/:id', component: EditActivityComponent},
   {path: 'remove-activity/:id', component: RemoveActivityComponent},
+  {path: 'show-profile', component: ShowProfileComponent},
   {path: 'show-profile/:id', component: ShowProfileComponent},
+  {path: 'edit-profile', component: EditProfileComponent},
+  {path: 'profile-list', component: ProfileListComponent},
   {path: 'not-available', component: ServiceNotAvailableComponent},
   {path: 'not-found', component: PageNotFoundComponent},
   {path: '**', component: PageNotFoundComponent}
