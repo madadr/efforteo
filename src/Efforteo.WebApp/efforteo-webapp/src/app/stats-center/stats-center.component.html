@@ -1,0 +1,27 @@
+<div class="mt-2 mx-3">
+
+  <app-alerts></app-alerts>
+  <div class="jumbotron border-left border-white">
+    <h3 class="text-center">Stats center</h3>
+    <hr/>
+
+    <app-loader *ngIf="toggleService.isShown(activityLoaderName) || toggleService.isShown(statsLoaderName); else loaded"
+                class="my-3 d-flex justify-content-center"
+                size="100"></app-loader>
+    <ng-template #loaded>
+      <div *ngIf="!statsAvailable || !activitiesAvailable; else available">
+        <h5>Could not fetch activity or stats data.</h5>
+        <button (click)="loadData()" class="btn btn-outline-success btn-sm">Refresh</button>
+      </div>
+      <ng-template #available>
+        <div *ngIf="!activities || activities.length == 0 || !stats || stats.length == 0; else valid">
+          <h5>No activities available to display</h5>
+        </div>
+      </ng-template>
+      <ng-template #valid>
+        <!--<h4>here we go!</h4>-->
+        <app-activities-stats-detailed [activities]="activities" [stats]="stats"></app-activities-stats-detailed>
+      </ng-template>
+    </ng-template>
+  </div>
+</div>

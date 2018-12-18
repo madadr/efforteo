@@ -1,0 +1,63 @@
+<div *ngIf="stats && stats.length > 0">
+  <ngb-tabset type="pills" justify="fill">
+    <ngb-tab *ngFor="let detailedStat of stats" title="{{detailedStat.category | titlecase}}">
+      <ng-template ngbTabContent class="mb-2">
+        <table class="table table-hover table-striped table-default table-responsive-lg">
+          <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Title</th>
+            <th scope="col">Distance<br/>[km]</th>
+            <th scope="col">Time</th>
+            <td align="right"><b>Speed<br/>[km/h]</b></td>
+            <th scope="col">+/-</th>
+            <td align="right"><b>Pace<br/>[min/km]</b></td>
+            <th scope="col">+/-</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let pair of detailedStat.stats">
+            <td>
+              <span class="badge text-light bg-primary">{{pair.stat.createdAt | date | uppercase}}</span>
+            </td>
+            <th>{{getTitle(pair.stat)}}</th>
+            <td>{{pair.stat.distance}}</td>
+            <td>{{converter.getTimeString(pair.stat.time)}}</td>
+            <td align="right">{{pair.stat.speed ? (pair.stat.speed | number:'1.2-2') : '--'}}</td>
+            <div *ngIf="pair.predecessor">
+              <div *ngIf="pair.predecessor.deltaSpeed >= 0">
+                <td class="text-success">+{{pair.predecessor.deltaSpeed | number:'1.2-2'}}</td>
+              </div>
+              <div *ngIf="pair.predecessor.deltaSpeed < 0">
+                <td class="text-danger">{{pair.predecessor.deltaSpeed | number:'1.2-2'}}</td>
+              </div>
+            </div>
+            <div *ngIf="!pair.predecessor">
+              <td>--</td>
+            </div>
+            <td align="right">{{pair.stat.pace ? converter.getPaceTimeString(pair.stat.pace) : '--'}}</td>
+            <div *ngIf="pair.predecessor">
+              <div *ngIf="pair.predecessor.deltaPace > 0">
+                <td class="text-danger">+{{converter.getPaceTimeString(pair.predecessor.deltaPace)}}</td>
+              </div>
+              <div *ngIf="pair.predecessor.deltaPace <= 0">
+                <td
+                  class="text-success">{{(pair.predecessor.deltaPace === 0 ? '-' : '') + converter.getPaceTimeString(pair.predecessor.deltaPace)}}</td>
+              </div>
+            </div>
+            <div *ngIf="!pair.predecessor">
+              <td>--</td>
+            </div>
+            <td><a class="btn btn-sm btn-outline-primary mr-2"
+                      routerLink="/show-activity/{{pair.stat.id}}">Details</a><a *ngIf="pair.predecessor"
+                                                                                       class="btn btn-sm btn-outline-success mt-1"
+                                                                                       routerLink="/show-activity/{{pair.predecessor.id}}">Previous</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>

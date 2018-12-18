@@ -22,4 +22,9 @@ export class StatsService {
     console.log('called get total stats for userId =' + userId);
     return this.http.get(`/api/stats/total/` + userId, {observe: 'response'});
   }
+
+  getDetailedStats(userId: string) {
+    console.log('called get total stats for userId =' + userId);
+    return this.http.get(`/api/stats/detailed/` + userId, {observe: 'response'});
+  }
 }

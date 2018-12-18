@@ -14,6 +14,7 @@ import {ShowProfileComponent} from './show-profile/show-profile.component';
 import {RemoveActivityComponent} from './remove-activity/remove-activity.component';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
 import {ProfileListComponent} from './profile-list/profile-list.component';
+import {StatsCenterComponent} from './stats-center/stats-center.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'sign-in', component: SignInComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'activities', component: ActivitiesComponent},
+  {path: 'stats-center', component: StatsCenterComponent},
   {path: 'add-activity', component: AddActivityComponent},
   {path: 'show-activity/:id', component: ShowActivityComponent},
   {path: 'edit-activity/:id', component: EditActivityComponent},

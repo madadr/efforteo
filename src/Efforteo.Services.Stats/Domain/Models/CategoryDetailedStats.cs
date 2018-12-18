@@ -55,7 +55,7 @@ namespace Efforteo.Services.Stats.Domain.Models
         }
 
         private StatPredecessor CreatePredecessor(Stat first, Stat second)
-            => new StatPredecessor(second.Id, second.Speed.Value - first.Speed.Value,
+            => new StatPredecessor(second.Id, first.Speed.Value - second.Speed.Value,
                 first.Pace.Value - second.Pace.Value);
     }
 }

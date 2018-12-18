@@ -76,9 +76,9 @@ export class EditProfileComponent implements OnInit, OnDestroy {
           if (account != null) {
             this.account = account;
             this.alertService.remove(this.accountLoadFailAlert);
-            this.accountAvailable = true;
             this.initForm();
           }
+          this.accountAvailable = true;
         }),
         catchError(err => {
           if (err.status >= 500 || err.status < 600) {

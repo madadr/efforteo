@@ -52,8 +52,8 @@ export class ProfileListComponent implements OnInit, OnDestroy {
           if (accounts != null) {
             this.accountList = accounts;
             this.alertService.remove(this.accountLoadFailAlert);
-            this.accountsAvailable = true;
           }
+          this.accountsAvailable = true;
         }),
         catchError(err => {
           if (err.status >= 500 || err.status < 600) {

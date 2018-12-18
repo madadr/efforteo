@@ -35,6 +35,8 @@ import { TotalStatsComponent } from './total-stats/total-stats.component';
 import { RemoveActivityComponent } from './remove-activity/remove-activity.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ProfileListComponent } from './profile-list/profile-list.component';
+import { StatsCenterComponent } from './stats-center/stats-center.component';
+import { ActivitiesStatsDetailedComponent } from './activities-stats-detailed/activities-stats-detailed.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,8 @@ import { ProfileListComponent } from './profile-list/profile-list.component';
     RemoveActivityComponent,
     EditProfileComponent,
     ProfileListComponent,
+    StatsCenterComponent,
+    ActivitiesStatsDetailedComponent,
   ],
   imports: [
     BrowserModule,

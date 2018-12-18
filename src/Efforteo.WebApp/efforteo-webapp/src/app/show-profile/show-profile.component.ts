@@ -142,8 +142,8 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
           if (stats != null) {
             this.stats30 = stats;
             this.alertService.remove(this.statsLoadFailAlert);
-            this.stats30available = true;
           }
+          this.stats30available = true;
         }),
         catchError(err => {
           if (err.status >= 500 || err.status < 600) {

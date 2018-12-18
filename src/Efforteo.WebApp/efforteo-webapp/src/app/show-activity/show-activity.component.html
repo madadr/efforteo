@@ -48,7 +48,7 @@
             <div class="card-body">
               <app-loader *ngIf="toggleService.isShown(paceLoaderName)" size="15"></app-loader>
               <span *ngIf="!toggleService.isShown(paceLoaderName)">
-                  <span *ngIf="activityStats">{{converter.getPaceTimeString(activityStats.pace)}} min/km</span>
+                  <span *ngIf="activityStats">{{activityStats.pace ? converter.getPaceTimeString(activityStats.pace) + ' min/km' : '--'}}</span>
                   <button *ngIf="!activityStats" (click)="loadStats()" class="btn btn-outline-success btn-sm">Refresh</button>
                 </span>
             </div>
@@ -61,7 +61,7 @@
               <h5 class="card-title">
                 <app-loader *ngIf="toggleService.isShown(speedLoaderName)" size="15"></app-loader>
                 <span *ngIf="!toggleService.isShown(speedLoaderName)">
-                  <span *ngIf="activityStats">{{activityStats.speed | number:'1.2-2'}} km/h</span>
+                  <span *ngIf="activityStats">{{activityStats.speed ? (activityStats.speed | number:'1.2-2') + ' km/h' : '--'}}</span>
                   <button *ngIf="!activityStats" (click)="loadStats()" class="btn btn-outline-success btn-sm">Refresh</button>
                 </span>
               </h5>
