@@ -11,9 +11,9 @@ namespace Efforteo.Services.Stats.Domain.Models
     public class CategoryDetailedStats
     {
         public string Category { get; protected set; }
-        public DetailedStatDto[] Stats { get; protected set; }
+        public DetailedStat[] Stats { get; protected set; }
 
-        public CategoryDetailedStats(IEnumerable<Stat> stats, IMapper mapper)
+        public CategoryDetailedStats(IEnumerable<Stat> stats)
         {
             if (!stats.Any())
             {
@@ -23,17 +23,17 @@ namespace Efforteo.Services.Stats.Domain.Models
             Category = stats.First().Category.ToLowerInvariant();
 
             stats = stats.OrderByDescending(stat => stat.CreatedAt);
-            Stats = new DetailedStatDto[stats.Count()];
+            Stats = new DetailedStat[stats.Count()];
 
-            CalculateDetailedStats(stats, mapper);
+            CalculateDetailedStats(stats);
         }
 
-        private void CalculateDetailedStats(IEnumerable<Stat> stats, IMapper mapper)
+        private void CalculateDetailedStats(IEnumerable<Stat> stats)
         {
             for (int i = 0; i < stats.Count(); i++)
             {
-                DetailedStatDto stat = new DetailedStatDto();
-                stat.Stat = mapper.Map<StatDto>(stats.ElementAt(i));
+                DetailedStat stat = new DetailedStat();
+                stat.Stat = stats.ElementAt(i);
 
                 if (stat.Stat.Pace.HasValue && stat.Stat.Speed.HasValue)
                 {
@@ -45,7 +45,7 @@ namespace Efforteo.Services.Stats.Domain.Models
                             continue;
                         }
 
-                        stat.Predecessor = CreatePredecessor(stat.Stat, mapper.Map<StatDto>(st));
+                        stat.Predecessor = CreatePredecessor(stat.Stat, st);
                         break;
                     }
                 }
@@ -54,12 +54,8 @@ namespace Efforteo.Services.Stats.Domain.Models
             }
         }
 
-        private StatPredecessorDto CreatePredecessor(StatDto first, StatDto second)
-            => new StatPredecessorDto
-            {
-                Id = second.Id,
-                DeltaPace = first.Pace.Value - second.Pace.Value,
-                DeltaSpeed = first.Speed.Value - second.Speed.Value
-            };
+        private StatPredecessor CreatePredecessor(Stat first, Stat second)
+            => new StatPredecessor(second.Id, second.Speed.Value - first.Speed.Value,
+                first.Pace.Value - second.Pace.Value);
     }
 }

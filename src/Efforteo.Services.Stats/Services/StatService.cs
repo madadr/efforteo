@@ -100,7 +100,7 @@ namespace Efforteo.Services.Stats.Services
             List<CategoryDetailedStats> detailedStats = new List<CategoryDetailedStats>();
             foreach (var categoryStats in userStatsByCategory)
             {
-                detailedStats.Add(new CategoryDetailedStats(categoryStats, _mapper));
+                detailedStats.Add(new CategoryDetailedStats(categoryStats));
             }
 
             return _mapper.Map<IEnumerable<CategoryDetailedStatsDto>>(detailedStats);
