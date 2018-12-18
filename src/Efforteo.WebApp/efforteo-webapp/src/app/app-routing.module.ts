@@ -11,6 +11,7 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {ServiceNotAvailableComponent} from './service-not-available/service-not-available.component';
 import {EditActivityComponent} from './edit-activity/edit-activity.component';
 import {ShowProfileComponent} from './show-profile/show-profile.component';
+import {RemoveActivityComponent} from './remove-activity/remove-activity.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'add-activity', component: AddActivityComponent},
   {path: 'show-activity/:id', component: ShowActivityComponent},
   {path: 'edit-activity/:id', component: EditActivityComponent},
+  {path: 'remove-activity/:id', component: RemoveActivityComponent},
   {path: 'show-profile/:id', component: ShowProfileComponent},
   {path: 'not-available', component: ServiceNotAvailableComponent},
   {path: 'not-found', component: PageNotFoundComponent},

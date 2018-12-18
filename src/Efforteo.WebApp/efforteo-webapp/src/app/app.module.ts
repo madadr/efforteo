@@ -32,6 +32,7 @@ import {ChartsModule} from 'ng2-charts/ng2-charts';
 import { ShowProfileComponent } from './show-profile/show-profile.component';
 import { ProfileDetailsComponent } from './profile-details/profile-details.component';
 import { TotalStatsComponent } from './total-stats/total-stats.component';
+import { RemoveActivityComponent } from './remove-activity/remove-activity.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { TotalStatsComponent } from './total-stats/total-stats.component';
     ShowProfileComponent,
     ProfileDetailsComponent,
     TotalStatsComponent,
+    RemoveActivityComponent,
   ],
   imports: [
     BrowserModule,

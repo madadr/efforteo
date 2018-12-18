@@ -40,4 +40,9 @@ export class ActivityService {
     console.log('called get all activities');
     return this.http.get(`/api/activities`, {observe: 'response'});
   }
+
+  removeActivity(id: string) {
+    console.log('called remove activity for id =' + id);
+    return this.http.delete(`/api/activities/activity/` + id, {observe: 'response'});
+  }
 }

@@ -69,8 +69,11 @@
           </div>
         </div>
 
-        <a *ngIf="isOwner" class="btn btn-outline-dark btn-sm btn-block mt-4" routerLink="/edit-activity/{{activity.id}}">
+        <a *ngIf="isOwner" class="btn btn-outline-primary btn-sm btn-block mt-4" routerLink="/edit-activity/{{activity.id}}">
           Edit
+        </a>
+        <a *ngIf="isOwner" class="btn btn-outline-danger btn-sm btn-block mt-4" routerLink="/remove-activity/{{activity.id}}">
+          Remove
         </a>
       </div>
     </div>

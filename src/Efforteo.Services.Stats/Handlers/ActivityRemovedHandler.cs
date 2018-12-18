@@ -29,16 +29,16 @@ namespace Efforteo.Services.Stats.Handlers
 
             try
             {
-                await _service.RemoveAsync(command.UserId);
+                await _service.RemoveAsync(command.Id);
                 _logger.LogInformation($"Removed stats for activity=(id={command.Id})");
             }
             catch (EfforteoException exception)
             {
-                _logger.LogError($"Failed to create stats for activity=(id={command.Id}, code={exception.Code}, message={exception.Message})");
+                _logger.LogError($"Failed to remove stats for activity=(id={command.Id}, code={exception.Code}, message={exception.Message})");
             }
             catch (Exception exception)
             {
-                _logger.LogError($"Failed to create stats for activity=(id={command.Id}, code=unknown, message={exception.Message})");
+                _logger.LogError($"Failed to remove stats for activity=(id={command.Id}, code=unknown, message={exception.Message})");
             }
         }
     }
