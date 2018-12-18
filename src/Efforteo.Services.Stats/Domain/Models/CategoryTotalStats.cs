@@ -7,7 +7,7 @@ using Efforteo.Services.Stats.Domain.DTO;
 
 namespace Efforteo.Services.Stats.Domain.Models
 {
-    public class CategoryTotal
+    public class CategoryTotalStats
     {
         public string Category { get; protected set; }
         public int Amount { get; protected set; }
@@ -18,7 +18,7 @@ namespace Efforteo.Services.Stats.Domain.Models
         public ActivityPointer LongestDistance { get; protected set; }
         public ActivityPointer LongestTime { get; protected set; }
 
-        public CategoryTotal(IEnumerable<Stat> stats)
+        public CategoryTotalStats(IEnumerable<Stat> stats)
         {
             if (!stats.Any())
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Efforteo.Services.Stats.Domain.DTO
 {
-    public class CategoryTotalDto
+    public class CategoryTotalStatsDto
     {
         public string Category { get; set; }
         public int Amount { get; set; }

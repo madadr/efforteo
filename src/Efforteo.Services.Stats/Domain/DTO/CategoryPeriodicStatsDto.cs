@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Efforteo.Services.Stats.Domain.DTO
 {
-    public class CategoryDetailsDto
+    public class CategoryPeriodicStatsDto
     {
         public string Category { get; set; }
         public DateTime PeriodStart { get; set; }

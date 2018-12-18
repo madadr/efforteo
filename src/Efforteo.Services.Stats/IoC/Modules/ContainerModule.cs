@@ -17,8 +17,8 @@ namespace Efforteo.Services.Stats.IoC.Modules
         {
             builder.RegisterInstance(new MapperConfiguration(cfg => {
                     cfg.CreateMap<Stat, StatDto>();
-                    cfg.CreateMap<CategoryDetails, CategoryDetailsDto>();
-                    cfg.CreateMap<CategoryTotal, CategoryTotalDto>();
+                    cfg.CreateMap<CategoryPeriodicStats, CategoryPeriodicStatsDto>();
+                    cfg.CreateMap<CategoryTotalStats, CategoryTotalStatsDto>();
                     cfg.CreateMap<Stat, ActivityPointer>();
                     cfg.CreateMap<CategoryDetailedStats, CategoryDetailedStatsDto>();
             }).CreateMapper())

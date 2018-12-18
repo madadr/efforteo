@@ -47,7 +47,7 @@ namespace Efforteo.Services.Stats.Services
             return _mapper.Map<StatDto>(stat);
         }
 
-        public async Task<IEnumerable<CategoryTotalDto>> GetTotalAsync(Guid userId)
+        public async Task<IEnumerable<CategoryTotalStatsDto>> GetTotalAsync(Guid userId)
         {
             var userStats = await _repository.GetUserAsync(userId);
             if (!userStats.Any())
@@ -56,16 +56,16 @@ namespace Efforteo.Services.Stats.Services
             }
 
             var userStatsByCategory = userStats.GroupBy(stat => stat.Category.ToLowerInvariant());
-            List<CategoryTotal> totalStats = new List<CategoryTotal>();
+            List<CategoryTotalStats> totalStats = new List<CategoryTotalStats>();
             foreach (var categoryStats in userStatsByCategory)
             {
-                totalStats.Add(new CategoryTotal(categoryStats));
+                totalStats.Add(new CategoryTotalStats(categoryStats));
             }
 
-            return _mapper.Map<IEnumerable<CategoryTotalDto>>(totalStats);
+            return _mapper.Map<IEnumerable<CategoryTotalStatsDto>>(totalStats);
         }
 
-        public async Task<IEnumerable<CategoryDetailsDto>> GetPeriodAsync(Guid userId, int days)
+        public async Task<IEnumerable<CategoryPeriodicStatsDto>> GetPeriodAsync(Guid userId, int days)
         {
             var userStats = await _repository.GetUserAsync(userId);
             if (!userStats.Any())
@@ -79,13 +79,13 @@ namespace Efforteo.Services.Stats.Services
             }
 
             var userStatsByCategory = userStats.GroupBy(stat => stat.Category.ToLowerInvariant());
-            List <CategoryDetails> periodStats = new List<CategoryDetails>();
+            List <CategoryPeriodicStats> periodStats = new List<CategoryPeriodicStats>();
             foreach (var categoryStats in userStatsByCategory)
             {
-                periodStats.Add(new CategoryDetails(categoryStats, days));
+                periodStats.Add(new CategoryPeriodicStats(categoryStats, days));
             }
 
-            return _mapper.Map<IEnumerable<CategoryDetailsDto>>(periodStats);
+            return _mapper.Map<IEnumerable<CategoryPeriodicStatsDto>>(periodStats);
         }
 
         public async Task<IEnumerable<CategoryDetailedStatsDto>> GetDetailedStats(Guid userId)

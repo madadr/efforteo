@@ -7,7 +7,7 @@ using Efforteo.Common.Exceptions;
 
 namespace Efforteo.Services.Stats.Domain.Models
 {
-    public class CategoryDetails
+    public class CategoryPeriodicStats
     {
         public string Category { get; protected set; }
         public int Days { get; protected set; }
@@ -15,7 +15,7 @@ namespace Efforteo.Services.Stats.Domain.Models
         public float[] Distance { get; protected set; }
         public long[] Time { get; protected set; }
 
-        public CategoryDetails(IEnumerable<Stat> stats, int days)
+        public CategoryPeriodicStats(IEnumerable<Stat> stats, int days)
         {
             if (!stats.Any())
             {
