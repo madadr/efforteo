@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   statsLoaderName = 'statsLoader';
   lastCommunityActivityLoaderName = 'communityLoader';
   lastUserActivityLoaderName = 'userLoader';
-  private userId: string;
+  private userId = this.authService.getId();
 
   constructor(private route: ActivatedRoute,
               private activityService: ActivityService,
@@ -47,7 +47,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   private loadData() {
-    this.userId = this.authService.getId();
     this.loadStatsData();
     this.loadLastActivities();
   }

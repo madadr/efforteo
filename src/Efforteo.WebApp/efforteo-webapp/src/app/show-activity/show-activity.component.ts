@@ -73,6 +73,7 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
       .pipe(map(resp => {
           this.activity = <Activity>JSON.parse(JSON.stringify(resp.body));
           console.log('Activity = ' + JSON.stringify(this.activity));
+          this.checkIfOwner();
 
           if (this.activity == null) {
             this.router.navigateByUrl('/not-found');
@@ -80,7 +81,6 @@ export class ShowActivityComponent implements OnInit, OnDestroy {
           this.createdAgo = new Date(this.activity.createdAt);
           this.loadUserName();
           this.loadStats();
-          this.checkIfOwner();
         }),
         catchError(err => {
           if (err.status >= 500 && err.status < 600) {
