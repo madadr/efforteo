@@ -1,27 +1,20 @@
-version: "3"
+version: "3.7"
 
 services:
-  nginx:
-    build: ./nginx
-    container_name: nginx
-    ports:
-    - 8888:80
-    - 4444:443
-    links:
-    - api-service
-    - webapp
-  
   webapp:
-    image: efforteo.webapp.new
+    image: efforteo.webapp
     build: ../src/Efforteo.WebApp/efforteo-webapp
     ports:
-    - 4200:4200
-    - 49152:49152
+      - 4200:4200
+      - 49152:49152
+    #volumes:
+    #  - '.:/usr/src/app'
+    #  - '/usr/src/app/node_modules'
 
   mongo:
     image: mongo:3.6
-    #volumes:
-    #  - ./data/db:/data/db
+    volumes:
+      - './data:/data/db'
     ports:
       - '27017:27017'
 
@@ -30,11 +23,14 @@ services:
     ports:
       - '5672:5672'
       - '15672:15672'
+    volumes:
+      - ./data:/var/lib/rabbitmq:rw
+      - ./definitions.json:/opt/definitions.json:ro
+      - ./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
 
   api-service:
     image: efforteo.services.api
     build: ../src/Efforteo.Services.Api
-    #restart: on-failure
     depends_on:
       - authentication-service
       - accounts-service
@@ -46,55 +42,39 @@ services:
   activities-service:
     image: efforteo.services.activities
     build: ../src/Efforteo.Services.Activities
-    #restart: on-failure
     depends_on:
       - mongo
       - rabbitmq
     links:
       - rabbitmq
       - mongo
-    #ports:
-    #  - '5010:5000'
-    #  - '5011:5001'
 
   authentication-service:
     image: efforteo.services.authentication
     build: ../src/Efforteo.Services.Authentication
-    #restart: on-failure
     depends_on:
       - mongo
       - rabbitmq
     links:
       - rabbitmq
       - mongo
-    #ports:
-    #  - '5020:5000'
-    #  - '5021:5001'
 
   accounts-service:
     image: efforteo.services.accounts
     build: ../src/Efforteo.Services.Accounts
-    #restart: on-failure
     depends_on:
       - mongo
       - rabbitmq
     links:
       - rabbitmq
       - mongo
-    #ports:
-    #  - '5030:5000'
-    #  - '5031:5001'
 
   stats-service:
     image: efforteo.services.stats
     build: ../src/Efforteo.Services.Stats
-    #restart: on-failure
     depends_on:
       - mongo
       - rabbitmq
     links:
       - rabbitmq
       - mongo
-    #ports:
-    #  - '5040:5000'
-    #  - '5041:5001'
