@@ -18,41 +18,35 @@
           </thead>
           <tbody>
           <tr *ngFor="let pair of detailedStat.stats">
-            <td>
-              <span class="badge text-light bg-primary">{{pair.stat.createdAt | date | uppercase}}</span>
+            <td class="align-middle">
+              <span class="badge text-light bg-primary">{{pair.stat.createdAt | date:'HH:mm' | uppercase}}<br/>
+                {{pair.stat.createdAt | date:'d/M/yy' | uppercase}}</span>
             </td>
-            <th>{{getTitle(pair.stat)}}</th>
-            <td>{{pair.stat.distance}}</td>
-            <td>{{converter.getTimeString(pair.stat.time)}}</td>
-            <td align="right">{{pair.stat.speed ? (pair.stat.speed | number:'1.2-2') : '--'}}</td>
-            <div *ngIf="pair.predecessor">
-              <div *ngIf="pair.predecessor.deltaSpeed >= 0">
-                <td class="text-success">+{{pair.predecessor.deltaSpeed | number:'1.2-2'}}</td>
-              </div>
-              <div *ngIf="pair.predecessor.deltaSpeed < 0">
-                <td class="text-danger">{{pair.predecessor.deltaSpeed | number:'1.2-2'}}</td>
-              </div>
-            </div>
-            <div *ngIf="!pair.predecessor">
-              <td>--</td>
-            </div>
-            <td align="right">{{pair.stat.pace ? converter.getPaceTimeString(pair.stat.pace) : '--'}}</td>
-            <div *ngIf="pair.predecessor">
-              <div *ngIf="pair.predecessor.deltaPace > 0">
-                <td class="text-danger">+{{converter.getPaceTimeString(pair.predecessor.deltaPace)}}</td>
-              </div>
-              <div *ngIf="pair.predecessor.deltaPace <= 0">
-                <td
-                  class="text-success">{{(pair.predecessor.deltaPace === 0 ? '-' : '') + converter.getPaceTimeString(pair.predecessor.deltaPace)}}</td>
-              </div>
-            </div>
-            <div *ngIf="!pair.predecessor">
-              <td>--</td>
-            </div>
-            <td><a class="btn btn-sm btn-outline-primary mr-2"
-                      routerLink="/show-activity/{{pair.stat.id}}">Details</a><a *ngIf="pair.predecessor"
-                                                                                       class="btn btn-sm btn-outline-success mt-1"
-                                                                                       routerLink="/show-activity/{{pair.predecessor.id}}">Previous</a>
+            <td class="align-middle">{{getTitle(pair.stat)}}</td>
+            <td class="align-middle">{{pair.stat.distance}}</td>
+            <td class="align-middle">{{converter.getTimeString(pair.stat.time)}}</td>
+            <td class="align-middle" align="right">{{pair.stat.speed ? (pair.stat.speed | number:'1.2-2') : '--'}}</td>
+
+            <td *ngIf="pair.predecessor && pair.predecessor.deltaSpeed >= 0" class="align-middle"><span
+              class="badge-pill badge-success w-100">+{{pair.predecessor.deltaSpeed | number:'1.2-2'}}</span></td>
+            <td *ngIf="pair.predecessor && pair.predecessor.deltaSpeed < 0" class="align-middle"><span
+              class="badge-pill badge-danger w-100">{{pair.predecessor.deltaSpeed | number:'1.2-2'}}</span></td>
+            <td *ngIf="!pair.predecessor" class="align-middle">--</td>
+
+            <td class="align-middle"
+                align="right">{{pair.stat.pace ? converter.getPaceTimeString(pair.stat.pace) : '--'}}</td>
+
+            <td *ngIf="pair.predecessor && pair.predecessor.deltaPace > 0" class="align-middle"><span
+              class="badge-pill badge-danger">+{{converter.getPaceTimeString(pair.predecessor.deltaPace)}}</span></td>
+            <td *ngIf="pair.predecessor && pair.predecessor.deltaPace <= 0" class="align-middle"><span
+              class="inline badge-pill badge-success">-{{converter.getPaceTimeString(-pair.predecessor.deltaPace)}}</span>
+            </td>
+            <td *ngIf="!pair.predecessor" class="align-middle">--</td>
+
+            <td><a class="btn btn-sm btn-outline-primary mr-1 mt-1"
+                   routerLink="/show-activity/{{pair.stat.id}}">Details</a><a *ngIf="pair.predecessor"
+                                                                              class="btn btn-sm btn-outline-success mt-1"
+                                                                              routerLink="/show-activity/{{pair.predecessor.id}}">Previous</a>
             </td>
           </tr>
           </tbody>
