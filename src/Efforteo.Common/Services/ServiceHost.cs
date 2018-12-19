@@ -59,7 +59,7 @@ namespace Efforteo.Common.Services
 
             public BusBuilder UseRabbitMq()
             {
-                _bus = (IBusClient)_webHost.Services.GetService(typeof(IBusClient));
+                _bus = (IBusClient) _webHost.Services.GetService(typeof(IBusClient));
 
                 return new BusBuilder(_webHost, _bus);
             }
@@ -83,7 +83,7 @@ namespace Efforteo.Common.Services
 
             public BusBuilder Subscribe<TEvent>() where TEvent : IEvent
             {
-                var handler = (IEventHandler<TEvent>)_webHost.Services
+                var handler = (IEventHandler<TEvent>) _webHost.Services
                     .GetService(typeof(IEventHandler<TEvent>));
                 _bus.WithEventHandlerAsync(handler);
 

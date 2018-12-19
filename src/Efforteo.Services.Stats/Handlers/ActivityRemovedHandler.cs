@@ -16,7 +16,8 @@ namespace Efforteo.Services.Stats.Handlers
         private readonly IStatService _service;
         private readonly ILogger _logger;
 
-        public ActivityRemovedHandler(IBusClient busClient, IStatService service, ILogger<ActivityRemovedHandler> logger)
+        public ActivityRemovedHandler(IBusClient busClient, IStatService service,
+            ILogger<ActivityRemovedHandler> logger)
         {
             _busClient = busClient;
             _service = service;
@@ -34,11 +35,13 @@ namespace Efforteo.Services.Stats.Handlers
             }
             catch (EfforteoException exception)
             {
-                _logger.LogError($"Failed to remove stats for activity=(id={command.Id}, code={exception.Code}, message={exception.Message})");
+                _logger.LogError(
+                    $"Failed to remove stats for activity=(id={command.Id}, code={exception.Code}, message={exception.Message})");
             }
             catch (Exception exception)
             {
-                _logger.LogError($"Failed to remove stats for activity=(id={command.Id}, code=unknown, message={exception.Message})");
+                _logger.LogError(
+                    $"Failed to remove stats for activity=(id={command.Id}, code=unknown, message={exception.Message})");
             }
         }
     }

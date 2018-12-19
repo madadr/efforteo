@@ -24,7 +24,8 @@ namespace Efforteo.Services.Stats.Controllers
         private Guid UserId =>
             string.IsNullOrWhiteSpace(User?.Identity?.Name) ? Guid.Empty : Guid.Parse(User.Identity.Name);
 
-        public StatsController(IStatService statService, ILogger<StatsController> logger, ICommandDispatcher commandDispatcher,
+        public StatsController(IStatService statService, ILogger<StatsController> logger,
+            ICommandDispatcher commandDispatcher,
             IBusClient busClient)
         {
             _statService = statService;
@@ -33,7 +34,7 @@ namespace Efforteo.Services.Stats.Controllers
             _busClient = busClient;
         }
 
-        [HttpGet("activity/{id}", Name="getStatById")]
+        [HttpGet("activity/{id}", Name = "getStatById")]
         public async Task<IActionResult> GetStat(Guid id)
         {
             _logger.LogInformation($"StatsController::GetStat id={id}");
@@ -64,6 +65,7 @@ namespace Efforteo.Services.Stats.Controllers
             {
                 throw new EfforteoException("empty_days", "Cannot get period stats. Invalid days period.");
             }
+
             var stat = await _statService.GetPeriodAsync(userId, days);
             if (stat == null)
             {

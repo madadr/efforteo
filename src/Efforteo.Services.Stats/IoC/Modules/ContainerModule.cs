@@ -15,15 +15,18 @@ namespace Efforteo.Services.Stats.IoC.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterInstance(new MapperConfiguration(cfg => {
+            builder.RegisterInstance(new MapperConfiguration(cfg =>
+                {
                     cfg.CreateMap<Stat, StatDto>();
                     cfg.CreateMap<CategoryPeriodicStats, CategoryPeriodicStatsDto>();
                     cfg.CreateMap<CategoryTotalStats, CategoryTotalStatsDto>();
                     cfg.CreateMap<Stat, ActivityPointer>();
-                    cfg.CreateMap<CategoryDetailedStats, CategoryDetailedStatsDto>(); ;
-                    cfg.CreateMap<StatPredecessor, StatPredecessorDto>(); ;
+                    cfg.CreateMap<CategoryDetailedStats, CategoryDetailedStatsDto>();
+                    ;
+                    cfg.CreateMap<StatPredecessor, StatPredecessorDto>();
+                    ;
                     cfg.CreateMap<DetailedStat, DetailedStatDto>();
-            }).CreateMapper())
+                }).CreateMapper())
                 .SingleInstance();
 
             builder.RegisterType<StatsRepository>()

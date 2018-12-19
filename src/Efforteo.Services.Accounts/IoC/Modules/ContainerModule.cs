@@ -15,7 +15,8 @@ namespace Efforteo.Services.Accounts.IoC.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterInstance(new MapperConfiguration(cfg => { cfg.CreateMap<Account, AccountDto>(); }).CreateMapper())
+            builder.RegisterInstance(new MapperConfiguration(cfg => { cfg.CreateMap<Account, AccountDto>(); })
+                    .CreateMapper())
                 .SingleInstance();
 
             builder.RegisterType<AccountRepository>()

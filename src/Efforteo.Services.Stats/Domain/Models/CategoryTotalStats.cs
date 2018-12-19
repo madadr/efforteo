@@ -34,6 +34,7 @@ namespace Efforteo.Services.Stats.Domain.Models
             CalculateLongestDistance(stats);
             CalculateLongestTime(stats);
         }
+
         private void CalculateSpeed()
         {
             if (Time == 0 || Math.Abs(Distance) <= 0.001)
@@ -54,14 +55,15 @@ namespace Efforteo.Services.Stats.Domain.Models
             }
             else
             {
-                AveragePace = (int)(Time / Distance);
+                AveragePace = (int) (Time / Distance);
             }
         }
 
         private void CalculateLongestDistance(IEnumerable<Stat> stats)
         {
             var longestDistanceStat = stats.OrderByDescending(stat => stat.Distance).First();
-            LongestDistance = new ActivityPointer(longestDistanceStat.Id, longestDistanceStat.Time, longestDistanceStat.Distance);
+            LongestDistance = new ActivityPointer(longestDistanceStat.Id, longestDistanceStat.Time,
+                longestDistanceStat.Distance);
         }
 
         private void CalculateLongestTime(IEnumerable<Stat> stats)

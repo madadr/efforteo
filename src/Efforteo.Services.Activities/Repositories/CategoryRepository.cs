@@ -10,6 +10,7 @@ namespace Efforteo.Services.Activities.Repositories
     public class CategoryRepository : ICategoryRepository
     {
         private readonly IMongoDatabase _database;
+
         private IMongoCollection<Category> Collection
             => _database.GetCollection<Category>("categories");
 
@@ -30,6 +31,6 @@ namespace Efforteo.Services.Activities.Repositories
 
         public async Task AddAsync(Category category)
             => await Collection
-                    .InsertOneAsync(category);
+                .InsertOneAsync(category);
     }
 }

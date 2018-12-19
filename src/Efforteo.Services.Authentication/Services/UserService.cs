@@ -32,6 +32,7 @@ namespace Efforteo.Services.Authentication.Services
             {
                 throw new EfforteoException("email_already_taken", $"Email: '{email}' is already in use.");
             }
+
             user = new User(email, name);
             user.SetPassword(password, _encrypter);
             await _repository.AddAsync(user);
@@ -66,6 +67,7 @@ namespace Efforteo.Services.Authentication.Services
             {
                 throw new EfforteoException("invalid_credentials", $"Invalid credentials.");
             }
+
             if (!user.ValidatePassword(password, _encrypter))
             {
                 throw new EfforteoException("invalid_credentials", $"Invalid credentials.");
@@ -81,6 +83,7 @@ namespace Efforteo.Services.Authentication.Services
             {
                 throw new EfforteoException("invalid_credentials", $"Invalid credentials.");
             }
+
             if (!user.ValidatePassword(oldPassword, _encrypter))
             {
                 throw new EfforteoException("invalid_credentials", $"Invalid credentials.");

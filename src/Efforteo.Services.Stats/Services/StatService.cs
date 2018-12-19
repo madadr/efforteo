@@ -26,12 +26,12 @@ namespace Efforteo.Services.Stats.Services
         public async Task AddAsync(Guid id, Guid userId, string category, float distance, long time, DateTime createdAt)
         {
             var stat = await _repository.GetAsync(id);
-            
+
             if (stat != null)
             {
-            throw new EfforteoException("stat_already_added", $"Stat is already created.");
+                throw new EfforteoException("stat_already_added", $"Stat is already created.");
             }
-            
+
             stat = new Stat(id, userId, category, distance, time, createdAt);
             await _repository.AddAsync(stat);
         }
@@ -41,9 +41,9 @@ namespace Efforteo.Services.Stats.Services
             var stat = await _repository.GetAsync(id);
             if (stat == null)
             {
-            throw new EfforteoException("stat_not_exists", $"Stat doesn't exist.");
+                throw new EfforteoException("stat_not_exists", $"Stat doesn't exist.");
             }
-            
+
             return _mapper.Map<StatDto>(stat);
         }
 
@@ -79,7 +79,7 @@ namespace Efforteo.Services.Stats.Services
             }
 
             var userStatsByCategory = userStats.GroupBy(stat => stat.Category.ToLowerInvariant());
-            List <CategoryPeriodicStats> periodStats = new List<CategoryPeriodicStats>();
+            List<CategoryPeriodicStats> periodStats = new List<CategoryPeriodicStats>();
             foreach (var categoryStats in userStatsByCategory)
             {
                 periodStats.Add(new CategoryPeriodicStats(categoryStats, days));
@@ -111,11 +111,11 @@ namespace Efforteo.Services.Stats.Services
             var stat = await _repository.GetAsync(statDto.Id);
             if (stat == null)
             {
-               throw new EfforteoException("stat_not_exists", $"Stat doesn't exist {statDto.Id}.");
+                throw new EfforteoException("stat_not_exists", $"Stat doesn't exist {statDto.Id}.");
             }
-                        
+
             stat.SetStatData(statDto.Category, statDto.Distance, statDto.Time, statDto.CreatedAt);
-            
+
             await _repository.UpdateAsync(stat);
         }
 
@@ -126,7 +126,7 @@ namespace Efforteo.Services.Stats.Services
             {
                 throw new EfforteoException("stat_not_exists", $"Stat doesn't exist.");
             }
-            
+
             await _repository.RemoveAsync(id);
         }
     }

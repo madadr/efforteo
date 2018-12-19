@@ -14,7 +14,7 @@ namespace Efforteo.Services.Authentication.Domain.Services
             var saltBytes = new byte[SaltSize];
             var rng = RandomNumberGenerator.Create();
             rng.GetBytes(saltBytes);
-            
+
             return Convert.ToBase64String(saltBytes);
         }
 

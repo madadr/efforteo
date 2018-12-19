@@ -13,6 +13,7 @@ namespace Efforteo.Services.Accounts.Repositories
     public class AccountRepository : IAccountRepository
     {
         private readonly IMongoDatabase _database;
+
         private IMongoCollection<Account> Collection
             => _database.GetCollection<Account>("accounts");
 

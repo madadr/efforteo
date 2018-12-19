@@ -28,7 +28,7 @@ namespace Efforteo.Services.Authentication
                 .AddJsonFormatters()
                 .AddDataAnnotations()
                 .AddAuthorization();
-    
+
             services.AddJwt(Configuration);
             services.AddMongoDb(Configuration, _logger);
             services.AddRabbitMq(Configuration, _logger);

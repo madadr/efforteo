@@ -6,7 +6,6 @@ using Autofac;
 
 namespace Efforteo.Common.Events
 {
-
     public class EventDispatcher : IEventDispatcher
     {
         private readonly IComponentContext _componentContext;

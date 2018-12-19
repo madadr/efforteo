@@ -15,14 +15,16 @@ namespace Efforteo.Services.Activities.Services
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
 
-        public ActivityService(IActivityRepository activityRepository, ICategoryRepository categoryRepository, IMapper mapper)
+        public ActivityService(IActivityRepository activityRepository, ICategoryRepository categoryRepository,
+            IMapper mapper)
         {
             _activityRepository = activityRepository;
             _categoryRepository = categoryRepository;
             _mapper = mapper;
         }
 
-        public async Task AddAsync(Guid userId, Guid id, string category, string title, string description, long time, float distance, DateTime createdAt)
+        public async Task AddAsync(Guid userId, Guid id, string category, string title, string description, long time,
+            float distance, DateTime createdAt)
         {
             var categoryObject = await _categoryRepository.GetAsync(category.ToLowerInvariant());
 
@@ -31,7 +33,8 @@ namespace Efforteo.Services.Activities.Services
                 throw new EfforteoException("invalid_category", $"Category {category} not found");
             }
 
-            await _activityRepository.AddAsync(new Activity(userId, id, title, categoryObject, description, time, distance, createdAt));
+            await _activityRepository.AddAsync(new Activity(userId, id, title, categoryObject, description, time,
+                distance, createdAt));
         }
 
         public async Task<ActivityDto> GetAsync(Guid id)
@@ -78,7 +81,8 @@ namespace Efforteo.Services.Activities.Services
                 }
             }
 
-            activity.SetData(activityDto.Title, activityDto.Category, activityDto.Description, activityDto.Time, activityDto.Distance, activityDto.CreatedAt);
+            activity.SetData(activityDto.Title, activityDto.Category, activityDto.Description, activityDto.Time,
+                activityDto.Distance, activityDto.CreatedAt);
 
             await _activityRepository.UpdateAsync(activity);
         }

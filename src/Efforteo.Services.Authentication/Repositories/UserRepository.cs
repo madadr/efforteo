@@ -10,6 +10,7 @@ namespace Efforteo.Services.Authentication.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly IMongoDatabase _database;
+
         private IMongoCollection<User> Collection
             => _database.GetCollection<User>("users");
 

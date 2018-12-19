@@ -39,14 +39,14 @@ namespace Efforteo.Services.Accounts.Handlers
             }
             catch (EfforteoException exception)
             {
-                _logger.LogError($"Failed to update last logged in for account: {JsonConvert.SerializeObject(@event)}, code={exception.Code}, message={exception.Message}");
+                _logger.LogError(
+                    $"Failed to update last logged in for account: {JsonConvert.SerializeObject(@event)}, code={exception.Code}, message={exception.Message}");
             }
             catch (Exception exception)
             {
-                _logger.LogError($"Failed to update last logged in for account: {JsonConvert.SerializeObject(@event)}, code=unknown, message={exception.Message})");
+                _logger.LogError(
+                    $"Failed to update last logged in for account: {JsonConvert.SerializeObject(@event)}, code=unknown, message={exception.Message})");
             }
-
-
         }
     }
 }

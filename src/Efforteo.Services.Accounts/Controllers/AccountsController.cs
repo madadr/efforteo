@@ -25,7 +25,8 @@ namespace Efforteo.Services.Accounts.Controllers
         private Guid UserId =>
             string.IsNullOrWhiteSpace(User?.Identity?.Name) ? Guid.Empty : Guid.Parse(User.Identity.Name);
 
-        public AccountsController(IAccountService accountService, ILogger<AccountsController> logger, ICommandDispatcher commandDispatcher,
+        public AccountsController(IAccountService accountService, ILogger<AccountsController> logger,
+            ICommandDispatcher commandDispatcher,
             IBusClient busClient)
         {
             _accountService = accountService;
@@ -49,7 +50,7 @@ namespace Efforteo.Services.Accounts.Controllers
         }
 
         // TODO: Consider detailed info only for friends
-        [HttpGet("{id}", Name="getById")]
+        [HttpGet("{id}", Name = "getById")]
         public async Task<IActionResult> Get(Guid id)
         {
             _logger.LogInformation($"AccountsController::GetAccount id={id}");
@@ -61,7 +62,8 @@ namespace Efforteo.Services.Accounts.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(UpdateAccount command)
         {
-            _logger.LogInformation($"AccountsController::Update command={JsonConvert.SerializeObject(command)}, UserId={UserId}");
+            _logger.LogInformation(
+                $"AccountsController::Update command={JsonConvert.SerializeObject(command)}, UserId={UserId}");
 
             command.UserId = UserId;
 

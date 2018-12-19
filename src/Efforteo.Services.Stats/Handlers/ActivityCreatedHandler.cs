@@ -16,7 +16,8 @@ namespace Efforteo.Services.Stats.Handlers
         private readonly IStatService _service;
         private readonly ILogger _logger;
 
-        public ActivityCreatedHandler(IBusClient busClient, IStatService service, ILogger<ActivityCreatedHandler> logger)
+        public ActivityCreatedHandler(IBusClient busClient, IStatService service,
+            ILogger<ActivityCreatedHandler> logger)
         {
             _busClient = busClient;
             _service = service;
@@ -29,16 +30,19 @@ namespace Efforteo.Services.Stats.Handlers
 
             try
             {
-                await _service.AddAsync(command.UserId, command.Id, command.Category, command.Distance, command.Time, command.CreatedAt);
+                await _service.AddAsync(command.UserId, command.Id, command.Category, command.Distance, command.Time,
+                    command.CreatedAt);
                 _logger.LogInformation($"Created stats for activity=(id={command.Id})");
             }
             catch (EfforteoException exception)
             {
-                _logger.LogError($"Failed to create stats for activity=(id={command.Id}, code={exception.Code}, message={exception.Message})");
+                _logger.LogError(
+                    $"Failed to create stats for activity=(id={command.Id}, code={exception.Code}, message={exception.Message})");
             }
             catch (Exception exception)
             {
-                _logger.LogError($"Failed to create stats for activity=(id={command.Id}, code=unknown, message={exception.Message})");
+                _logger.LogError(
+                    $"Failed to create stats for activity=(id={command.Id}, code=unknown, message={exception.Message})");
             }
         }
     }

@@ -27,7 +27,8 @@ namespace Efforteo.Services.Accounts.Services
 
             if (account != null)
             {
-                throw new EfforteoException("account_already_added", $"Account for email: '{email}' is already created.");
+                throw new EfforteoException("account_already_added",
+                    $"Account for email: '{email}' is already created.");
             }
 
             account = new Account(id, email);
@@ -70,8 +71,9 @@ namespace Efforteo.Services.Accounts.Services
             {
                 throw new EfforteoException("account_not_exists", $"Account doesn't exist {accountDto.Id}.");
             }
-            
-            account.SetAccountData(accountDto.Email, accountDto.Name, accountDto.Location, accountDto.Weight, accountDto.Birthday);
+
+            account.SetAccountData(accountDto.Email, accountDto.Name, accountDto.Location, accountDto.Weight,
+                accountDto.Birthday);
 
             await _repository.UpdateAsync(account);
         }
@@ -83,6 +85,7 @@ namespace Efforteo.Services.Accounts.Services
             {
                 throw new EfforteoException("account_not_exists", $"Account doesn't exist.");
             }
+
             account.UpdateLastLoggedIn();
 
             await _repository.UpdateAsync(account);

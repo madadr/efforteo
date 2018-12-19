@@ -35,8 +35,8 @@ namespace Efforteo.Common.Auth
             var nowUtc = DateTime.UtcNow;
             var expires = nowUtc.AddMinutes(_settings.ExpiryMinutes);
             var centuryBegin = new DateTime(1970, 1, 1).ToUniversalTime();
-            var now = (long)(new TimeSpan(nowUtc.Ticks - centuryBegin.Ticks).TotalSeconds);
-            var exp = (long)(new TimeSpan(expires.Ticks - centuryBegin.Ticks).TotalSeconds);
+            var now = (long) (new TimeSpan(nowUtc.Ticks - centuryBegin.Ticks).TotalSeconds);
+            var exp = (long) (new TimeSpan(expires.Ticks - centuryBegin.Ticks).TotalSeconds);
             var payload = new JwtPayload
             {
                 {"sub", userId},
@@ -53,7 +53,7 @@ namespace Efforteo.Common.Auth
                 Token = token,
                 UserId = userId.ToString(),
                 Expires = exp
-        };
+            };
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Efforteo.Services.Authentication.Domain.Models
             {
                 throw new EfforteoException("empty_email", "User e-mail cannot be empty");
             }
+
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new EfforteoException("empty_name", "User name cannot be empty");
@@ -34,6 +35,7 @@ namespace Efforteo.Services.Authentication.Domain.Models
             {
                 throw new EfforteoException("empty_password", "Password can not be empty.");
             }
+
             Salt = encrypter.GetSalt();
             Password = encrypter.GetHash(password, Salt);
         }

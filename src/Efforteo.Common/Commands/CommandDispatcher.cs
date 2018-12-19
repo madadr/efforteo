@@ -6,7 +6,6 @@ using Autofac;
 
 namespace Efforteo.Common.Commands
 {
-
     public class CommandDispatcher : ICommandDispatcher
     {
         private readonly IComponentContext _componentContext;

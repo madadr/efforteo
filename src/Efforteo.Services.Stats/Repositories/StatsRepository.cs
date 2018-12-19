@@ -13,6 +13,7 @@ namespace Efforteo.Services.Stats.Repositories
     public class StatsRepository : IStatsRepository
     {
         private readonly IMongoDatabase _database;
+
         private IMongoCollection<Stat> Collection
             => _database.GetCollection<Stat>("Stats");
 
@@ -34,7 +35,7 @@ namespace Efforteo.Services.Stats.Repositories
 
         public async Task<IEnumerable<Stat>> GetPeriodAsync(Guid userId, int days)
         {
-            var day = DateTime.UtcNow.AddDays(1-days);
+            var day = DateTime.UtcNow.AddDays(1 - days);
             var dayStart = new DateTime(day.Year, day.Month, day.Day, 0, 0, 0, DateTimeKind.Utc);
 
             return await Collection

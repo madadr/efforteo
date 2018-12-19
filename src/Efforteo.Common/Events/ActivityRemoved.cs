@@ -9,7 +9,6 @@ namespace Efforteo.Common.Events
 
         protected ActivityRemoved()
         {
-
         }
 
         public ActivityRemoved(Guid userId, Guid id)

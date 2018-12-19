@@ -15,7 +15,8 @@ namespace Efforteo.Services.Activities.Handlers
         private readonly IActivityService _activityService;
         private readonly ILogger _logger;
 
-        public RemoveActivityHandler(IBusClient busClient, IActivityService activityService, ILogger<CreateActivityHandler> logger)
+        public RemoveActivityHandler(IBusClient busClient, IActivityService activityService,
+            ILogger<CreateActivityHandler> logger)
         {
             _busClient = busClient;
             _activityService = activityService;
@@ -37,19 +38,23 @@ namespace Efforteo.Services.Activities.Handlers
 
                     return;
                 }
-                throw  new EfforteoException("activity_not_users", "Activity doesn't belong to this user.");
+
+                throw new EfforteoException("activity_not_users", "Activity doesn't belong to this user.");
             }
             catch (EfforteoException exception)
             {
-                await _busClient.PublishAsync(new RemoveActivityRejected(command.Id, exception.Code, exception.Message));
-                _logger.LogError($"Published event RemoveActivityRejected(id={command.Id}, code={exception.Code}, message={exception.Message})");
+                await _busClient.PublishAsync(new RemoveActivityRejected(command.Id, exception.Code,
+                    exception.Message));
+                _logger.LogError(
+                    $"Published event RemoveActivityRejected(id={command.Id}, code={exception.Code}, message={exception.Message})");
 
                 throw;
             }
             catch (Exception exception)
             {
                 await _busClient.PublishAsync(new RemoveActivityRejected(command.Id, "error", exception.Message));
-                _logger.LogError($"Published event RemoveActivityRejected(id={command.Id}, code=unknown, message={exception.Message})");
+                _logger.LogError(
+                    $"Published event RemoveActivityRejected(id={command.Id}, code=unknown, message={exception.Message})");
 
                 throw;
             }

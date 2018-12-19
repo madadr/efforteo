@@ -10,7 +10,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/authentication/",
-      "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ]
+      "UpstreamHttpMethod": ["GET", "POST", "DELETE"]
     },
     {
       "DownstreamPathTemplate": "/api/authentication/{everything}",
@@ -22,7 +22,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/authentication/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ]
+      "UpstreamHttpMethod": ["GET", "POST", "DELETE"]
     },
     {
       "DownstreamPathTemplate": "/api/accounts/",
@@ -34,7 +34,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/accounts/",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+      "UpstreamHttpMethod": ["GET", "POST", "PUT"]
     },
     {
       "DownstreamPathTemplate": "/api/accounts/{everything}",
@@ -46,7 +46,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/accounts/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+      "UpstreamHttpMethod": ["GET", "POST", "PUT"]
     },
     {
       "DownstreamPathTemplate": "/api/activities/",
@@ -58,7 +58,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/activities/",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+      "UpstreamHttpMethod": ["GET", "POST", "PUT", "DELETE"]
     },
     {
       "DownstreamPathTemplate": "/api/activities/{everything}",
@@ -70,7 +70,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/activities/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+      "UpstreamHttpMethod": ["GET", "POST", "PUT", "DELETE"]
     },
     {
       "DownstreamPathTemplate": "/api/stats/{everything}",
@@ -82,7 +82,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/stats/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": ["GET"]
     }
   ],
 

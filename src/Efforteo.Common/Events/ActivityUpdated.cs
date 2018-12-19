@@ -15,10 +15,10 @@ namespace Efforteo.Common.Events
 
         protected ActivityUpdated()
         {
-
         }
 
-        public ActivityUpdated(Guid id, Guid userId, string category, string title, string description, long time, float distance, DateTime createdAt)
+        public ActivityUpdated(Guid id, Guid userId, string category, string title, string description, long time,
+            float distance, DateTime createdAt)
         {
             Id = id;
             UserId = userId;
