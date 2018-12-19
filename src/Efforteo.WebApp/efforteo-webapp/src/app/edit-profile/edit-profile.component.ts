@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Account} from '../model/account';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ActivityService} from '../activity.service';
@@ -7,7 +7,7 @@ import {AccountService} from '../account.service';
 import {StatsService} from '../stats.service';
 import {AuthService} from '../auth.service';
 import {AlertService} from '../alert.service';
-import {catchError, finalize, map, timeout} from 'rxjs/operators';
+import {catchError, finalize, map} from 'rxjs/operators';
 import {Alert} from '../alert';
 import {throwError} from 'rxjs';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -136,7 +136,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     )
       .pipe(map((resp: HttpResponse<any>) => {
           console.log('Edit account: successful' + resp);
-          this.alertService.add(new Alert('success', 'Your acount was updated!'));
+          this.alertService.add(new Alert('success', 'Your account was updated!'));
         }),
         catchError(err => {
           if (err.error && err.error.message) {

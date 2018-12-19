@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private loadLastActivities() {
     this.toggleService.show(this.lastCommunityActivityLoaderName);
     this.toggleService.show(this.lastUserActivityLoaderName);
-    this.activityService.getAllActivites()
+    this.activityService.getAllActivities()
       .pipe(map(resp => {
           const activities = <Activity[]>JSON.parse(JSON.stringify(resp.body));
           let activity = activities.find(a => a.userId !== this.userId);

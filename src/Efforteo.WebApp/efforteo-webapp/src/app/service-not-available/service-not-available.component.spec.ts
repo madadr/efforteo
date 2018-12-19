@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ServiceNotAvailableComponent } from './service-not-available.component';
+import {ServiceNotAvailableComponent} from './service-not-available.component';
 
 describe('ServiceNotAvailableComponent', () => {
   let component: ServiceNotAvailableComponent;
@@ -8,9 +8,9 @@ describe('ServiceNotAvailableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ServiceNotAvailableComponent ]
+      declarations: [ServiceNotAvailableComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

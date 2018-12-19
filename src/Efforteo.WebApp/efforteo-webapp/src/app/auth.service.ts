@@ -5,7 +5,8 @@ import {Router} from '@angular/router';
 @Injectable({providedIn: 'root'})
 export class AuthService {
   constructor(private http: HttpClient,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   signUp(name: string, email: string, password: string) {
     console.log('called sign up');

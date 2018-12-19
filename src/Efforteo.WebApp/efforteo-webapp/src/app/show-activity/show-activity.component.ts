@@ -18,7 +18,7 @@ import {Account} from '../model/account';
   selector: 'app-show-activity',
   templateUrl: './show-activity.component.html',
   styleUrls: ['./show-activity.component.css'],
-  providers: [ LoadingService ]
+  providers: [LoadingService]
 })
 export class ShowActivityComponent implements OnInit, OnDestroy {
   id: string;

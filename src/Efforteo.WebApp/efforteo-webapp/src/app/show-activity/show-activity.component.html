@@ -20,8 +20,11 @@
       </span>
       </div>
       <div class="card-body border-bottom border-info">
-        <h5><span class="badge text-light bg-primary" style="background-color: purple">{{activity.createdAt | date:'HH:mm' | uppercase}} | {{activity.createdAt | date | uppercase}}</span></h5>
-        <h5><span class="badge text-light bg-{{(activity.category | lowercase)}}">{{activity.category | uppercase}}</span></h5>
+        <h5><span class="badge text-light bg-primary"
+                  style="background-color: purple">{{activity.createdAt | date:'HH:mm' | uppercase}}
+          | {{activity.createdAt | date | uppercase}}</span></h5>
+        <h5><span
+          class="badge text-light bg-{{(activity.category | lowercase)}}">{{activity.category | uppercase}}</span></h5>
         <h4 class="card-title">{{activity.title}}</h4>
         <p class="card-text text-dark col-6">{{activity.description}}</p>
         <div class="row justify-content-center mt-1 mb-2">
@@ -48,8 +51,10 @@
             <div class="card-body">
               <app-loader *ngIf="toggleService.isShown(paceLoaderName)" size="15"></app-loader>
               <span *ngIf="!toggleService.isShown(paceLoaderName)">
-                  <span *ngIf="activityStats">{{activityStats.pace ? converter.getPaceTimeString(activityStats.pace) + ' min/km' : '--'}}</span>
-                  <button *ngIf="!activityStats" (click)="loadStats()" class="btn btn-outline-success btn-sm">Refresh</button>
+                  <span
+                    *ngIf="activityStats">{{activityStats.pace ? converter.getPaceTimeString(activityStats.pace) + ' min/km' : '--'}}</span>
+                  <button *ngIf="!activityStats" (click)="loadStats()"
+                          class="btn btn-outline-success btn-sm">Refresh</button>
                 </span>
             </div>
           </div>
@@ -61,8 +66,10 @@
               <h5 class="card-title">
                 <app-loader *ngIf="toggleService.isShown(speedLoaderName)" size="15"></app-loader>
                 <span *ngIf="!toggleService.isShown(speedLoaderName)">
-                  <span *ngIf="activityStats">{{activityStats.speed ? (activityStats.speed | number:'1.2-2') + ' km/h' : '--'}}</span>
-                  <button *ngIf="!activityStats" (click)="loadStats()" class="btn btn-outline-success btn-sm">Refresh</button>
+                  <span
+                    *ngIf="activityStats">{{activityStats.speed ? (activityStats.speed | number:'1.2-2') + ' km/h' : '--'}}</span>
+                  <button *ngIf="!activityStats" (click)="loadStats()"
+                          class="btn btn-outline-success btn-sm">Refresh</button>
                 </span>
               </h5>
             </div>

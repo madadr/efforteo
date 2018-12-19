@@ -15,7 +15,8 @@ export class ActivitiesStatsDetailedComponent implements OnInit {
 
   public converter = Converter;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

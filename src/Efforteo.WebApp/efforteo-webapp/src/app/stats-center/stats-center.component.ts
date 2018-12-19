@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {catchError, finalize, map, timeout} from 'rxjs/operators';
+import {catchError, finalize, map} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ActivityService} from '../activity.service';
@@ -10,7 +10,6 @@ import {AuthService} from '../auth.service';
 import {AlertService} from '../alert.service';
 import {Alert} from '../alert';
 import {Activity} from '../model/activity';
-import {ActivityDetailedStats} from '../model/activity-detailed-stats';
 import {CategoryDetailedStats} from '../model/category-detailed-stats';
 
 @Component({
@@ -91,7 +90,7 @@ export class StatsCenterComponent implements OnInit, OnDestroy {
 
   private loadActivityData() {
     this.toggleService.show(this.activityLoaderName);
-    this.activityService.getAllActivites()
+    this.activityService.getAllActivities()
       .pipe(map(resp => {
           const activities = <Activity[]>JSON.parse(JSON.stringify(resp.body));
           if (activities) {

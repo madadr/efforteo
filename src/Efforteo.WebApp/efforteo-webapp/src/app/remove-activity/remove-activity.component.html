@@ -5,7 +5,8 @@
 
   <div *ngIf="!toggleService.isShown(onCreateLoaderName) && activity && isOwner">
     <div class="my-2">
-      <a class="btn btn-outline-primary" routerLink="/show-activity/{{activity.id}}" role="button">Back to activity details</a>
+      <a class="btn btn-outline-primary" routerLink="/show-activity/{{activity.id}}" role="button">Back to activity
+        details</a>
     </div>
     <app-alerts></app-alerts>
     <div class="card text-dark bg-light my-2">
@@ -25,7 +26,8 @@
   <div class="my-2">
     <div *ngIf="!toggleService.isShown(onCreateLoaderName) && activity && !isOwner">
       <h4>You cannot edit this activity.</h4>
-      <a class="btn btn-outline-primary" routerLink="/show-activity/{{activity.id}}" role="button">Back to activity details</a>
+      <a class="btn btn-outline-primary" routerLink="/show-activity/{{activity.id}}" role="button">Back to activity
+        details</a>
     </div>
 
     <div *ngIf="!toggleService.isShown(onCreateLoaderName) && !activity">

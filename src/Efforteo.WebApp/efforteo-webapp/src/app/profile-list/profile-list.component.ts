@@ -8,8 +8,7 @@ import {AccountService} from '../account.service';
 import {StatsService} from '../stats.service';
 import {AuthService} from '../auth.service';
 import {AlertService} from '../alert.service';
-import {catchError, finalize, map, timeout} from 'rxjs/operators';
-import {UserTotalStats} from '../model/user-total-stats';
+import {catchError, finalize, map} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 
 @Component({

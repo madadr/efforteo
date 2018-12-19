@@ -4,9 +4,7 @@ export class Converter {
 
     const min = Math.floor(time / 60);
     time = time - min * 60;
-    const sec = time;
-
-    return this.toStringNumber(min) + ':' + this.toStringNumber(sec);
+    return this.toStringNumber(min) + ':' + this.toStringNumber(time);
   }
 
   static getTimeString(timeInSec: number): string {
@@ -16,9 +14,7 @@ export class Converter {
     time = time - hour * 3600;
     const min = Math.floor(time / 60);
     time = time - min * 60;
-    const sec = time;
-
-    return this.toStringNumber(hour) + ':' + this.toStringNumber(min) + ':' + this.toStringNumber(sec);
+    return this.toStringNumber(hour) + ':' + this.toStringNumber(min) + ':' + this.toStringNumber(time);
   }
 
   static toStringNumber(num: number): string {

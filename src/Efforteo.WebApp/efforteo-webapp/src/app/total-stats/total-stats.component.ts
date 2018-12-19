@@ -12,7 +12,8 @@ export class TotalStatsComponent implements OnInit {
 
   public converter = Converter;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

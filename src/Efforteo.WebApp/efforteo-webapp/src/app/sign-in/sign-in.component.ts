@@ -18,7 +18,8 @@ export class SignInComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private alertService: AlertService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -29,7 +30,9 @@ export class SignInComponent implements OnInit {
     this.authService.logOut();
   }
 
-  get f() { return this.loginForm.controls; } // accessibel from HTML
+  get f() {
+    return this.loginForm.controls;
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -48,7 +51,7 @@ export class SignInComponent implements OnInit {
           // @ts-ignore
           localStorage.setItem('currentUser', JSON.stringify({token: response.token, userId: response.userId, expires: response.expires}));
 
-          this.router.navigate(['/dashboard']);
+          this.router.navigateByUrl('/dashboard');
         },
         response => {
           console.log('Sign up: error; response.error' + response.error);

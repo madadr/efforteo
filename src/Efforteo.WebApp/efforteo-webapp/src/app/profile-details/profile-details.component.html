@@ -8,7 +8,9 @@
       <p class="lead">{{account.location === null || account.location == '' ? '-' : account.location}}</p>
       <hr/>
       <p><b class="text-secondary">Weight:</b> {{account.weight === 0 ? '-' : (account.weight + ' kg')}}</p>
-      <p><b class="text-secondary">Born:</b> {{account.birthday === null || account.birthday == '' ? '-' : account.birthday | date:'d/M/y'}}</p>
+      <p><b
+        class="text-secondary">Born:</b> {{account.birthday === null || account.birthday == '' ? '-' : account.birthday | date:'d/M/y'}}
+      </p>
       <p><b class="text-secondary">Member since:</b> {{account.createdAt | timeAgo}}</p>
       <p><b class="text-secondary">Last logged in:</b> {{account.lastLoggedIn | timeAgo}}</p>
     </div>

@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PeriodChartComponent } from './period-chart.component';
+import {PeriodChartComponent} from './period-chart.component';
 
 describe('PeriodChartComponent', () => {
   let component: PeriodChartComponent;
@@ -8,9 +8,9 @@ describe('PeriodChartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PeriodChartComponent ]
+      declarations: [PeriodChartComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

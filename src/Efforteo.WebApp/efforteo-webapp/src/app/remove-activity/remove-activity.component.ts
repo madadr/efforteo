@@ -6,7 +6,7 @@ import {LoadingService} from '../loading.service';
 import {AccountService} from '../account.service';
 import {AuthService} from '../auth.service';
 import {AlertService} from '../alert.service';
-import {catchError, finalize, map, timeout} from 'rxjs/operators';
+import {catchError, finalize, map} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import {HttpResponse} from '@angular/common/http';
 import {Alert} from '../alert';
@@ -87,14 +87,14 @@ export class RemoveActivityComponent implements OnInit, OnDestroy {
 
     this.activityService.removeActivity(this.activity.id)
       .pipe(map((resp: HttpResponse<any>) => {
-        console.log('Remove activity: successful' + resp);
-        this.activity = null;
-        this.alertService.clear();
-        this.router.navigate(['/activities']);
-      }),
+          console.log('Remove activity: successful' + resp);
+          this.activity = null;
+          this.alertService.clear();
+          this.router.navigateByUrl('/activities');
+        }),
         finalize(() => {
           this.toggleService.hide(this.onSubmitLoaderName);
-      }))
+        }))
       .subscribe(
         () => {
         },

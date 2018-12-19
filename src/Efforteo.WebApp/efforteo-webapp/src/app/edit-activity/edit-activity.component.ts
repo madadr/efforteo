@@ -55,7 +55,7 @@ export class EditActivityComponent implements OnInit, OnDestroy {
 
   get f() {
     return this.editActivityForm.controls;
-  } // accessibel from HTML
+  }
 
   ngOnInit() {
     this.toggleService.create(this.onCreateLoaderName);
@@ -146,7 +146,7 @@ export class EditActivityComponent implements OnInit, OnDestroy {
       timeInSec,
       this.editActivityForm.controls['description'].value,
       date
-      )
+    )
       .pipe(map((resp: HttpResponse<any>) => {
         console.log('Edit activity: successful' + resp);
         this.alertService.add(new Alert('success', 'Your activity was updated successfully!'));

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AlertService} from '../alert.service';
 import {ActivityService} from '../activity.service';
@@ -30,9 +30,12 @@ export class AddActivityComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private alertService: AlertService,
               private activityService: ActivityService,
-              private calendar: NgbCalendar) { }
+              private calendar: NgbCalendar) {
+  }
 
-  get f() { return this.addActivityForm.controls; } // accessibel from HTML
+  get f() {
+    return this.addActivityForm.controls;
+  }
 
   ngOnInit() {
     this.addActivityForm = this.formBuilder.group({
@@ -89,7 +92,8 @@ export class AddActivityComponent implements OnInit {
         }
       }))
       .subscribe(
-        () => {},
+        () => {
+        },
         response => {
           if (response.error.message != null) {
             this.alertService.add(new Alert('danger', 'Failed to add activity. ' + response.error.message));

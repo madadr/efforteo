@@ -15,19 +15,22 @@ export class SignUpComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private alertService: AlertService) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private alertService: AlertService) {
+  }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      name: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(200)])],
-      email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(200)])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(200)])],
-      confirmPassword: ['', Validators.compose([Validators.required, ConfirmPasswordValidator('password')])]
-    }
+        name: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(200)])],
+        email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(200)])],
+        password: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(200)])],
+        confirmPassword: ['', Validators.compose([Validators.required, ConfirmPasswordValidator('password')])]
+      }
     );
   }
 
-  get f() { return this.registerForm.controls; } // accessibel from HTML
+  get f() {
+    return this.registerForm.controls;
+  } // accessibel from HTML
 
   onSubmit() {
     this.submitted = true;
@@ -38,8 +41,8 @@ export class SignUpComponent implements OnInit {
     this.alertService.clear();
 
     this.authService.signUp(this.registerForm.controls['name'].value,
-                            this.registerForm.controls['email'].value,
-                            this.registerForm.controls['password'].value)
+      this.registerForm.controls['email'].value,
+      this.registerForm.controls['password'].value)
       .pipe(first())
       .subscribe(
         (val) => {

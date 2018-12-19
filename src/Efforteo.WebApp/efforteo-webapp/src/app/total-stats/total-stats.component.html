@@ -24,11 +24,13 @@
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <span class="">Longest distance</span>
-          <span class=""><a routerLink="/show-activity/{{stat.longestDistance.id}}">{{stat.longestDistance.distance}} km</a></span>
+          <span class=""><a routerLink="/show-activity/{{stat.longestDistance.id}}">{{stat.longestDistance.distance}}
+            km</a></span>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <span class="">Longest time</span>
-          <span class=""><a routerLink="/show-activity/{{stat.longestTime.id}}">{{converter.getTimeString(stat.longestTime.time)}}</a></span>
+          <span class=""><a
+            routerLink="/show-activity/{{stat.longestTime.id}}">{{converter.getTimeString(stat.longestTime.time)}}</a></span>
         </li>
       </ul>
     </ng-template>

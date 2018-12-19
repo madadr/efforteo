@@ -5,7 +5,8 @@
 
   <div *ngIf="!toggleService.isShown(onCreateLoaderName) && activity && isOwner">
     <div class="my-2">
-      <a class="btn btn-outline-primary" routerLink="/show-activity/{{activity.id}}" role="button">Back to activity details</a>
+      <a class="btn btn-outline-primary" routerLink="/show-activity/{{activity.id}}" role="button">Back to activity
+        details</a>
     </div>
     <app-alerts></app-alerts>
     <div class="card text-dark bg-light my-2">
@@ -80,7 +81,7 @@
                 <div class="form-group">
                   <ngb-timepicker [formControl]="timePickerCtrl" required></ngb-timepicker>
                   <div class="small form-text text-danger" *ngIf="!timePickerCtrl.valid">
-                    <div *ngIf="submitted && timePickerCtrl.errors['required']">Start time is required</div>
+                    <div *ngIf="timePickerCtrl.errors['required']">Start time is required</div>
                   </div>
                 </div>
               </form>
@@ -88,16 +89,19 @@
                 <div class="form-group">
                   <div class="input-group">
                     <input class="form-control" placeholder="yyyy-mm-dd" [formControl]="datePickerCtrl"
-                           name="dp" [(ngModel)]="datePickerModel" ngbDatepicker [footerTemplate]="footerTemplate" #d="ngbDatepicker" required>
+                           name="dp" [(ngModel)]="datePickerModel" ngbDatepicker
+                           #d="ngbDatepicker" required>
                     <div class="input-group-append">
-                      <button class="btn btn-outline-primary" (click)="d.toggle()"><small>\/</small></button>
+                      <button class="btn btn-outline-primary" (click)="d.toggle()">
+                        <small>\/</small>
+                      </button>
                       <button class="btn btn-outline-primary" (click)="datePickerModel = today">Today</button>
                     </div>
                   </div>
                 </div>
               </form>
               <div class="small form-text text-danger" *ngIf="!datePickerCtrl.valid">
-                <div *ngIf="submitted && datePickerCtrl.errors['required']">Start date is required</div>
+                <div *ngIf="datePickerCtrl.errors['required']">Start date is required</div>
               </div>
               <div class="small form-text text-secondary text-center mt-1">
                 Please note, that if you select time in future, it will be replaced with current time.
@@ -125,7 +129,8 @@
   <div class="my-2">
     <div *ngIf="!toggleService.isShown(onCreateLoaderName) && activity && !isOwner">
       <h4>You cannot edit this activity.</h4>
-      <a class="btn btn-outline-primary" routerLink="/show-activity/{{activity.id}}" role="button">Back to activity details</a>
+      <a class="btn btn-outline-primary" routerLink="/show-activity/{{activity.id}}" role="button">Back to activity
+        details</a>
     </div>
 
     <div *ngIf="!toggleService.isShown(onCreateLoaderName) && !activity && !isOwner">

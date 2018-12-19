@@ -9,7 +9,8 @@ import {AuthService} from '../auth.service';
 export class NavbarComponent implements OnInit {
   title = 'Efforteo';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+  }
 
   ngOnInit() {
   }

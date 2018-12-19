@@ -59,13 +59,15 @@
           <label class="mr-3">Birthday</label>
           <div class="input-group">
             <input class="form-control" placeholder="yyyy-mm-dd" [formControl]="datePickerCtrl"
-                   name="dp" [(ngModel)]="datePickerModel" ngbDatepicker [footerTemplate]="footerTemplate"
+                   name="dp" [(ngModel)]="datePickerModel" ngbDatepicker
                    #d="ngbDatepicker">
             <div class="input-group-append">
               <button class="btn btn-outline-primary" (click)="d.toggle()" type="button">
                 <small>\/</small>
               </button>
-              <button *ngIf="!toggleService.isShown(onSubmitLoaderName)" class="btn btn-outline-primary" (click)="datePickerModel = today" type="button">Today</button>
+              <button *ngIf="!toggleService.isShown(onSubmitLoaderName)" class="btn btn-outline-primary"
+                      (click)="datePickerModel = today" type="button">Today
+              </button>
               <app-loader *ngIf="toggleService.isShown(onSubmitLoaderName)" class="my-3 d-flex justify-content-center"
                           size="20"></app-loader>
             </div>

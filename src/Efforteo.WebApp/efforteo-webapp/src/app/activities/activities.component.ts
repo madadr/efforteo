@@ -33,7 +33,7 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
 
   private loadActivities() {
     this.toggleService.show(this.onCreateLoaderName);
-    this.activityService.getAllActivites()
+    this.activityService.getAllActivities()
       .pipe(map(resp => {
           this.activities = <Activity[]>JSON.parse(JSON.stringify(resp.body));
         }),
