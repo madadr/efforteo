@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using Autofac;
+using Efforteo.Common.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,12 +16,10 @@ namespace Efforteo.Common.Mongo
     {
         public static void AddMongoDb(this IServiceCollection services, IConfiguration configuration, ILogger logger)
         {
-            services.Configure<MongoOptions>(configuration.GetSection("mongo"));
-            services.AddSingleton<MongoClient>(c =>
-            {
-                var options = c.GetService<IOptions<MongoOptions>>();
-                return new MongoClient(options.Value.ConnectionString);
-            });
+            var settings = configuration.GetSettings<MongoSettings>();
+            MongoClient client = new MongoClient(settings.ConnectionString);
+            services.Configure<MongoSettings>(configuration.GetSection("mongo"));
+            services.AddSingleton<MongoClient>(c => client);
             Policy.Handle<Exception>()
                 .WaitAndRetryForever(r => TimeSpan.FromSeconds(7.5),
                     (ex, ts) =>
@@ -27,22 +28,23 @@ namespace Efforteo.Common.Mongo
                     })
                 .Execute(() =>
                 {
-                    services.AddScoped<IMongoDatabase>(c =>
+                    var serviceDescriptor = services.FirstOrDefault(descriptor =>
+                        descriptor.ServiceType == typeof(IMongoDatabase));
+                    if (serviceDescriptor != null)
                     {
-                        var options = c.GetService<IOptions<MongoOptions>>();
-                        var client = c.GetService<MongoClient>();
+                        services.Remove(serviceDescriptor);
+                    }
+                    
+                    var database = client.GetDatabase(settings.Database);
 
-                        var database = client.GetDatabase(options.Value.Database);
+                    bool isMongoLive = database.RunCommandAsync((Command<BsonDocument>) "{ping:1}").Wait(1000);
 
-                        bool isMongoLive = database.RunCommandAsync((Command<BsonDocument>) "{ping:1}").Wait(1000);
+                    if (!isMongoLive)
+                    {
+                        throw new Exception("Mongo database connection not available");
+                    }
 
-                        if (!isMongoLive)
-                        {
-                            throw new Exception("Mongo database connection not available");
-                        }
-
-                        return database;
-                    });
+                    services.AddScoped<IMongoDatabase>(c => database);
                 });
             services.AddScoped<IDatabaseInitializer, MongoInitializer>();
             services.AddScoped<IDatabaseSeeder, MongoSeeder>();

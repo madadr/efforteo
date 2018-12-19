@@ -12,7 +12,7 @@ namespace Efforteo.Common.Mongo
         private readonly bool _seed;
         private readonly IDatabaseSeeder _seeder;
 
-        public MongoInitializer(IOptions<MongoOptions> options, IDatabaseSeeder seeder, bool initialized = false)
+        public MongoInitializer(IOptions<MongoSettings> options, IDatabaseSeeder seeder, bool initialized = false)
         {
             _seed = options.Value.Seed;
             _seeder = seeder;
