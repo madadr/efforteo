@@ -22,9 +22,7 @@ namespace Efforteo.Services.Stats.IoC.Modules
                     cfg.CreateMap<CategoryTotalStats, CategoryTotalStatsDto>();
                     cfg.CreateMap<Stat, ActivityPointer>();
                     cfg.CreateMap<CategoryDetailedStats, CategoryDetailedStatsDto>();
-                    ;
                     cfg.CreateMap<StatPredecessor, StatPredecessorDto>();
-                    ;
                     cfg.CreateMap<DetailedStat, DetailedStatDto>();
                 }).CreateMapper())
                 .SingleInstance();

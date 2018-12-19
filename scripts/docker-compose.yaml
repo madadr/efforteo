@@ -1,13 +1,23 @@
 version: "3"
 
 services:
-#  start-dep:
-#    image: dadarek/wait-for-dependencies
-#    depends_on:
-#      - mongo
-#      - rabbitmq
-#    command: rabbitmq:5672
- 
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+    - 8888:80
+    - 4444:443
+    links:
+    - api-service
+    - webapp
+  
+  webapp:
+    image: efforteo.webapp.new
+    build: ../src/Efforteo.WebApp/efforteo-webapp
+    ports:
+    - 4200:4200
+    - 49152:49152
+
   mongo:
     image: mongo:3.6
     #volumes:

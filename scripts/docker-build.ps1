@@ -4,3 +4,4 @@ docker build --no-cache -f ./Efforteo.Services.Activities/Dockerfile -t efforteo
 docker build --no-cache -f ./Efforteo.Services.Accounts/Dockerfile -t efforteo.services.accounts ./Efforteo.Services.Accounts
 docker build --no-cache -f ./Efforteo.Services.Authentication/Dockerfile -t efforteo.services.authentication ./Efforteo.Services.Authentication
 docker build --no-cache -f ./Efforteo.Services.Stats/Dockerfile -t efforteo.services.stats ./Efforteo.Services.Stats
+docker build --no-cache -f ./Efforteo.WebApp/efforteo-webapp/Dockerfile -t efforteo.webapp.new ./Efforteo.WebApp/efforteo-webapp
