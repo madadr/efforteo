@@ -8,7 +8,7 @@
 
   <app-loader *ngIf="toggleService.isShown(onCreateLoaderName)" class="my-3 d-flex justify-content-center"
               size="100"></app-loader>
-  <div *ngIf="!toggleService.isShown(onCreateLoaderName) && activity">
+  <div class="col-xl-10 offset-xl-1 px-xl-5" *ngIf="!toggleService.isShown(onCreateLoaderName) && activity">
     <div [(ngModel)]="activity" name="activity" class="card text-dark bg-light mb-3" ngDefaultControl>
       <div class="card-header" [(ngModel)]="createdAgo" name="createdAgo" ngDefaultControl>
         Created {{ createdAgo | timeAgo }} by

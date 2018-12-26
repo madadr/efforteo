@@ -7,15 +7,34 @@ services:
     ports:
       - 4200:4200
       - 49152:49152
-    #volumes:
-    #  - '.:/usr/src/app'
-    #  - '/usr/src/app/node_modules'
-  mongo:
+
+  auth-db:
     image: mongo:3.6
     volumes:
-      - './data:/data/db'
+      - './data_auth:/data/db'
+    ports:
+      - '27217:27017'
+
+  accounts-db:
+    image: mongo:3.6
+    volumes:
+      - './data_acc:/data/db'
+    ports:
+      - '27317:27017'
+
+  activities-db:
+    image: mongo:3.6
+    volumes:
+      - './data_act:/data/db'
     ports:
       - '27017:27017'
+
+  stats-db:
+    image: mongo:3.6
+    volumes:
+      - './data_stat:/data/db'
+    ports:
+      - '27117:27017'
 
   rabbitmq:
     image: rabbitmq
@@ -37,43 +56,43 @@ services:
     ports:
       - '5000:5000'
       - '5001:5001'
-  
-  activities-service:
-    image: efforteo.services.activities
-    build: ../src/Efforteo.Services.Activities
-    depends_on:
-      - mongo
-      - rabbitmq
-    links:
-      - rabbitmq
-      - mongo
 
   authentication-service:
     image: efforteo.services.authentication
     build: ../src/Efforteo.Services.Authentication
     depends_on:
-      - mongo
+      - auth-db
       - rabbitmq
     links:
       - rabbitmq
-      - mongo
+      - auth-db
 
   accounts-service:
     image: efforteo.services.accounts
     build: ../src/Efforteo.Services.Accounts
     depends_on:
-      - mongo
+      - accounts-db
       - rabbitmq
     links:
       - rabbitmq
-      - mongo
+      - accounts-db
+  
+  activities-service:
+    image: efforteo.services.activities
+    build: ../src/Efforteo.Services.Activities
+    depends_on:
+      - activities-db
+      - rabbitmq
+    links:
+      - rabbitmq
+      - activities-db
 
   stats-service:
     image: efforteo.services.stats
     build: ../src/Efforteo.Services.Stats
     depends_on:
-      - mongo
+      - stats-db
       - rabbitmq
     links:
       - rabbitmq
-      - mongo
+      - stats-db
