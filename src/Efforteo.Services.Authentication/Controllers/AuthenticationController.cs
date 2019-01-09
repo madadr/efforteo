@@ -81,7 +81,7 @@ namespace Efforteo.Services.Authentication.Controllers
             }
         }
 
-        [HttpPost("password")]
+        [HttpPut("password")]
         [Authorize]
         public async Task<IActionResult> ChangePassword(ChangePassword command)
         {
@@ -96,6 +96,7 @@ namespace Efforteo.Services.Authentication.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public async Task<IActionResult> RemoveUser()
         {
             _logger.LogInformation($"AuthenticationController::RemoveUser id={UserId}");

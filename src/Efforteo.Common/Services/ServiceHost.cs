@@ -29,6 +29,13 @@ namespace Efforteo.Common.Services
                 .Build();
 
             var webHostBuilder = WebHost.CreateDefaultBuilder(args)
+                .UseBeatPulse(options =>
+                {
+                    options.ConfigurePath(path: "health")
+                        .ConfigureTimeout(milliseconds: 1500)
+                        .ConfigureDetailedOutput(detailedOutput: true,
+                            includeExceptionMessages: true);
+                })
                 .UseConfiguration(config)
                 .UseDefaultServiceProvider(options => options.ValidateScopes = false)
                 .ConfigureLogging(logging =>

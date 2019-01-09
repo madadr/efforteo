@@ -48,16 +48,7 @@ namespace Efforteo.Services.Activities.Controllers
 
             return Accepted($"api/activities/activity/{command.Id}");
         }
-
-        [HttpGet("activity/{id}", Name = "GetActivityById")]
-        public async Task<IActionResult> GetActivity(Guid id)
-        {
-            _logger.LogInformation($"ActivitiesController::GetActivity: id={id.ToString()}");
-
-            var activity = await _activityService.GetAsync(id);
-            return new JsonResult(activity);
-        }
-
+   
         [HttpGet(Name = "GetAllActivities")]
         public async Task<IActionResult> GetAllActivities()
         {
@@ -95,6 +86,16 @@ namespace Efforteo.Services.Activities.Controllers
                 activity.Category
             }));
         }
+
+        [HttpGet("activity/{id}", Name = "GetActivityById")]
+        public async Task<IActionResult> GetActivity(Guid id)
+        {
+            _logger.LogInformation($"ActivitiesController::GetActivity: id={id.ToString()}");
+
+            var activity = await _activityService.GetAsync(id);
+            return new JsonResult(activity);
+        }
+
 
         [HttpPut("activity")]
         public async Task<IActionResult> Update(ActivityDto command)

@@ -48,8 +48,7 @@ namespace Efforteo.Services.Accounts.Controllers
                 account.Location
             }));
         }
-
-        // TODO: Consider detailed info only for friends
+        
         [HttpGet("{id}", Name = "getById")]
         public async Task<IActionResult> Get(Guid id)
         {

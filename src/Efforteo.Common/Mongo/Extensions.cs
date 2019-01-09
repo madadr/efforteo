@@ -17,8 +17,8 @@ namespace Efforteo.Common.Mongo
         public static void AddMongoDb(this IServiceCollection services, IConfiguration configuration, ILogger logger)
         {
             var settings = configuration.GetSettings<MongoSettings>();
-            MongoClient client = new MongoClient(settings.ConnectionString);
             services.Configure<MongoSettings>(configuration.GetSection("mongo"));
+            MongoClient client = new MongoClient(settings.ConnectionString);
             services.AddSingleton<MongoClient>(c => client);
             Policy.Handle<Exception>()
                 .WaitAndRetryForever(r => TimeSpan.FromSeconds(7.5),

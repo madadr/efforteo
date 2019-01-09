@@ -7,44 +7,38 @@ services:
     ports:
       - 4200:4200
       - 49152:49152
+    restart: on-failure
 
   auth-db:
     image: mongo:3.6
-    volumes:
-      - './data_auth:/data/db'
     ports:
       - '27217:27017'
+    restart: on-failure
 
   accounts-db:
     image: mongo:3.6
-    volumes:
-      - './data_acc:/data/db'
     ports:
       - '27317:27017'
+    restart: on-failure
 
   activities-db:
     image: mongo:3.6
-    volumes:
-      - './data_act:/data/db'
     ports:
       - '27017:27017'
+    restart: on-failure
 
   stats-db:
     image: mongo:3.6
-    volumes:
-      - './data_stat:/data/db'
     ports:
       - '27117:27017'
+    restart: on-failure
 
   rabbitmq:
     image: rabbitmq
     ports:
       - '5672:5672'
       - '15672:15672'
-    volumes:
-      - ./data:/var/lib/rabbitmq:rw
-      - ./definitions.json:/opt/definitions.json:ro
-      - ./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+    restart: on-failure
 
   api-service:
     image: efforteo.services.api
@@ -56,6 +50,7 @@ services:
     ports:
       - '5000:5000'
       - '5001:5001'
+    restart: on-failure
 
   authentication-service:
     image: efforteo.services.authentication
@@ -66,6 +61,12 @@ services:
     links:
       - rabbitmq
       - auth-db
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   accounts-service:
     image: efforteo.services.accounts
@@ -76,6 +77,12 @@ services:
     links:
       - rabbitmq
       - accounts-db
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
   
   activities-service:
     image: efforteo.services.activities
@@ -86,6 +93,12 @@ services:
     links:
       - rabbitmq
       - activities-db
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   stats-service:
     image: efforteo.services.stats
@@ -96,3 +109,9 @@ services:
     links:
       - rabbitmq
       - stats-db
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3

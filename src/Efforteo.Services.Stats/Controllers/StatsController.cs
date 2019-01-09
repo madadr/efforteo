@@ -18,20 +18,14 @@ namespace Efforteo.Services.Stats.Controllers
     {
         private readonly IStatService _statService;
         private readonly ILogger _logger;
-        private readonly ICommandDispatcher _commandDispatcher;
-        private readonly IBusClient _busClient;
 
         private Guid UserId =>
             string.IsNullOrWhiteSpace(User?.Identity?.Name) ? Guid.Empty : Guid.Parse(User.Identity.Name);
 
-        public StatsController(IStatService statService, ILogger<StatsController> logger,
-            ICommandDispatcher commandDispatcher,
-            IBusClient busClient)
+        public StatsController(IStatService statService, ILogger<StatsController> logger)
         {
             _statService = statService;
             _logger = logger;
-            _commandDispatcher = commandDispatcher;
-            _busClient = busClient;
         }
 
         [HttpGet("activity/{id}", Name = "getStatById")]

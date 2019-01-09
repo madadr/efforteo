@@ -1,13 +1,16 @@
 ﻿using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using BeatPulse;
 using Efforteo.Common.Auth;
 using Efforteo.Common.Exceptions;
+using Efforteo.Common.HealthCheck;
 using Efforteo.Common.Mongo;
 using Efforteo.Common.RabbitMq;
 using Efforteo.Services.Accounts.IoC.Modules;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
@@ -32,6 +35,7 @@ namespace Efforteo.Services.Accounts
             services.AddJwt(Configuration);
             services.AddMongoDb(Configuration, _logger);
             services.AddRabbitMq(Configuration, _logger);
+            services.AddHealthCheck(Configuration, _logger);
 
             var builder = new ContainerBuilder();
             builder.Populate(services);

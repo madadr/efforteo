@@ -3,6 +3,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Efforteo.Common.Auth;
 using Efforteo.Common.Exceptions;
+using Efforteo.Common.HealthCheck;
 using Efforteo.Common.Mongo;
 using Efforteo.Common.RabbitMq;
 using Efforteo.Services.Authentication.IoC.Modules;
@@ -32,6 +33,7 @@ namespace Efforteo.Services.Authentication
             services.AddJwt(Configuration);
             services.AddMongoDb(Configuration, _logger);
             services.AddRabbitMq(Configuration, _logger);
+            services.AddHealthCheck(Configuration, _logger);
 
             var builder = new ContainerBuilder();
             builder.Populate(services);

@@ -8,7 +8,10 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.1" />
-    <PackageReference Include="Microsoft.AspNetCore.App">
+    <PackageReference Include="BeatPulse" Version="3.0.0" />
+    <PackageReference Include="BeatPulse.MongoDb" Version="3.0.0" />
+    <PackageReference Include="BeatPulse.RabbitMQ" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1">
       <NoWarn>NU1602,NU1604</NoWarn>
     </PackageReference>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.3.0" />

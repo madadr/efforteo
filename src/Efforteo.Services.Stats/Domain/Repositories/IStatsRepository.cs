@@ -10,7 +10,6 @@ namespace Efforteo.Services.Stats.Domain.Repositories
         Task AddAsync(Stat stat);
         Task<Stat> GetAsync(Guid id);
         Task<IEnumerable<Stat>> GetUserAsync(Guid userId);
-        Task<IEnumerable<Stat>> GetPeriodAsync(Guid userId, int days);
         Task UpdateAsync(Stat stat);
         Task RemoveAsync(Guid id);
     }
